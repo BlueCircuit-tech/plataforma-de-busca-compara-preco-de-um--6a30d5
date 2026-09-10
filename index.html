@@ -2548,6 +2548,447 @@
   </script>
 </section>
 
+    <section data-tela="painel-administrativo" class="hidden">
+    <script>
+        const painel_administrativo_integrantes = [
+            { nome: 'Uber', status: 'Conectado', cor: 'green', api: 'v2.1', ultimaSync: '2025-01-15T14:30:00', corridas: 1450 },
+            { nome: '99', status: 'Conectado', cor: 'green', api: 'v3.0', ultimaSync: '2025-01-15T14:28:00', corridas: 980 },
+            { nome: 'InDriver', status: 'Manutenção', cor: 'yellow', api: 'v1.8', ultimaSync: '2025-01-15T10:00:00', corridas: 650 },
+            { nome: 'Bolt', status: 'Conectado', cor: 'green', api: 'v2.0', ultimaSync: '2025-01-15T14:29:00', corridas: 420 },
+            { nome: 'Cabify', status: 'Desconectado', cor: 'red', api: '—', ultimaSync: '2025-01-14T22:00:00', corridas: 0 }
+        ];
+
+        const painel_administrativo_aprovacoes = [
+            { nome: 'Carlos Eduardo Silva', veiculo: 'Honda Civic 2023 / ABC-1234', doc: 'CNH', cidade: 'São Paulo - SP', data: '2025-01-15T09:00:00' },
+            { nome: 'Ana Beatriz Oliveira', veiculo: 'Toyota Corolla 2024 / DEF-5678', doc: 'CNH', cidade: 'São Paulo - SP', data: '2025-01-15T10:30:00' },
+            { nome: 'Roberto Almeida Santos', veiculo: 'Hyundai HB20 2022 / GHI-9012', doc: 'CNH', cidade: 'Guarulhos - SP', data: '2025-01-15T11:00:00' },
+            { nome: 'Fernanda Lima Costa', veiculo: 'Fiat Argo 2024 / JKL-3456', doc: 'CNH', cidade: 'São Bernardo - SP', data: '2025-01-15T12:15:00' },
+            { nome: 'João Pedro Mendes', veiculo: 'VW Polo 2023 / MNO-7890', doc: 'CNH', cidade: 'Santo André - SP', data: '2025-01-15T13:00:00' },
+            { nome: 'Mariana Souza Rocha', veiculo: 'Chevrolet Onix 2024 / PQR-1234', doc: 'CNH + CRLV', cidade: 'Osasco - SP', data: '2025-01-15T13:45:00' }
+        ];
+
+        const painel_administrativo_dadosGrafico = [18,24,30,22,35,42,38,45,52,48,55,62,58,70,65,72,80,75,82,90,85,92,88,95,102,98,105,110,108,115];
+        const painel_administrativo_usuarios = [
+            { nome: 'Rafael Moura', email: 'rafael.m@email.com', cidade: 'São Paulo', status: 'Ativo', corridas: 47, gasto: 'R$ 1.280,00', dataCadastro: '2024-11-02' },
+            { nome: 'Juliana Ferreira', email: 'juliana.f@email.com', cidade: 'Guarulhos', status: 'Ativo', corridas: 23, gasto: 'R$ 620,00', dataCadastro: '2024-12-10' },
+            { nome: 'Thiago Barbosa', email: 'thiago.b@email.com', cidade: 'São Paulo', status: 'Inativo', corridas: 8, gasto: 'R$ 190,00', dataCadastro: '2024-09-18' },
+            { nome: 'Camila Dias', email: 'camila.d@email.com', cidade: 'Campinas', status: 'Ativo', corridas: 62, gasto: 'R$ 2.150,00', dataCadastro: '2024-07-22' },
+            { nome: 'Lucas Andrade', email: 'lucas.a@email.com', cidade: 'São Paulo', status: 'Ativo', corridas: 35, gasto: 'R$ 940,00', dataCadastro: '2024-10-05' },
+            { nome: 'Patricia Nunes', email: 'patricia.n@email.com', cidade: 'São Bernardo', status: 'Suspenso', corridas: 3, gasto: 'R$ 75,00', dataCadastro: '2024-08-14' },
+            { nome: 'Diego Rocha', email: 'diego.r@email.com', cidade: 'Guarulhos', status: 'Ativo', corridas: 19, gasto: 'R$ 510,00', dataCadastro: '2024-12-01' }
+        ];
+
+        function painel_administrativo_alterarAba(aba) {
+            document.querySelectorAll('[data-painel-aba]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            const alvo = document.querySelector('[data-painel-aba="' + aba + '"]');
+            if (alvo) alvo.classList.remove('hidden');
+
+            document.querySelectorAll('[data-painel-tab]').forEach(el => {
+                el.classList.remove('border-marca', 'text-marca-800');
+                el.classList.add('text-gray-400', 'border-transparent');
+            });
+            const tabAtiva = document.querySelector('[data-painel-tab="' + aba + '"]');
+            if (tabAtiva) {
+                tabAtiva.classList.remove('text-gray-400', 'border-transparent');
+                tabAtiva.classList.add('border-marca', 'text-marca-800');
+            }
+        }
+
+        function painel_administrativo_aprovar(indice) {
+            const item = painel_administrativo_aprovacoes[indice];
+            if (!item) return;
+            painel_administrativo_aprovacoes.splice(indice, 1);
+            painel_administrativo_renderizarAprovacoes();
+            toast(item.nome + ' aprovado com sucesso!', 'ok');
+            const btn = document.getElementById('btn-aprovar-' + indice);
+            if (btn) btn.disabled = true;
+        }
+
+        function painel_administrativo_reprovar(indice) {
+            const item = painel_administrativo_aprovacoes[indice];
+            if (!item) return;
+            abrirModal('<div class="text-center"><p class="font-body text-gray-300 mb-4">Deseja realmente reprovar o cadastro de <strong class="text-white">' + item.nome + '</strong>?</p><div class="flex gap-3"><button onclick="painel_administrativo_confirmarReprovacao(' + indice + ')" class="flex-1 bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-4 rounded-xl transition-all active:scale-95">Confirmar Reprovação</button><button onclick="fecharModal()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-xl transition-all active:scale-95">Cancelar</button></div></div>', 'Confirmar Reprovação');
+        }
+
+        function painel_administrativo_confirmarReprovacao(indice) {
+            const item = painel_administrativo_aprovacoes[indice];
+            painel_administrativo_aprovacoes.splice(indice, 1);
+            painel_administrativo_renderizarAprovacoes();
+            fecharModal();
+            toast(item.nome + ' reprovado.', 'erro');
+        }
+
+        function painel_administrativo_renderizarAprovacoes() {
+            const container = document.getElementById('lista-aprovacoes');
+            if (!container) return;
+            if (painel_administrativo_aprovacoes.length === 0) {
+                container.innerHTML = '<div class="text-center py-8"><svg class="w-12 h-12 mx-auto text-green-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><p class="text-gray-400 font-body">Todas as aprovações foram processadas!</p></div>';
+                return;
+            }
+            container.innerHTML = painel_administrativo_aprovacoes.map(function(a, i) {
+                return '<div id="aprovacao-' + i + '" class="flex items-center gap-4 p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl hover:border-marca/20 transition-all cursor-pointer" onclick="abrirModal(\'<div class=\"space-y-3\"><p><span class=\"text-gray-400 font-body\">Nome:</span> <span class=\"text-white font-semibold\">' + a.nome + '</span></p><p><span class=\"text-gray-400 font-body\">Veículo:</span> <span class=\"text-white\">' + a.veiculo + '</span></p><p><span class=\"text-gray-400 font-body\">Documento:</span> <span class=\"text-white\">' + a.doc + '</span></p><p><span class=\"text-gray-400 font-body\">Cidade:</span> <span class=\"text-white\">' + a.cidade + '</span></p><p><span class=\"text-gray-400 font-body\">Enviado em:</span> <span class=\"text-white\">' + dataBR(a.data) + '</span></p></div>\',\'Detalhes do Cadastro\')"><div class="w-10 h-10 rounded-full bg-marca/20 flex items-center justify-center text-marca font-bold text-sm flex-shrink-0">' + a.nome.split(' ').map(function(n){return n[0]}).slice(0,2).join('') + '</div><div class="flex-1 min-w-0"><p class="text-white font-semibold text-sm truncate">' + a.nome + '</p><p class="text-gray-400 font-body text-xs">' + a.veiculo + '</p></div><div class="flex gap-2 flex-shrink-0"><button id="btn-aprovar-' + i + '" onclick="event.stopPropagation(); painel_administrativo_aprovar(' + i + ')" class="bg-green-600 hover:bg-green-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition-all active:scale-95">Aprovar</button><button onclick="event.stopPropagation(); painel_administrativo_reprovar(' + i + ')" class="bg-red-600/80 hover:bg-red-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition-all active:scale-95">Reprovar</button></div></div>';
+            }).join('');
+        }
+
+        function painel_administrativo_filtrarUsuarios(termo) {
+            termo = termo.toLowerCase();
+            const cards = document.querySelectorAll('[data-usuario-card]');
+            cards.forEach(function(card) {
+                const nome = card.getAttribute('data-usuario-nome').toLowerCase();
+                const email = card.getAttribute('data-usuario-email').toLowerCase();
+                const cidade = card.getAttribute('data-usuario-cidade').toLowerCase();
+                if (nome.includes(termo) || email.includes(termo) || cidade.includes(termo)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function painel_administrativo_criarSVGGrafico() {
+            var dados = painel_administrativo_dadosGrafico;
+            var largura = 350, altura = 180, padding = 30;
+            var max = Math.max.apply(null, dados);
+            var min = Math.min.apply(null, dados);
+            var range = max - min;
+            var pontos = dados.map(function(val, i) {
+                var x = padding + (i / (dados.length - 1)) * (largura - padding * 2);
+                var y = altura - padding - ((val - min) / range) * (altura - padding * 2);
+                return { x: x, y: y, val: val };
+            });
+            var caminho = 'M ' + pontos[0].x + ' ' + pontos[0].y;
+            for (var i = 1; i < pontos.length; i++) {
+                var x0 = pontos[i - 1].x, y0 = pontos[i - 1].y;
+                var x1 = pontos[i].x, y1 = pontos[i].y;
+                var cx = (x0 + x1) / 2;
+                caminho += ' C ' + cx + ' ' + y0 + ', ' + cx + ' ' + y1 + ', ' + x1 + ' ' + y1;
+            }
+            var caminhoArea = caminho + ' L ' + pontos[pontos.length - 1].x + ' ' + (altura - padding) + ' L ' + pontos[0].x + ' ' + (altura - padding) + ' Z';
+            var circuloUltimo = '<circle cx="' + pontos[pontos.length - 1].x + '" cy="' + pontos[pontos.length - 1].y + '" r="4" fill="#D4AF37" stroke="#0A0A0A" stroke-width="2"/>';
+            var gridY = '';
+            var gridVals = [min, Math.round((min + max) / 2), max];
+            gridVals.forEach(function(v) {
+                var y = altura - padding - ((v - min) / range) * (altura - padding * 2);
+                gridY += '<line x1="' + padding + '" y1="' + y + '" x2="' + (largura - padding) + '" y2="' + y + '" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>';
+            });
+            return '<svg viewBox="0 0 ' + largura + ' ' + altura + '" class="w-full" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D4AF37" stop-opacity="0.25"/><stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/></linearGradient></defs>' + gridY + '<path d="' + caminhoArea + '" fill="url(#areaGrad)"/><path d="' + caminho + '" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' + circuloUltimo + '<text x="10" y="14" fill="#D4AF37" font-size="11" font-weight="bold">' + pontos[pontos.length - 1].val + ' corridas</text><text x="10" y="' + (altura - 6) + '" fill="#6B7280" font-size="9">15 dias atrás</text><text x="' + (largura - 50) + '" y="' + (altura - 6) + '" fill="#6B7280" font-size="9">hoje</text></svg>';
+        }
+
+        function painel_administrativo_inicializar() {
+            painel_administrativo_renderizarAprovacoes();
+        }
+    </script>
+
+    <div class="mb-6">
+        <h1 class="font-display text-2xl font-bold text-white tracking-tight">Painel Administrativo</h1>
+        <p class="font-body text-gray-400 text-sm mt-1">Visão geral da plataforma Kilegal</p>
+    </div>
+
+    <div class="flex gap-2 mb-6 overflow-x-auto pb-1 scrollbar-hide" data-painel-tabs>
+        <button data-painel-tab="dashboard" onclick="painel_administrativo_alterarAba('dashboard')" class="border-marca text-marca-800 font-semibold text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all active:scale-95 bg-marca/10">Dashboard</button>
+        <button data-painel-tab="usuarios" onclick="painel_administrativo_alterarAba('usuarios')" class="border-transparent text-gray-400 font-semibold text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all active:scale-95 hover:text-gray-200">Usuários</button>
+        <button data-painel-tab="motoristas" onclick="painel_administrativo_alterarAba('motoristas')" class="border-transparent text-gray-400 font-semibold text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all active:scale-95 hover:text-gray-200">Motoristas</button>
+        <button data-painel-tab="financeiro" onclick="painel_administrativo_alterarAba('financeiro')" class="border-transparent text-gray-400 font-semibold text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all active:scale-95 hover:text-gray-200">Financeiro</button>
+        <button data-painel-tab="banners" onclick="painel_administrativo_alterarAba('banners')" class="border-transparent text-gray-400 font-semibold text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all active:scale-95 hover:text-gray-200">Banners</button>
+        <button data-painel-tab="config" onclick="painel_administrativo_alterarAba('config')" class="border-transparent text-gray-400 font-semibold text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all active:scale-95 hover:text-gray-200">Config</button>
+    </div>
+
+    <div data-painel-aba="dashboard">
+        <div class="grid grid-cols-2 gap-3 mb-5">
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 hover:border-marca/20 transition-all">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-marca/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-marca" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                    <span class="text-gray-400 font-body text-xs">Usuários Ativos</span>
+                </div>
+                <p class="text-white font-display font-bold text-2xl">12.450</p>
+                <p class="text-green-400 font-body text-xs mt-1 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                    +8,2% esse mês
+                </p>
+            </div>
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 hover:border-marca/20 transition-all">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-marca/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-marca" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <span class="text-gray-400 font-body text-xs">Corridas Hoje</span>
+                </div>
+                <p class="text-white font-display font-bold text-2xl">3.280</p>
+                <p class="text-green-400 font-body text-xs mt-1 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                    +12,5% vs ontem
+                </p>
+            </div>
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 hover:border-marca/20 transition-all">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-marca/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-marca" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <span class="text-gray-400 font-body text-xs">Receita do Mês</span>
+                </div>
+                <p class="text-white font-display font-bold text-2xl">R$ 49.200</p>
+                <p class="text-green-400 font-body text-xs mt-1 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                    +5,7% vs mês anterior
+                </p>
+            </div>
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 hover:border-marca/20 transition-all">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-marca/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-marca" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    </div>
+                    <span class="text-gray-400 font-body text-xs">Comissão (5%)</span>
+                </div>
+                <p class="text-white font-display font-bold text-2xl">R$ 2.460</p>
+                <p class="text-green-400 font-body text-xs mt-1 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                    +6,1% vs mês anterior
+                </p>
+            </div>
+        </div>
+
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 mb-5">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="font-display font-semibold text-white text-sm">Volume de Corridas — Últimos 30 dias</h3>
+                    <p class="text-gray-500 font-body text-xs mt-0.5">Corridas confirmadas por dia</p>
+                </div>
+                <span class="bg-marca/10 text-marca font-body text-xs font-semibold px-3 py-1 rounded-full">+15,3% tendência</span>
+            </div>
+            <div class="overflow-hidden" id="grafico-corridas"></div>
+        </div>
+
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 mb-5">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-display font-semibold text-white text-sm">Apps Integrados</h3>
+                <span class="text-gray-500 font-body text-xs">Status das APIs</span>
+            </div>
+            <div class="space-y-3" id="lista-apps"></div>
+        </div>
+
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-display font-semibold text-white text-sm">Aprovações Pendentes</h3>
+                <span id="badge-aprovacoes" class="bg-red-500/20 text-red-400 font-body text-xs font-bold px-2.5 py-0.5 rounded-full">6</span>
+            </div>
+            <div id="lista-aprovacoes"></div>
+        </div>
+    </div>
+
+    <div data-painel-aba="usuarios" class="hidden">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="relative flex-1">
+                <svg class="w-5 h-5 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" id="busca-usuarios" oninput="painel_administrativo_filtrarUsuarios(this.value)" placeholder="Buscar por nome, e-mail ou cidade..." class="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-white font-body text-sm placeholder-gray-500 focus:border-marca/50 focus:ring-1 focus:ring-marca/30 focus:outline-none transition-all">
+            </div>
+            <select class="bg-white/[0.06] border border-white/[0.08] rounded-xl px-3 py-3 text-gray-300 font-body text-sm focus:border-marca/50 focus:outline-none appearance-none" onchange="toast('Filtro aplicado: ' + this.value, 'info')">
+                <option value="">Todos</option>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+                <option value="suspenso">Suspenso</option>
+            </select>
+        </div>
+        <div class="space-y-3" id="lista-usuarios"></div>
+        <div id="vazio-usuarios" class="hidden text-center py-12">
+            <svg class="w-16 h-16 mx-auto text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <p class="text-gray-400 font-body">Nenhum usuário encontrado</p>
+        </div>
+    </div>
+
+    <div data-painel-aba="motoristas" class="hidden">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="relative flex-1">
+                <svg class="w-5 h-5 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" placeholder="Buscar motoristas..." class="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl pl-10 pr-4 py-3 text-white font-body text-sm placeholder-gray-500 focus:border-marca/50 focus:ring-1 focus:ring-marca/30 focus:outline-none transition-all">
+            </div>
+        </div>
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <table class="w-full text-sm">
+                <thead><tr class="border-b border-white/[0.06]">
+                    <th class="text-left text-gray-500 font-body font-semibold text-xs px-4 py-3">Motorista</th>
+                    <th class="text-left text-gray-500 font-body font-semibold text-xs px-2 py-3">Veículo</th>
+                    <th class="text-center text-gray-500 font-body font-semibold text-xs px-2 py-3">Corridas</th>
+                    <th class="text-center text-gray-500 font-body font-semibold text-xs px-2 py-3">Avaliação</th>
+                    <th class="text-center text-gray-500 font-body font-semibold text-xs px-4 py-3">Status</th>
+                </tr></thead>
+                <tbody id="tabela-motoristas"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div data-painel-aba="financeiro" class="hidden">
+        <div class="grid grid-cols-3 gap-3 mb-5">
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
+                <p class="text-gray-400 font-body text-xs mb-1">Receita Total</p>
+                <p class="text-white font-display font-bold text-lg">R$ 49.200</p>
+            </div>
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
+                <p class="text-gray-400 font-body text-xs mb-1">Comissão (5%)</p>
+                <p class="text-marca font-display font-bold text-lg">R$ 2.460</p>
+            </div>
+            <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
+                <p class="text-gray-400 font-body text-xs mb-1">Repasse Motoristas</p>
+                <p class="text-white font-display font-bold text-lg">R$ 46.740</p>
+            </div>
+        </div>
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 mb-5">
+            <h3 class="font-display font-semibold text-white text-sm mb-4">Últimos Pagamentos</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-marca/20 flex items-center justify-center text-marca font-bold text-xs">CM</div>
+                        <div><p class="text-white font-body text-sm">Carlos Mendes</p><p class="text-gray-500 font-body text-xs">15/01/2025 — 23 corridas</p></div>
+                    </div>
+                    <span class="text-green-400 font-body text-sm font-semibold">R$ 1.847,50</span>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs">AR</div>
+                        <div><p class="text-white font-body text-sm">Ana Reis</p><p class="text-gray-500 font-body text-xs">15/01/2025 — 18 corridas</p></div>
+                    </div>
+                    <span class="text-green-400 font-body text-sm font-semibold">R$ 1.285,20</span>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 font-bold text-xs">PF</div>
+                        <div><p class="text-white font-body text-sm">Paulo Ferreira</p><p class="text-gray-500 font-body text-xs">15/01/2025 — 31 corridas</p></div>
+                    </div>
+                    <span class="text-green-400 font-body text-sm font-semibold">R$ 2.438,75</span>
+                </div>
+                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 font-bold text-xs">LS</div>
+                        <div><p class="text-white font-body text-sm">Luiza Santos</p><p class="text-gray-500 font-body text-xs">14/01/2025 — 12 corridas</p></div>
+                    </div>
+                    <span class="text-green-400 font-body text-sm font-semibold">R$ 986,40</span>
+                </div>
+                <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-xs">MG</div>
+                        <div><p class="text-white font-body text-sm">Marcos Gomes</p><p class="text-gray-500 font-body text-xs">14/01/2025 — 27 corridas</p></div>
+                    </div>
+                    <span class="text-green-400 font-body text-sm font-semibold">R$ 2.012,25</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-painel-aba="banners" class="hidden">
+        <div class="flex items-center justify-between mb-5">
+            <p class="text-gray-400 font-body text-sm">Gerencie banners promocionais exibidos no app</p>
+            <button onclick="abrirModal('<div class=\"space-y-4\"><div><label class=\"block text-gray-400 font-body text-xs mb-1.5\">Título do Banner</label><input type=\"text\" placeholder=\"Ex: Promoção de Verão\" class=\"w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-3 text-white font-body text-sm placeholder-gray-500 focus:border-marca/50 focus:outline-none\"></div><div><label class=\"block text-gray-400 font-body text-xs mb-1.5\">Subtítulo</label><input type=\"text\" placeholder=\"Texto complementar\" class=\"w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-3 text-white font-body text-sm placeholder-gray-500 focus:border-marca/50 focus:outline-none\"></div><div><label class=\"block text-gray-400 font-body text-xs mb-1.5\">Data de Início</label><input type=\"date\" class=\"w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-3 text-white font-body text-sm focus:border-marca/50 focus:outline-none\"></div><div><label class=\"block text-gray-400 font-body text-xs mb-1.5\">Data de Término</label><input type=\"date\" class=\"w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-3 text-white font-body text-sm focus:border-marca/50 focus:outline-none\"></div><button onclick=\"fecharModal(); toast('Banner criado com sucesso!', 'ok')\" class=\"w-full bg-marca hover:bg-marca-600 text-black font-semibold py-3 rounded-xl transition-all active:scale-95 mt-2\">Criar Banner</button></div>', 'Novo Banner Promocional')" class="bg-marca hover:bg-marca-600 text-black font-semibold text-sm px-4 py-2.5 rounded-xl transition-all active:scale-95 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Novo Banner
+            </button>
+        </div>
+        <div class="grid grid-cols-1 gap-4" id="lista-banners"></div>
+    </div>
+
+    <div data-painel-aba="config" class="hidden">
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 mb-5">
+            <h3 class="font-display font-semibold text-white text-sm mb-4">Configurações da Plataforma</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div><p class="text-white font-body text-sm">Comissão padrão</p><p class="text-gray-500 font-body text-xs">Percentual sobre corridas aceitas</p></div>
+                    <div class="flex items-center gap-2"><span class="text-white font-body font-semibold">5%</span><button onclick="toast('Taxa atual: 5%. Alteração em análise.', 'info')" class="text-marca text-sm font-semibold hover:underline">Editar</button></div>
+                </div>
+                <div class="border-t border-white/[0.04]"></div>
+                <div class="flex items-center justify-between">
+                    <div><p class="text-white font-body text-sm">Moeda</p><p class="text-gray-500 font-body text-xs">Moeda exibida nos valores</p></div>
+                    <span class="text-marca font-body font-semibold text-sm">BRL (R$)</span>
+                </div>
+                <div class="border-t border-white/[0.04]"></div>
+                <div class="flex items-center justify-between">
+                    <div><p class="text-white font-body text-sm">Idioma</p><p class="text-gray-500 font-body text-xs">Idioma padrão do app</p></div>
+                    <span class="text-marca font-body font-semibold text-sm">Português (BR)</span>
+                </div>
+                <div class="border-t border-white/[0.04]"></div>
+                <div class="flex items-center justify-between">
+                    <div><p class="text-white font-body text-sm">Notificações push</p><p class="text-gray-500 font-body text-xs">Enviar notificações para usuários</p></div>
+                    <button onclick="this.classList.toggle('bg-marca'); this.classList.toggle('bg-gray-600'); toast('Configuração atualizada', 'ok')" class="w-12 h-7 bg-marca rounded-full relative transition-all"><span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full transition-all"></span></button>
+                </div>
+                <div class="border-t border-white/[0.04]"></div>
+                <div class="flex items-center justify-between">
+                    <div><p class="text-white font-body text-sm">Localização em tempo real</p><p class="text-gray-500 font-body text-xs">Rastreamento durante corridas</p></div>
+                    <button onclick="this.classList.toggle('bg-marca'); this.classList.toggle('bg-gray-600'); toast('Configuração atualizada', 'ok')" class="w-12 h-7 bg-marca rounded-full relative transition-all"><span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full transition-all"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5">
+            <h3 class="font-display font-semibold text-white text-sm mb-4">Cidades Ativas</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center gap-3"><span class="text-white font-body text-sm">São Paulo - SP</span><span class="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">Ativo</span></div>
+                    <span class="text-gray-500 font-body text-xs">12.450 usuários</span>
+                </div>
+                <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center gap-3"><span class="text-white font-body text-sm">Guarulhos - SP</span><span class="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">Ativo</span></div>
+                    <span class="text-gray-500 font-body text-xs">3.820 usuários</span>
+                </div>
+                <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center gap-3"><span class="text-white font-body text-sm">Campinas - SP</span><span class="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">Ativo</span></div>
+                    <span class="text-gray-500 font-body text-xs">2.150 usuários</span>
+                </div>
+                <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center gap-3"><span class="text-white font-body text-sm">Rio de Janeiro - RJ</span><span class="bg-yellow-500/20 text-yellow-400 text-xs font-bold px-2 py-0.5 rounded-full">Beta</span></div>
+                    <span class="text-gray-500 font-body text-xs">890 usuários</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.getElementById('grafico-corridas').innerHTML = painel_administrativo_criarSVGGrafico();
+            painel_administrativo_renderizarAprovacoes();
+
+            var appsHTML = painel_administrativo_integrantes.map(function(a) {
+                var statusColors = { green: { bg: 'bg-green-500/10', text: 'text-green-400', dot: 'bg-green-400' }, yellow: { bg: 'bg-yellow-500/10', text: 'text-yellow-400', dot: 'bg-yellow-400' }, red: { bg: 'bg-red-500/10', text: 'text-red-400', dot: 'bg-red-400' } };
+                var c = statusColors[a.cor] || statusColors.green;
+                return '<div class="flex items-center justify-between py-3 border-b border-white/[0.04] last:border-0"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center"><span class="text-white font-display font-bold text-xs">' + a.nome.charAt(0) + '</span></div><div><p class="text-white font-body text-sm font-semibold">' + a.nome + '</p><p class="text-gray-500 font-body text-xs">API ' + a.api + ' · ' + a.corridas + ' corridas/mês</p></div></div><span class="' + c.bg + ' ' + c.text + ' text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full ' + c.dot + '"></span>' + a.status + '</span></div>';
+            }).join('');
+            document.getElementById('lista-apps').innerHTML = appsHTML;
+
+            var motoristasHTML = [
+                { nome: 'Carlos Eduardo S.', veiculo: 'Honda Civic · ABC-1234', corridas: 342, av: 4.9, status: 'Ativo' },
+                { nome: 'Ana Beatriz O.', veiculo: 'Toyota Corolla · DEF-5678', corridas: 218, av: 4.8, status: 'Ativo' },
+                { nome: 'Roberto A. Santos', veiculo: 'Hyundai HB20 · GHI-9012', corridas: 156, av: 4.7, status: 'Ativo' },
+                { nome: 'Fernanda L. Costa', veiculo: 'Fiat Argo · JKL-3456', corridas: 89, av: 4.9, status: 'Ativo' },
+                { nome: 'João Pedro M.', veiculo: 'VW Polo · MNO-7890', corridas: 67, av: 4.5, status: 'Pausado' },
+                { nome: 'Mariana S. Rocha', veiculo: 'Chevrolet Onix · PQR-1234', corridas: 45, av: 4.6, status: 'Ativo' },
+                { nome: 'André Luiz P.', veiculo: 'Renault Kwid · STU-5678', corridas: 31, av: 4.4, status: 'Pendente' }
+            ].map(function(m) {
+                var sClass = m.status === 'Ativo' ? 'bg-green-500/15 text-green-400' : m.status === 'Pausado' ? 'bg-yellow-500/15 text-yellow-400' : 'bg-gray-500/15 text-gray-400';
+                var iniciais = m.nome.split(' ').map(function(n){return n[0]}).slice(0,2).join('');
+                return '<tr class="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-all cursor-pointer" onclick="abrirModal(\'<div class=\"space-y-2\"><p><span class=\"text-gray-400 font-body text-xs\">Motorista:</span> <span class=\"text-white font-semibold\">' + m.nome + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Veículo:</span> <span class=\"text-white\">' + m.veiculo + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Corridas realizadas:</span> <span class=\"text-white\">' + m.corridas + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Avaliação:</span> <span class=\"text-marca font-semibold\">' + m.av + ' ★</span></p><p><span class=\"text-gray-400 font-body text-xs\">Status:</span> <span class=\"' + sClass + ' text-xs font-bold px-2 py-0.5 rounded-full\">' + m.status + '</span></p></div>\',\'Detalhes do Motorista\')"><td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-marca/20 flex items-center justify-center text-marca font-bold text-xs flex-shrink-0">' + iniciais + '</div><span class="text-white font-body text-sm">' + m.nome + '</span></div></td><td class="px-2 py-3 text-gray-400 font-body text-xs">' + m.veiculo + '</td><td class="px-2 py-3 text-center text-white font-body text-sm">' + m.corridas + '</td><td class="px-2 py-3 text-center text-marca font-body text-sm font-semibold">' + m.av + ' ★</td><td class="px-4 py-3 text-center"><span class="' + sClass + ' text-xs font-bold px-2.5 py-1 rounded-full">' + m.status + '</span></td></tr>';
+            }).join('');
+            document.getElementById('tabela-motoristas').innerHTML = motoristasHTML;
+
+            var bannersHTML = [
+                { titulo: 'Promoção de Verão', subtitulo: 'Ganhe 20% de desconto em corridas', dataInicio: '01/12/2024', dataFim: '31/01/2025', status: 'Ativo' },
+                { titulo: 'Indique e Ganhe', subtitulo: 'R$ 10 de crédito para cada amigo', dataInicio: '10/01/2025', dataFim: '10/02/2025', status: 'Ativo' },
+                { titulo: 'Primeira Corrida Grátis', subtitulo: 'Até R$ 15 de desconto no primeiro uso', dataInicio: '15/11/2024', dataFim: '15/03/2025', status: 'Ativo' },
+                { titulo: 'Black Friday 2024', subtitulo: 'Até 50% off em viagens', dataInicio: '22/11/2024', dataFim: '30/11/2024', status: 'Expirado' }
+            ].map(function(b) {
+                var sClass = b.status === 'Ativo' ? 'bg-green-500/15 text-green-400' : 'bg-gray-500/15 text-gray-400';
+                return '<div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-marca/20 transition-all cursor-pointer" onclick="abrirModal(\'<div class=\"space-y-3\"><p><span class=\"text-gray-400 font-body text-xs\">Título:</span> <span class=\"text-white font-semibold\">' + b.titulo + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Subtítulo:</span> <span class=\"text-white\">' + b.subtitulo + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Período:</span> <span class=\"text-white\">' + b.dataInicio + ' até ' + b.dataFim + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Status:</span> <span class=\"' + sClass + ' text-xs font-bold px-2 py-0.5 rounded-full\">' + b.status + '</span></p><button onclick=\"fecharModal(); toast(\'Banner editado\', \'ok\')\" class=\"w-full bg-marca hover:bg-marca-600 text-black font-semibold py-2.5 rounded-xl transition-all active:scale-95 mt-3\">Editar Banner</button></div>\',\'Detalhes do Banner\')"><div class="h-24 bg-gradient-to-r from-marca/30 via-marca/10 to-marca/20 relative"><div class="absolute inset-0 flex items-center px-5"><div><p class="text-white font-display font-bold text-sm">' + b.titulo + '</p><p class="text-gray-300 font-body text-xs mt-0.5">' + b.subtitulo + '</p></div></div></div><div class="flex items-center justify-between px-4 py-3"><div class="flex items-center gap-4"><span class="text-gray-400 font-body text-xs">' + b.dataInicio + ' — ' + b.dataFim + '</span><span class="' + sClass + ' text-xs font-bold px-2 py-0.5 rounded-full">' + b.status + '</span></div><svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div></div>';
+            }).join('');
+            document.getElementById('lista-banners').innerHTML = bannersHTML;
+
+            var usuariosHTML = painel_administrativo_usuarios.map(function(u) {
+                var iniciais = u.nome.split(' ').map(function(n){return n[0]}).slice(0,2).join('');
+                var statusBadge = u.status === 'Ativo' ? '<span class="bg-green-500/15 text-green-400 text-xs font-bold px-2.5 py-0.5 rounded-full">' + u.status + '</span>' : u.status === 'Inativo' ? '<span class="bg-gray-500/15 text-gray-400 text-xs font-bold px-2.5 py-0.5 rounded-full">' + u.status + '</span>' : '<span class="bg-red-500/15 text-red-400 text-xs font-bold px-2.5 py-0.5 rounded-full">' + u.status + '</span>';
+                return '<div data-usuario-card data-usuario-nome="' + u.nome + '" data-usuario-email="' + u.email + '" data-usuario-cidade="' + u.cidade + '" class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 hover:border-marca/20 transition-all cursor-pointer" onclick="abrirModal(\'<div class=\"space-y-2\"><p><span class=\"text-gray-400 font-body text-xs\">Nome:</span> <span class=\"text-white font-semibold\">' + u.nome + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Email:</span> <span class=\"text-white\">' + u.email + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Cidade:</span> <span class=\"text-white\">' + u.cidade + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Corridas:</span> <span class=\"text-white\">' + u.corridas + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Gasto total:</span> <span class=\"text-marca font-semibold\">' + u.gasto + '</span></p><p><span class=\"text-gray-400 font-body text-xs\">Cadastro:</span> <span class=\"text-white\">' + u.dataCadastro + '</span></p><button onclick=\"fecharModal(); toast(\'E-mail enviado para o usuário\', \'ok\')\" class=\"w-full bg-marca hover:bg-marca-600 text-black font-semibold py-2.5 rounded-xl transition-all active:scale-95 mt-3\">Enviar E-mail</button></div>\',\'Detalhes do Usuário\')"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-marca/20 flex items-center justify-center text-marca font-bold text-sm flex-shrink-0">' + iniciais + '</div><div class="flex-1 min-w-0"><p class="text-white font-body font-semibold text-sm truncate">' + u.nome + '</p><p class="text-gray-400 font-body text-xs">' + u.email + '</p></div>' + statusBadge + '</div></div>';
+            }).join('');
+            document.getElementById('lista-usuarios').innerHTML = usuariosHTML;
+        })();
+    </script>
+</section>
+
     <!-- TELAS -->
     </main>
 

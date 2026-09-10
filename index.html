@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>Kilegal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['Syne','sans-serif'], body: ['"DM Sans"','sans-serif'] },
+          colors: {
+            marca: {
+              50:'#fdfaef',100:'#f9efcd',200:'#f3de9c',300:'#eccd6a',400:'#e5bc38',
+              500:'#D4AF37',600:'#b8951f',700:'#8c7118',800:'#5f4d11',900:'#33290a'
+            }
+          },
+          dark: { DEFAULT:'#0A0A0A', 50:'#171717',100:'#222222',200:'#2E2E2E',300:'#3A3A3A' },
+          light: { DEFAULT:'#FAFAFA', 50:'#FFFFFF',100:'#F5F5F5',200:'#EEEEEE',300:'#E0E0E0' }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    html { height: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: #0A0A0A; min-height: 100%; overscroll-behavior: none; }
+
+    @keyframes kilegal-in {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    [data-tela]:not(.hidden) { animation: kilegal-in .3s cubic-bezier(.4,0,.2,1) forwards; }
+
+    ::-webkit-scrollbar { width: 0; height: 0; }
+
+    *:focus-visible { outline: 2px solid #D4AF37; outline-offset: 2px; border-radius: 4px; }
+
+    .ativo { color: #D4AF37 !important; }
+    .ativo svg { fill: #D4AF37; }
+
+    .card {
+      background: #FFFFFF; border-radius: 14px; padding: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .card:active { transform: scale(.985); }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      border-radius: 999px; padding: 2px 10px;
+      font-size: .7rem; font-weight: 600; line-height: 1.6;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      border-radius: 12px; padding: 14px 24px; cursor: pointer;
+      border: none; transition: all .2s; font-size: .95rem; width: 100%;
+      -webkit-appearance: none;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn-primario { background: linear-gradient(135deg,#D4AF37,#b8951f); color: #0A0A0A; }
+    .btn-primario:hover { box-shadow: 0 4px 20px rgba(212,175,55,.3); }
+    .btn-secundario { background: transparent; color: #FAFAFA; border: 1.5px solid rgba(250,250,250,.2); }
+    .btn-secundario:hover { border-color: rgba(212,175,55,.5); color: #D4AF37; }
+    .btn-contorno { background: transparent; color: #0A0A0A; border: 1.5px solid #0A0A0A; }
+    .btn-contorno:hover { background: #0A0A0A; color: #FAFAFA; }
+    .btn-pequeno { padding: 8px 14px; font-size: .8rem; border-radius: 8px; }
+    .btn-sm { padding: 6px 12px; font-size: .75rem; border-radius: 8px; }
+    .btn:disabled { opacity:.5; cursor: not-allowed; }
+
+    .nav-btn {
+      background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px; color: rgba(250,250,250,.3);
+      font-size: .6rem; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      padding: 6px 0; min-width: 52px; flex: 1;
+      transition: color .2s, transform .15s;
+      -webkit-tap-highlight-color: transparent; position: relative;
+    }
+    .nav-btn:active { transform: scale(.9); }
+    .nav-btn svg { transition: fill .2s, stroke .2s; }
+
+    .input-k {
+      width: 100%; padding: 13px 16px; background: #F5F5F5;
+      border: 1.5px solid #EEEEEE; border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: .95rem;
+      color: #0A0A0A; transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+    }
+    .input-k::placeholder { color: #999; }
+    .input-k:focus { outline: none; border-color: #D4AF37; box-shadow: 0 0 0 3px rgba(212,175,55,.12); }
+
+    .input-dark {
+      width: 100%; padding: 13px 16px; background: rgba(255,255,255,.06);
+      border: 1.5px solid rgba(255,255,255,.08); border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: .95rem;
+      color: #FAFAFA; transition: border-color .2s, box-shadow .2s;
+    }
+    .input-dark::placeholder { color: rgba(250,250,250,.3); }
+    .input-dark:focus { outline: none; border-color: rgba(212,175,55,.5); box-shadow: 0 0 0 3px rgba(212,175,55,.08); }
+
+    .label-k {
+      display: block; font-size: .72rem; font-weight: 700;
+      color: rgba(250,250,250,.45); margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+
+    .label-k-dark {
+      display: block; font-size: .72rem; font-weight: 700;
+      color: rgba(0,0,0,.4); margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform: scale(1); }
+      50%      { opacity:.4; transform: scale(.75); }
+    }
+    .pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+    .pulse-dot-2 { animation: pulse-dot 1.8s ease-in-out .3s infinite; }
+    .pulse-dot-3 { animation: pulse-dot 1.8s ease-in-out .6s infinite; }
+
+    @keyframes skeleton { 0% { background-position: -200px 0; } 100% { background-position: calc(200px + 100%) 0; } }
+    .skeleton {
+      background: linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%);
+      background-size: 200px 100%; border-radius: 8px;
+      animation: skeleton 1.5s ease-in-out infinite;
+    }
+
+    .seg { cursor: pointer; border-radius: 12px; padding: 12px; border: 1.5px solid transparent; transition: all .2s; }
+    .seg:hover { border-color: rgba(212,175,55,.25); background: rgba(212,175,55,.04); }
+
+    @keyframes toast-in  { from { opacity:0; transform:translateY(20px) scale(.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes toast-out { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(-10px) scale(.95); } }
+    .toast-enter { animation: toast-in .3s ease-out; }
+    .toast-exit  { animation: toast-out .3s ease-in forwards; }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      border-radius: 999px; padding: 6px 14px;
+      font-size: .78rem; font-weight: 500; cursor: pointer;
+      border: 1.5px solid #E0E0E0; background: #FFF;
+      color: #0A0A0A; transition: all .15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .chip:hover, .chip-ativo { border-color: #D4AF37; background: #fdfaef; color: #0A0A0A; }
+
+    .tgl { position:relative; width:46px; height:26px; cursor:pointer; flex-shrink:0; }
+    .tgl input { display:none; }
+    .tgl-slider {
+      position:absolute; inset:0; background:#ccc; border-radius:999px;
+      transition: background .2s;
+    }
+    .tgl-slider::before {
+      content:''; position:absolute; top:3px; left:3px;
+      width:20px; height:20px; border-radius:50%; background:#FFF;
+      transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .tgl input:checked + .tgl-slider { background: #D4AF37; }
+    .tgl input:checked + .tgl-slider::before { transform: translateX(20px); }
+
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem;
+      flex-shrink: 0; color: #FFF;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======= APP WRAPPER ======= -->
+  <div id="app" class="mx-auto" style="height:100dvh;max-width:390px;display:flex;flex-direction:column;background:#0A0A0A;position:relative;overflow:hidden;">
+
+    <!-- ======= STATUS BAR ======= -->
+    <div class="shrink-0 flex items-end justify-between px-7 pb-1.5 select-none" style="background:#0A0A0A;padding-top:max(env(safe-area-inset-top),6px);min-height:38px;">
+      <span class="text-white font-body text-sm font-semibold" id="status-hora">09:41</span>
+      <div class="flex items-center gap-1.5 text-white">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-2-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 7 13z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+      </div>
+    </div>
+
+    <!-- ======= APP HEADER ======= -->
+    <header id="app-header" class="shrink-0 flex items-center justify-between px-5 select-none" style="background:#0A0A0A;padding:6px 20px 10px;z-index:10;">
+      <div class="flex items-center gap-2.5">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#D4AF37"/>
+          <path d="M11 26L18 14M25 14L18 26" stroke="#0A0A0A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 14V26" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round" opacity=".3"/>
+          <circle cx="18" cy="20" r="2" fill="#0A0A0A" opacity=".35"/>
+        </svg>
+        <span class="font-display text-white font-bold text-lg tracking-tight">Kilegal</span>
+      </div>
+      <button class="relative p-2 rounded-full" style="background:rgba(255,255,255,.06);" onclick="toast('Sem notificações no momento','info')" aria-label="Notificações">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(250,250,250,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-marca-500 rounded-full"></span>
+      </button>
+    </header>
+
+    <!-- ======= SCREEN AREA ======= -->
+    <main id="tela-scroll" class="flex-1 overflow-y-auto" style="background:#0A0A0A;">
+      <!-- TELAS -->
+    </main>
+
+    <!-- ======= BOTTOM NAV ======= -->
+    <nav class="shrink-0 grid grid-cols-9 border-t" style="background:#0A0A0A;border-color:rgba(255,255,255,.06);padding-bottom:env(safe-area-inset-bottom);z-index:20;" aria-label="Navegação principal">
+      <button class="nav-btn ativo" data-nav="inicio-e-busca" onclick="mostrarTela('inicio-e-busca')" aria-label="Início">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="busca-e-filtros" onclick="mostrarTela('busca-e-filtros')" aria-label="Buscar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="comparativo-de-precos" onclick="mostrarTela('comparativo-de-precos')" aria-label="Comparar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="confirmacao-da-corrida" onclick="mostrarTela('confirmacao-da-corrida')" aria-label="Confirmar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="acompanhar-corrida" onclick="mostrarTela('acompanhar-corrida')" aria-label="Acompanhar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="solicitar-motoboy" onclick="mostrarTela('solicitar-motoboy')" aria-label="Motoboy">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M3 17h4l3-9h3l2 5h3"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="painel-do-motorista" onclick="mostrarTela('painel-do-motorista')" aria-label="Motorista">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="historico-de-corridas" onclick="mostrarTela('historico-de-corridas')" aria-label="Histórico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+      <button class="nav-btn" data-nav="painel-admin" onclick="mostrarTela('painel-admin')" aria-label="Admin">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ======= UTILITÁRIOS GLOBAIS ======= -->
+  <div id="toast-area" style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;width:390px;max-width:calc(100vw - 32px);"></div>
+
+  <div id="modal" class="hidden" style="position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;" onclick="if(event.target===this)fecharModal()">
+    <div style="background:#FFFFFF;border-radius:20px 20px 0 0;width:100%;max-width:430px;max-height:80vh;display:flex;flex-direction:column;animation:kilegal-in .25s ease-out;">
+      <div class="flex items-center justify-between px-5 pt-4 pb-2" style="border-bottom:1px solid #f0f0f0;">
+        <h3 id="modal-titulo" class="font-display font-bold text-dark text-base"></h3>
+        <button onclick="fecharModal()" style="width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.05);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;" aria-label="Fechar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="modal-conteudo" class="overflow-y-auto p-5" style="flex:1;"></div>
+    </div>
+  </div>
+
+  <!-- ======= ROTEADOR ======= -->
+  <script>
+    function mostrarTela(id) {
+      document.querySelectorAll('[data-tela]').forEach(function(s) { s.classList.toggle('hidden', s.dataset.tela !== id); });
+      document.querySelectorAll('[data-nav]').forEach(function(b) { b.classList.toggle('ativo', b.dataset.nav === id); });
+      window.scrollTo({ top: 0 });
+    }
+    document.addEventListener('DOMContentLoaded', function() { mostrarTela('inicio-e-busca'); });
+  </script>
+
+  <!-- ======= UTILITÁRIOS JS ======= -->
+  <script>
+    var toastTimer = null;
+    function toast(mensagem, tipo) {
+      var area = document.getElementById('toast-area');
+      var cores = { ok:{bg:'#f0fdf4',bd:'#22c55e',tx:'#15803d',ic:'✓'}, erro:{bg:'#fef2f2',bd:'#ef4444',tx:'#b91c1c',ic:'✕'}, info:{bg:'#fdfaef',bd:'#D4AF37',tx:'#8c7118',ic:'◆'} };
+      var c = cores[tipo] || cores.info;
+      var el = document.createElement('div');
+      el.className = 'toast-enter';
+      el.style.cssText = 'pointer-events:auto;background:'+c.bg+';border:1.5px solid '+c.bd+';border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-family:"DM Sans",sans-serif;font-size:.875rem;color:'+c.tx+';font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.12);';
+      el.innerHTML = '<span style="width:20px;height:20px;border-radius:50%;background:'+c.bd+';color:#FFF;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">'+c.ic+'</span><span style="flex:1;">'+mensagem+'</span>';
+      area.appendChild(el);
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() {
+        el.className = 'toast-exit';
+        setTimeout(function() { el.remove(); }, 300);
+      }, 3000);
+    }
+
+    function abrirModal(html, titulo) {
+      document.getElementById('modal-titulo').textContent = titulo || '';
+      document.getElementById('modal-conteudo').innerHTML = html;
+      document.getElementById('modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function fecharModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') fecharModal(); });
+
+    function brl(v) { return 'R$ ' + Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function dataBR(iso) {
+      var d = new Date(iso+'T12:00:00');
+      return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();
+    }
+  </script>
+</body>
+</html>

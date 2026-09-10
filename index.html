@@ -975,6 +975,324 @@
   .scrollbar-hide::-webkit-scrollbar { display: none; }
 </style>
 
+    <section data-tela="comparativo-de-precos" class="hidden">
+      <div class="px-4 pt-2 pb-6">
+        <div class="flex items-center justify-between mb-1">
+          <div>
+            <p class="font-body text-xs text-marca-700 font-medium tracking-wide uppercase mb-0.5">Comparando rotas</p>
+            <h2 class="font-display text-lg font-bold text-white leading-tight">Preços disponíveis</h2>
+          </div>
+          <button onclick="comparativo_de_precos_abrir_filtros()" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center active:scale-90 transition-all" aria-label="Filtros">
+            <svg class="w-4 h-4 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+          </button>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-3.5 mt-3 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-marca-500/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243A8 8 0 1117.657 16.657z"/><circle cx="12" cy="11" r="1.5" fill="currentColor"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <div>
+                <p class="text-white text-sm font-medium truncate">Centro</p>
+                <p class="text-zinc-500 text-[10px]">Origem</p>
+              </div>
+              <svg class="w-4 h-4 text-marca-500 mx-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              <div>
+                <p class="text-white text-sm font-medium truncate">Aeroporto</p>
+                <p class="text-zinc-500 text-[10px]">Destino</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mt-1">
+              <span class="text-zinc-400 text-[11px] flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m0 0l6 3m-6-3V7m6 10l-5.447-2.724A1 1 0 0115 13.618V2.618a1 1 0 011.447-.894L21 4m0 13"/></svg>
+                12 km
+              </span>
+              <span class="text-zinc-400 text-[11px] flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                ~25 min
+              </span>
+              <span class="text-zinc-400 text-[11px] flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Corrida comum
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 mt-4">
+          <span class="text-zinc-400 text-xs font-body">Ordenar por:</span>
+          <div class="flex gap-1.5 overflow-x-auto no-scrollbar flex-1">
+            <button onclick="comparativo_de_precos_ordenar('preco')" id="sort-btn-preco" class="sort-btn active-sort px-3 py-1 rounded-full text-[11px] font-medium font-body transition-all whitespace-nowrap">Menor preço</button>
+            <button onclick="comparativo_de_precos_ordenar('avaliacao')" id="sort-btn-avaliacao" class="sort-btn px-3 py-1 rounded-full text-[11px] font-medium font-body transition-all whitespace-nowrap">Melhor avaliação</button>
+            <button onclick="comparativo_de_precos_ordenar('tempo')" id="sort-btn-tempo" class="sort-btn px-3 py-1 rounded-full text-[11px] font-medium font-body transition-all whitespace-nowrap">Menor tempo</button>
+          </div>
+        </div>
+
+        <div id="lista-cards" class="mt-3 space-y-2.5"></div>
+
+        <div id="banner-ad-slot" class="mt-3 hidden">
+          <div class="bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl p-4 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all" onclick="toast('Anúncio clicado!', 'info')">
+            <div class="w-12 h-12 rounded-xl bg-marca-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-white text-sm font-medium">20% OFF na primeira corrida!</p>
+              <p class="text-zinc-400 text-[11px]">Use o cupom PRIMEIRAKILEGAL</p>
+            </div>
+            <svg class="w-4 h-4 text-zinc-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const comparativo_de_precos_apps = [
+          { id: 'k1', nome: 'Kilegal Express', preco: 18.90, tempo: 4, avaliacao: 4.5, veiculo: 'Hatch', portas: 4, tipo: 'economico', cor: '#22c55e', motorista: 'Carlos M.', passageiros: 4, bagagem: 'Mala pequena', acessivel: false },
+          { id: 'k2', nome: 'Kilegal Standard', preco: 24.90, tempo: 3, avaliacao: 4.8, veiculo: 'Sedã', portas: 4, tipo: 'padrao', cor: '#3b82f6', motorista: 'Ana P.', passageiros: 4, bagagem: '2 malas médias', acessivel: false },
+          { id: 'k3', nome: 'Kilegal Confort', preco: 32.50, tempo: 5, avaliacao: 4.9, veiculo: 'SUV', portas: 4, tipo: 'conforto', cor: '#8b5cf6', motorista: 'Roberto S.', passageiros: 5, bagagem: '3 malas grandes', acessivel: true },
+          { id: 'k4', nome: 'Kilegal Premium', preco: 45.00, tempo: 2, avaliacao: 5.0, veiculo: 'Executivo', portas: 4, tipo: 'premium', cor: '#D4AF37', motorista: 'Fernanda L.', passageiros: 3, bagagem: '2 malas grandes + mão', acessivel: true },
+          { id: 'k5', nome: 'Kilegal Moto', preco: 15.00, tempo: 2, avaliacao: 4.7, veiculo: 'Motocicleta', portas: 0, tipo: 'moto', cor: '#ef4444', motorista: 'João V.', passageiros: 1, bagagem: 'Mochila', acessivel: false },
+          { id: 'k6', nome: 'Kilegal 6Lug', preco: 38.00, tempo: 8, avaliacao: 4.6, veiculo: 'Minivan', portas: 4, tipo: 'grupo', cor: '#f97316', motorista: 'Marcos R.', passageiros: 6, bagagem: '4 malas grandes', acessivel: true },
+          { id: 'k7', nome: 'Kilegal Van', preco: 52.00, tempo: 10, avaliacao: 4.8, veiculo: 'Van de Carga', portas: 2, tipo: 'carga', cor: '#6b7280', motorista: 'Pedro H.', passageiros: 2, bagagem: 'Móveis até 200kg', acessivel: false },
+          { id: 'k8', nome: 'Kilegal Luxo', preco: 68.00, tempo: 6, avaliacao: 4.95, veiculo: 'Luxo', portas: 4, tipo: 'premium', cor: '#D4AF37', motorista: 'Cristina A.', passageiros: 3, bagagem: 'Mala de couro + mala mão', acessivel: true },
+        ];
+
+        let comparativo_de_precos_ordem = 'preco';
+        let comparativo_de_precos_cards_ativos = [];
+
+        function comparativo_de_precos_inicializar() {
+          comparativo_de_precos_renderizar();
+        }
+
+        function comparativo_de_precos_ordenar(criterio) {
+          comparativo_de_precos_ordem = criterio;
+          document.querySelectorAll('.sort-btn').forEach(function(b) {
+            b.classList.remove('active-sort', 'bg-marca-500', 'text-black');
+            b.classList.add('bg-white/10', 'text-zinc-400');
+          });
+          var btn = document.getElementById('sort-btn-' + criterio);
+          if (btn) {
+            btn.classList.add('active-sort', 'bg-marca-500', 'text-black');
+            btn.classList.remove('bg-white/10', 'text-zinc-400');
+          }
+          comparativo_de_precos_renderizar();
+        }
+
+        function comparativo_de_precos_obter_ordenados() {
+          var arr = comparativo_de_precos_apps.slice();
+          if (comparativo_de_precos_ordem === 'preco') {
+            arr.sort(function(a, b) { return a.preco - b.preco; });
+          } else if (comparativo_de_precos_ordem === 'avaliacao') {
+            arr.sort(function(a, b) { return b.avaliacao - a.avaliacao; });
+          } else if (comparativo_de_precos_ordem === 'tempo') {
+            arr.sort(function(a, b) { return a.tempo - b.tempo; });
+          }
+          return arr;
+        }
+
+        function comparativo_de_precos_renderizar() {
+          var lista = document.getElementById('lista-cards');
+          var bannerSlot = document.getElementById('banner-ad-slot');
+          var ordenados = comparativo_de_precos_obter_ordenados();
+          comparativo_de_precos_cards_ativos = ordenados;
+          var html = '';
+          for (var i = 0; i < ordenados.length; i++) {
+            var app = ordenados[i];
+            var badgeClass = app.tipo === 'economico' ? 'bg-green-500/20 text-green-400' : app.tipo === 'moto' ? 'bg-red-500/20 text-red-400' : app.tipo === 'premium' ? 'bg-marca-500/20 text-marca-500' : 'bg-blue-500/20 text-blue-400';
+            var badgeTexto = app.tipo === 'economico' ? 'Econômico' : app.tipo === 'moto' ? 'Moto' : app.tipo === 'premium' ? 'Premium' : app.tipo === 'conforto' ? 'Conforto' : app.tipo === 'carga' ? 'Carga' : app.tipo === 'grupo' ? '6 Lugares' : 'Padrão';
+            var destaqueRank = i === 0 ? '<span class="ml-1.5 px-1.5 py-0.5 rounded-full bg-marca-500 text-black text-[9px] font-bold uppercase">Menor preço</span>' : '';
+            var acessivelTag = app.acessivel ? '<span class="px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 text-[10px]">♿ Acessível</span>' : '';
+            var portasTexto = app.portas > 0 ? app.portas + ' portas' : '';
+            html += '<div class="card bg-white/[0.04] border border-white/[0.08] rounded-2xl p-4 transition-all duration-200 hover:border-marca-500/30 active:scale-[0.98] cursor-pointer" onclick="comparativo_de_precos_abrir_detalhe(\'' + app.id + '\')">';
+            html += '  <div class="flex items-start justify-between mb-3">';
+            html += '    <div class="flex items-center gap-3">';
+            html += '      <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:' + app.cor + '22">';
+            html += '        <svg class="w-5 h-5" style="color:' + app.cor + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' + comparativo_de_precos_icone_veiculo(app.tipo) + '"/></svg>';
+            html += '      </div>';
+            html += '      <div>';
+            html += '        <p class="text-white text-sm font-semibold font-display flex items-center">' + app.nome + destaqueRank + '</p>';
+            html += '        <p class="text-zinc-500 text-[11px] font-body mt-0.5">Motorista: <span class="text-zinc-300">' + app.motorista + '</span></p>';
+            html += '      </div>';
+            html += '    </div>';
+            html += '    <div class="text-right flex-shrink-0">';
+            html += '      <p class="text-marca-500 text-lg font-bold font-display leading-none">R$ ' + app.preco.toFixed(2).replace('.', ',') + '</p>';
+            html += '      <p class="text-zinc-500 text-[10px] font-body mt-0.5">estimado</p>';
+            html += '    </div>';
+            html += '  </div>';
+            html += '  <div class="flex items-center gap-2 mb-3 flex-wrap">';
+            html += '    <span class="' + badgeClass + ' px-2 py-0.5 rounded-full text-[10px] font-medium font-body">' + badgeTexto + '</span>';
+            html += '    <span class="text-zinc-400 text-[11px] flex items-center gap-1 font-body">';
+            html += '      <svg class="w-3 h-3 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            html += '      ' + app.avaliacao.toFixed(1);
+            html += '    </span>';
+            html += '    <span class="text-zinc-400 text-[11px] flex items-center gap-1 font-body">';
+            html += '      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+            html += '      ' + app.tempo + ' min';
+            html += '    </span>';
+            html += '    ' + acessivelTag;
+            html += '  </div>';
+            html += '  <div class="flex items-center gap-3 text-[11px] text-zinc-400 mb-3 font-body">';
+            html += '    <span class="flex items-center gap-1">';
+            html += '      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>';
+            html += '      ' + app.veiculo;
+            html += '    </span>';
+            if (portasTexto) {
+              html += '    <span class="flex items-center gap-1">';
+              html += '      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+              html += '      ' + portasTexto;
+              html += '    </span>';
+            }
+            html += '    <span class="flex items-center gap-1">';
+            html += '      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>';
+            html += '      ' + app.bagagem;
+            html += '    </span>';
+            html += '  </div>';
+            html += '  <button onclick="event.stopPropagation(); comparativo_de_precos_selecionar(\'' + app.id + '\')" class="btn w-full py-2.5 rounded-xl bg-marca-500 text-black font-display font-semibold text-sm active:scale-95 transition-all flex items-center justify-center gap-2">';
+            html += '    Selecionar';
+            html += '    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+            html += '  </button>';
+            html += '</div>';
+
+            if ((i + 1) % 3 === 0 && i < ordenados.length - 1) {
+              html += comparativo_de_precos_banner_ad();
+            }
+          }
+          lista.innerHTML = html;
+
+          if (ordenados.length > 0 && (ordenados.length > 3 || ordenados.length % 3 === 0)) {
+            bannerSlot.classList.remove('hidden');
+          } else {
+            bannerSlot.classList.add('hidden');
+          }
+        }
+
+        function comparativo_de_precos_icone_veiculo(tipo) {
+          if (tipo === 'economico' || tipo === 'padrao') {
+            return 'M5 17h14M5 17a2 2 0 01-2-2V9a2 2 0 012-2h1l2-3h8l2 3h1a2 2 0 012 2v6a2 2 0 01-2 2M5 17a2 2 0 100 4 2 2 0 000-4zm14 0a2 2 0 100 4 2 2 0 000-4z';
+          } else if (tipo === 'conforto' || tipo === 'premium') {
+            return 'M8 17h8M8 17a2 2 0 01-2-2V9a2 2 0 012-2h1l2-3h4l2 3h1a2 2 0 012 2v6a2 2 0 01-2 2M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM5 11h.01M19 11h.01';
+          } else if (tipo === 'moto') {
+            return 'M13 10V3L4 14h7v7l9-11h-7z';
+          } else if (tipo === 'grupo') {
+            return 'M8 17h8M8 17a2 2 0 01-2-2V9a2 2 0 012-2h1l2-3h4l2 3h1a2 2 0 012 2v6a2 2 0 01-2 2M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM5 11h.01M19 11h.01M12 7v2';
+          } else if (tipo === 'carga') {
+            return 'M9 17h6M9 17a2 2 0 01-2-2V5a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2M9 17a2 2 0 100 4 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4zM5 5h14l-1.5 9h-11L5 5z';
+          }
+          return 'M5 17h14M5 17a2 2 0 01-2-2V9a2 2 0 012-2h1l2-3h8l2 3h1a2 2 0 012 2v6a2 2 0 01-2 2M5 17a2 2 0 100 4 2 2 0 000-4zm14 0a2 2 0 100 4 2 2 0 000-4z';
+        }
+
+        function comparativo_de_precos_banner_ad() {
+          var promos = [
+            { titulo: 'Primeira viagem? Ganhe 20% OFF!', sub: 'Cupom: PRIMEIRAKILEGAL', icone: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+            { titulo: 'Indique um amigo = R$ 15 de bônus', sub: 'Para você e para ele', icone: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z' },
+            { titulo: 'Planos corporativos disponíveis', sub: 'Para empresas e fretes', icone: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
+          ];
+          var p = promos[Math.floor(Math.random() * promos.length)];
+          return '<div class="bg-gradient-to-r from-marca-500/15 to-marca-500/5 border border-marca-500/20 rounded-2xl p-4 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all" onclick="toast(\'Oferta: ' + p.titulo + '\', \'info\')"><div class="w-10 h-10 rounded-xl bg-marca-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' + p.icone + '"/></svg></div><div class="flex-1 min-w-0"><p class="text-white text-xs font-semibold font-display truncate">' + p.titulo + '</p><p class="text-zinc-400 text-[10px] font-body">' + p.sub + '</p></div><svg class="w-4 h-4 text-marca-500/60 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>';
+        }
+
+        function comparativo_de_precos_selecionar(id) {
+          var app = null;
+          for (var i = 0; i < comparativo_de_precos_apps.length; i++) {
+            if (comparativo_de_precos_apps[i].id === id) {
+              app = comparativo_de_precos_apps[i];
+              break;
+            }
+          }
+          if (!app) return;
+          abrirModal('<div class="text-center"><div class="w-16 h-16 rounded-full bg-marca-500/20 flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><p class="text-white font-display font-semibold text-lg">Solicitar ' + app.nome + '?</p><p class="text-zinc-400 text-sm font-body mt-2">R$ ' + app.preco.toFixed(2).replace('.', ',') + ' • Chegada em ~' + app.tempo + ' min • ' + app.motorista + '</p></div>', 'Confirmar Corrida');
+          setTimeout(function() {
+            var btnConfirmar = document.getElementById('modal-btn-primary');
+            if (btnConfirmar) {
+              btnConfirmar.textContent = 'Confirmar';
+              btnConfirmar.onclick = function() {
+                fecharModal();
+                setTimeout(function() {
+                  mostrarTela('confirmacao-da-corrida');
+                }, 300);
+              };
+            }
+          }, 100);
+        }
+
+        function comparativo_de_precos_abrir_detalhe(id) {
+          var app = null;
+          for (var i = 0; i < comparativo_de_precos_apps.length; i++) {
+            if (comparativo_de_precos_apps[i].id === id) {
+              app = comparativo_de_precos_apps[i];
+              break;
+            }
+          }
+          if (!app) return;
+          var estrelas = '';
+          for (var s = 1; s <= 5; s++) {
+            if (s <= Math.floor(app.avaliacao)) {
+              estrelas += '<svg class="w-4 h-4 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            } else if (s - 0.5 <= app.avaliacao) {
+              estrelas += '<svg class="w-4 h-4 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><defs><linearGradient id="half"><stop offset="50%" stop-color="currentColor"/><stop offset="50%" stop-color="#52525b"/></linearGradient></defs><path fill="url(#half)" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            } else {
+              estrelas += '<svg class="w-4 h-4 text-zinc-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            }
+          }
+          var html = '<div class="space-y-4">';
+          html += '<div class="flex items-center gap-3 pb-4 border-b border-white/10">';
+          html += '  <div class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background:' + app.cor + '22">';
+          html += '    <svg class="w-7 h-7" style="color:' + app.cor + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' + comparativo_de_precos_icone_veiculo(app.tipo) + '"/></svg>';
+          html += '  </div>';
+          html += '  <div>';
+          html += '    <p class="text-white font-display font-bold text-base">' + app.nome + '</p>';
+          html += '    <p class="text-zinc-400 text-xs font-body">Motorista: <span class="text-zinc-200">' + app.motorista + '</span></p>';
+          html += '    <div class="flex items-center gap-0.5 mt-0.5">' + estrelas + '<span class="text-zinc-300 text-xs ml-1 font-body">' + app.avaliacao.toFixed(1) + '</span></div>';
+          html += '  </div>';
+          html += '</div>';
+          html += '<div class="grid grid-cols-2 gap-3">';
+          html += '  <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-marca-500 text-xl font-bold font-display">R$ ' + app.preco.toFixed(2).replace('.', ',') + '</p><p class="text-zinc-500 text-[10px] font-body mt-0.5">Valor estimado</p></div>';
+          html += '  <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-white text-xl font-bold font-display">' + app.tempo + ' min</p><p class="text-zinc-500 text-[10px] font-body mt-0.5">Chegada estimada</p></div>';
+          html += '  <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-white text-sm font-semibold font-body">' + app.veiculo + '</p><p class="text-zinc-500 text-[10px] font-body mt-0.5">Tipo de veículo</p></div>';
+          html += '  <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-white text-sm font-semibold font-body">' + (app.portas > 0 ? app.portas + ' portas' : 'Sem portas') + '</p><p class="text-zinc-500 text-[10px] font-body mt-0.5">Veículo</p></div>';
+          html += '</div>';
+          html += '<div class="space-y-2">';
+          html += '  <p class="text-zinc-400 text-xs font-body flex items-center gap-2"><svg class="w-3.5 h-3.5 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' + app.passageiros + ' passageiros</p>';
+          html += '  <p class="text-zinc-400 text-xs font-body flex items-center gap-2"><svg class="w-3.5 h-3.5 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>Bagagem: ' + app.bagagem + '</p>';
+          html += '  <p class="text-zinc-400 text-xs font-body flex items-center gap-2"><svg class="w-3.5 h-3.5 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>' + (app.acessivel ? 'Veículo acessível para PCD' : 'Veículo não acessível') + '</p>';
+          html += '</div>';
+          html += '<button onclick="fecharModal(); comparativo_de_precos_selecionar(\'' + app.id + '\')" class="btn w-full py-3 rounded-xl bg-marca-500 text-black font-display font-semibold text-sm active:scale-95 transition-all">Solicitar esta corrida</button>';
+          html += '</div>';
+          abrirModal(html, 'Detalhes da opção');
+        }
+
+        function comparativo_de_precos_abrir_filtros() {
+          var html = '<div class="space-y-4">';
+          html += '<div><p class="text-white text-sm font-display font-semibold mb-2">Tipo de veículo</p><div class="space-y-2">';
+          var tipos = [
+            { val: 'todos', lbl: 'Todos os tipos' },
+            { val: 'economico', lbl: 'Econômico' },
+            { val: 'padrao', lbl: 'Padrão' },
+            { val: 'conforto', lbl: 'Conforto' },
+            { val: 'premium', lbl: 'Premium / Executivo' },
+            { val: 'moto', lbl: 'Motocicleta' },
+            { val: 'grupo', lbl: '6 Lugares' },
+            { val: 'carga', lbl: 'Carga / Van' },
+          ];
+          for (var t = 0; t < tipos.length; t++) {
+            html += '<label class="flex items-center gap-3 cursor-pointer py-1.5"><input type="radio" name="filtro-tipo" value="' + tipos[t].val + '" ' + (t === 0 ? 'checked' : '') + ' class="accent-marca-500 w-4 h-4"><span class="text-zinc-200 text-sm font-body">' + tipos[t].lbl + '</span></label>';
+          }
+          html += '</div></div>';
+          html += '<div><p class="text-white text-sm font-display font-semibold mb-2">Máximo de portas</p><select onchange="" class="w-full bg-white/10 text-white text-sm font-body rounded-xl px-3 py-2.5 border border-white/10 appearance-none"><option value="0">Qualquer</option><option value="2">2 portas</option><option value="4" selected>4 portas</option><option value="5">5+ portas</option></select></div>';
+          html += '<div><p class="text-white text-sm font-display font-semibold mb-2">Preço máximo</p><input type="range" min="10" max="100" value="80" class="w-full accent-marca-500" oninput="this.nextElementSibling.textContent=\'R$ \'+this.value+\',00\'"><span class="text-marca-500 text-xs font-body">R$ 80,00</span></div>';
+          html += '<div class="flex items-center justify-between py-2"><span class="text-zinc-200 text-sm font-body">Apenas acessível</span><button onclick="this.classList.toggle(\'bg-marca-500\'); this.classList.toggle(\'bg-white/20\'); this.querySelector(\'span\').classList.toggle(\'translate-x-5\'); this.querySelector(\'span\').classList.toggle(\'bg-white\'); this.querySelector(\'span\').classList.toggle(\'bg-marca-500\')" class="w-11 h-6 bg-marca-500 rounded-full relative transition-colors"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-all translate-x-5"></span></button></div>';
+          html += '<button onclick="fecharModal(); toast(\'Filtros aplicados!\', \'ok\');" class="btn w-full py-3 rounded-xl bg-marca-500 text-black font-display font-semibold text-sm active:scale-95 transition-all">Aplicar filtros</button>';
+          html += '</div>';
+          abrirModal(html, 'Filtros');
+        }
+
+        function comparativo_de_precos_voltar_busca() {
+          mostrarTela('busca-e-filtros');
+        }
+
+        comparativo_de_precos_inicializar();
+      </script>
+    </section>
+
     <!-- TELAS -->
     </main>
 

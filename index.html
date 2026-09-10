@@ -2014,6 +2014,508 @@
       </script>
     </section>
 
+    <section data-tela="solicitar-motoboy" class="hidden">
+      <div class="px-5 pt-2 pb-24">
+        <!-- Cabeçalho da tela -->
+        <div class="mb-5">
+          <h1 class="font-display text-2xl font-bold text-marca-900 leading-tight">Motoboy</h1>
+          <p class="text-sm text-gray-500 mt-1">Solicite uma entrega ou cadastre sua demanda recorrente</p>
+        </div>
+
+        <!-- Indicadores rápidos -->
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <div class="card p-3 flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center">
+              <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <p class="text-[10px] text-gray-400 uppercase tracking-wide">Entrega</p>
+              <p class="text-sm font-semibold text-marca-900">~25 min</p>
+            </div>
+          </div>
+          <div class="card p-3 flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+            </div>
+            <div>
+              <p class="text-[10px] text-gray-400 uppercase tracking-wide">Distância</p>
+              <p class="text-sm font-semibold text-marca-900">4,2 km</p>
+            </div>
+          </div>
+          <div class="card p-3 flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center">
+              <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <p class="text-[10px] text-gray-400 uppercase tracking-wide">A partir</p>
+              <p class="text-sm font-semibold text-marca-900">R$ 8,50</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário etapas -->
+        <div id="motoboy-form-container">
+          <!-- Etapa 1: De onde? -->
+          <div id="motoboy-etapa-1" class="motoboy-etapa">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-full bg-marca-900 text-white text-xs font-bold flex items-center justify-center">1</div>
+              <h2 class="font-display font-semibold text-marca-900">De onde?</h2>
+            </div>
+            <div class="card p-4 space-y-3">
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Endereço de coleta</label>
+                <div class="relative">
+                  <svg class="w-5 h-5 text-green-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                  <input id="motoboy-endereco-coleta" type="text" placeholder="Rua, número, bairro" value="Rua Augusta, 1200 - Consolação" class="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Complemento (opcional)</label>
+                <input id="motoboy-complemento-coleta" type="text" placeholder="Sala, andar, bloco" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Ponto de referência</label>
+                <input id="motoboy-ref-coleta" type="text" placeholder="Próximo a..." class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+              </div>
+              <div class="flex gap-2">
+                <div class="flex-1">
+                  <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Contato no local</label>
+                  <input id="motoboy-contato-coleta" type="tel" placeholder="(11) 99999-9999" value="(11) 98765-4321" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+                <div class="flex-1">
+                  <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Nome do remetente</label>
+                  <input id="motoboy-remetente" type="text" placeholder="Nome" value="Carlos" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+              </div>
+            </div>
+            <button onclick="solicitar_motoboy_irEtapa(2)" class="btn w-full mt-4 active:scale-95 transition-transform">Continuar</button>
+          </div>
+
+          <!-- Etapa 2: Para onde? -->
+          <div id="motoboy-etapa-2" class="motoboy-etapa hidden">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-full bg-marca-900 text-white text-xs font-bold flex items-center justify-center">2</div>
+              <h2 class="font-display font-semibold text-marca-900">Para onde?</h2>
+            </div>
+            <div class="card p-4 space-y-3">
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Endereço de entrega</label>
+                <div class="relative">
+                  <svg class="w-5 h-5 text-red-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                  <input id="motoboy-endereco-destino" type="text" placeholder="Rua, número, bairro" value="Av. Paulista, 1578 - Bela Vista" class="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Complemento (opcional)</label>
+                <input id="motoboy-complemento-destino" type="text" placeholder="Sala, andar, bloco" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Ponto de referência</label>
+                <input id="motoboy-ref-destino" type="text" placeholder="Próximo a..." class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+              </div>
+              <div class="flex gap-2">
+                <div class="flex-1">
+                  <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Contato no destino</label>
+                  <input id="motoboy-contato-destino" type="tel" placeholder="(11) 99999-9999" value="(11) 91234-5678" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+                <div class="flex-1">
+                  <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Nome do destinatário</label>
+                  <input id="motoboy-destinatario" type="text" placeholder="Nome" value="Ana" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-4">
+              <button onclick="solicitar_motoboy_irEtapa(1)" class="btn-outline flex-1 active:scale-95 transition-transform">Voltar</button>
+              <button onclick="solicitar_motoboy_irEtapa(3)" class="btn flex-1 active:scale-95 transition-transform">Continuar</button>
+            </div>
+          </div>
+
+          <!-- Etapa 3: O que você está enviando? -->
+          <div id="motoboy-etapa-3" class="motoboy-etapa hidden">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-full bg-marca-900 text-white text-xs font-bold flex items-center justify-center">3</div>
+              <h2 class="font-display font-semibold text-marca-900">O que você está enviando?</h2>
+            </div>
+            <div class="card p-4 space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Descrição do objeto</label>
+                <textarea id="motoboy-descricao" placeholder="Descreva o que será enviado..." rows="3" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition resize-none">Documentos em pasta fechada</textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">Tamanho do pacote</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <button onclick="solicitar_motoboy_selecionarTamanho(this, 'pequeno')" class="motoboy-tamanho-btn p-3 rounded-xl border-2 border-gray-200 text-center hover:border-marca-700 transition active:scale-95">
+                    <svg class="w-8 h-8 mx-auto text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <p class="text-xs font-semibold text-gray-600">Pequeno</p>
+                    <p class="text-[10px] text-gray-400">Até 2 kg</p>
+                  </button>
+                  <button onclick="solicitar_motoboy_selecionarTamanho(this, 'medio')" class="motoboy-tamanho-btn p-3 rounded-xl border-2 border-marca-700 bg-marca-50 text-center transition active:scale-95">
+                    <svg class="w-8 h-8 mx-auto text-marca-700 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <p class="text-xs font-semibold text-marca-900">Médio</p>
+                    <p class="text-[10px] text-gray-500">2 a 10 kg</p>
+                  </button>
+                  <button onclick="solicitar_motoboy_selecionarTamanho(this, 'grande')" class="motoboy-tamanho-btn p-3 rounded-xl border-2 border-gray-200 text-center hover:border-marca-700 transition active:scale-95">
+                    <svg class="w-8 h-8 mx-auto text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <p class="text-xs font-semibold text-gray-600">Grande</p>
+                    <p class="text-[10px] text-gray-400">+ 10 kg</p>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">Valor declarado</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">R$</span>
+                  <input id="motoboy-valor-declarado" type="text" placeholder="0,00" value="250,00" class="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+              </div>
+              <div>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" id="motoboy-seguro" class="w-4 h-4 rounded border-gray-300 text-marca-700 focus:ring-marca-700" checked />
+                  <span class="text-sm text-gray-600">Quero seguro adicional (+ R$ 2,50)</span>
+                </label>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-4">
+              <button onclick="solicitar_motoboy_irEtapa(2)" class="btn-outline flex-1 active:scale-95 transition-transform">Voltar</button>
+              <button onclick="solicitar_motoboy_irEtapa(4)" class="btn flex-1 active:scale-95 transition-transform">Continuar</button>
+            </div>
+          </div>
+
+          <!-- Etapa 4: Quando? -->
+          <div id="motoboy-etapa-4" class="motoboy-etapa hidden">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-full bg-marca-900 text-white text-xs font-bold flex items-center justify-center">4</div>
+              <h2 class="font-display font-semibold text-marca-900">Quando?</h2>
+            </div>
+            <div class="card p-4 space-y-3">
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="solicitar_motoboy_selecionarQuando(this, 'imediato')" id="btn-quando-imediato" class="p-4 rounded-xl border-2 border-marca-700 bg-marca-50 text-center active:scale-95 transition">
+                  <svg class="w-6 h-6 mx-auto text-marca-700 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <p class="text-sm font-semibold text-marca-900">Imediato</p>
+                  <p class="text-[10px] text-gray-500">Agora mesmo</p>
+                </button>
+                <button onclick="solicitar_motoboy_selecionarQuando(this, 'agendar')" id="btn-quando-agendar" class="p-4 rounded-xl border-2 border-gray-200 text-center hover:border-marca-700 active:scale-95 transition">
+                  <svg class="w-6 h-6 mx-auto text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <p class="text-sm font-semibold text-gray-600">Agendar</p>
+                  <p class="text-[10px] text-gray-400">Escolha data/hora</p>
+                </button>
+              </div>
+              <div id="motoboy-agendamento-campos" class="hidden space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Data</label>
+                  <input id="motoboy-data" type="date" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Horário</label>
+                  <input id="motoboy-horario" type="time" value="14:00" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 focus:ring-1 focus:ring-marca-700 outline-none transition" />
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-4">
+              <button onclick="solicitar_motoboy_irEtapa(3)" class="btn-outline flex-1 active:scale-95 transition-transform">Voltar</button>
+              <button onclick="solicitar_motoboy_verEmpresas()" class="btn flex-1 active:scale-95 transition-transform">Ver Empresas</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumo do pedido -->
+        <div id="motoboy-resumo" class="hidden mt-5">
+          <div class="card p-4">
+            <h3 class="font-display font-semibold text-marca-900 mb-3 flex items-center gap-2">
+              <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+              Resumo da Solicitação
+            </h3>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-500">Rota</span>
+                <span id="motoboy-resumo-rota" class="text-gray-800 font-medium text-right max-w-[60%]">Consolação → Bela Vista</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Pacote</span>
+                <span class="text-gray-800 font-medium">Médio (2 a 10 kg)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Quando</span>
+                <span class="text-gray-800 font-medium">Imediato</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Valor declarado</span>
+                <span class="text-gray-800 font-medium">R$ 250,00</span>
+              </div>
+              <div class="border-t border-gray-100 pt-2 mt-2">
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Taxa estimada</span>
+                  <span id="motoboy-resumo-taxa" class="text-marca-900 font-bold">R$ 12,50</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empresas cadastradas -->
+        <div id="motoboy-empresas" class="hidden mt-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-display font-semibold text-marca-900 flex items-center gap-2">
+              <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+              Empresas Disponíveis
+            </h3>
+            <button onclick="solicitar_motoboy_ordenar()" class="text-xs text-marca-700 font-medium flex items-center gap-1 hover:underline">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
+              Ordenar
+            </button>
+          </div>
+          <div id="motoboy-lista-empresas" class="space-y-3"></div>
+        </div>
+
+        <!-- Botão Solicitar -->
+        <button id="motoboy-btn-solicitar" onclick="solicitar_motoboy_enviar()" class="hidden btn w-full mt-5 py-4 text-base font-bold active:scale-95 transition-transform flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          Solicitar Agora
+        </button>
+
+        <!-- Botão Sou Empresa -->
+        <button onclick="solicitar_motoboy_abrirCadastroEmpresa()" class="w-full mt-3 py-3 rounded-xl border-2 border-dashed border-marca-300 text-marca-700 text-sm font-medium hover:bg-marca-50 active:scale-95 transition flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          Sou Empresa — Cadastrar Demanda
+        </button>
+      </div>
+    </section>
+
+    <script>
+    (function() {
+      const tamanhos = { pequeno: 1, medio: 2, grande: 3 };
+      const tamanhoLabels = { pequeno: 'Pequeno', medio: 'Médio', grande: 'Grande' };
+      const tamanhoPreco = { pequeno: '8,50', medio: '12,50', grande: '18,00' };
+      let motoboy_etapaAtual = 1;
+      let motoboy_tamanhoSelecionado = 'medio';
+      let motoboy_quando = 'imediato';
+      let motoboy_empresas = [
+        { id: 1, nome: 'Motoboy Express', logo: 'ME', cor: '#D4AF37', taxa: '8,50', tempo: '20-25 min', nota: 4.8, avaliacoes: 342, entregas: 1250, tipo: 'Moto' },
+        { id: 2, nome: 'Rápido Delivery', logo: 'RD', cor: '#0A0A0A', taxa: '9,90', tempo: '25-30 min', nota: 4.5, avaliacoes: 218, entregas: 890, tipo: 'Moto' },
+        { id: 3, nome: 'Entregas Seguras', logo: 'ES', cor: '#059669', taxa: '10,50', tempo: '22-28 min', nota: 4.9, avaliacoes: 567, entregas: 2100, tipo: 'Moto' },
+        { id: 4, nome: 'City Moto', logo: 'CM', cor: '#DC2626', taxa: '7,90', tempo: '28-35 min', nota: 4.3, avaliacoes: 145, entregas: 540, tipo: 'Moto' },
+        { id: 5, nome: 'Flash Entregas', logo: 'FE', cor: '#7C3AED', taxa: '11,00', tempo: '18-22 min', nota: 4.7, avaliacoes: 421, entregas: 1680, tipo: 'Moto' },
+        { id: 6, nome: 'MotoPro', logo: 'MP', cor: '#0891B2', taxa: '9,50', tempo: '24-30 min', nota: 4.6, avaliacoes: 289, entregas: 1050, tipo: 'Moto' },
+      ];
+      let motoboy_ordemPreco = true;
+
+      window.solicitar_motoboy_irEtapa = function(n) {
+        motoboy_etapaAtual = n;
+        document.querySelectorAll('.motoboy-etapa').forEach(function(el) { el.classList.add('hidden'); });
+        const etapaEl = document.getElementById('motoboy-etapa-' + n);
+        if (etapaEl) etapaEl.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      window.solicitar_motoboy_selecionarTamanho = function(btn, tamanho) {
+        motoboy_tamanhoSelecionado = tamanho;
+        document.querySelectorAll('.motoboy-tamanho-btn').forEach(function(el) {
+          el.classList.remove('border-marca-700', 'bg-marca-50');
+          el.classList.add('border-gray-200');
+          el.querySelector('svg').classList.remove('text-marca-700');
+          el.querySelector('svg').classList.add('text-gray-400');
+          el.querySelectorAll('p').forEach(function(p) { p.classList.remove('text-marca-900'); p.classList.add('text-gray-600'); });
+        });
+        btn.classList.remove('border-gray-200');
+        btn.classList.add('border-marca-700', 'bg-marca-50');
+        btn.querySelector('svg').classList.remove('text-gray-400');
+        btn.querySelector('svg').classList.add('text-marca-700');
+        btn.querySelectorAll('p').forEach(function(p) { p.classList.remove('text-gray-600'); p.classList.add('text-marca-900'); });
+      };
+
+      window.solicitar_motoboy_selecionarQuando = function(btn, quando) {
+        motoboy_quando = quando;
+        document.getElementById('btn-quando-imediato').classList.remove('border-marca-700', 'bg-marca-50');
+        document.getElementById('btn-quando-imediato').classList.add('border-gray-200');
+        document.getElementById('btn-quando-imediato').querySelectorAll('p').forEach(function(p) { p.classList.remove('text-marca-900'); p.classList.add('text-gray-600'); });
+        document.getElementById('btn-quando-imediato').querySelector('svg').classList.remove('text-marca-700');
+        document.getElementById('btn-quando-imediato').querySelector('svg').classList.add('text-gray-400');
+        document.getElementById('btn-quando-agendar').classList.remove('border-marca-700', 'bg-marca-50');
+        document.getElementById('btn-quando-agendar').classList.add('border-gray-200');
+        document.getElementById('btn-quando-agendar').querySelectorAll('p').forEach(function(p) { p.classList.remove('text-marca-900'); p.classList.add('text-gray-600'); });
+        document.getElementById('btn-quando-agendar').querySelector('svg').classList.remove('text-marca-700');
+        document.getElementById('btn-quando-agendar').querySelector('svg').classList.add('text-gray-400');
+        btn.classList.remove('border-gray-200');
+        btn.classList.add('border-marca-700', 'bg-marca-50');
+        btn.querySelectorAll('p').forEach(function(p) { p.classList.remove('text-gray-600'); p.classList.add('text-marca-900'); });
+        btn.querySelector('svg').classList.remove('text-gray-400');
+        btn.querySelector('svg').classList.add('text-marca-700');
+        const agendamento = document.getElementById('motoboy-agendamento-campos');
+        if (quando === 'agendar') { agendamento.classList.remove('hidden'); } else { agendamento.classList.add('hidden'); }
+      };
+
+      window.solicitar_motoboy_verEmpresas = function() {
+        document.getElementById('motoboy-resumo').classList.remove('hidden');
+        document.getElementById('motoboy-empresas').classList.remove('hidden');
+        document.getElementById('motoboy-btn-solicitar').classList.remove('hidden');
+        window.solicitar_motoboy_renderEmpresas();
+        window.scrollTo({ top: document.getElementById('motoboy-resumo').offsetTop - 100, behavior: 'smooth' });
+      };
+
+      window.solicitar_motoboy_renderEmpresas = function() {
+        const container = document.getElementById('motoboy-lista-empresas');
+        let lista = motoboy_empresas.slice();
+        if (motoboy_ordemPreco) { lista.sort(function(a, b) { return parseFloat(a.taxa) - parseFloat(b.taxa); }); }
+        else { lista.sort(function(a, b) { return b.nota - a.nota; }); }
+        container.innerHTML = '';
+        lista.forEach(function(emp) {
+          const stars = '★'.repeat(Math.floor(emp.nota)) + (emp.nota % 1 >= 0.5 ? '½' : '');
+          const card = document.createElement('div');
+          card.className = 'card p-4 cursor-pointer hover:shadow-md transition';
+          card.onclick = function() { solicitar_motoboy_selecionarEmpresa(emp); };
+          card.innerHTML = '<div class="flex items-start gap-3">' +
+            '<div class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:' + emp.cor + '">' + emp.logo + '</div>' +
+            '<div class="flex-1 min-w-0">' +
+              '<div class="flex items-center justify-between">' +
+                '<h4 class="font-semibold text-sm text-marca-900 truncate">' + emp.nome + '</h4>' +
+                '<span class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">' + emp.tipo + '</span>' +
+              '</div>' +
+              '<div class="flex items-center gap-1 mt-1">' +
+                '<span class="text-xs text-marca-700">' + stars + '</span>' +
+                '<span class="text-xs text-gray-500">' + emp.nota + ' (' + emp.avaliacoes + ')</span>' +
+              '</div>' +
+              '<div class="flex items-center justify-between mt-2">' +
+                '<div class="flex items-center gap-3">' +
+                  '<span class="text-xs text-gray-500 flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' + emp.tempo + '</span>' +
+                  '<span class="text-xs text-gray-500">' + emp.entregas.toLocaleString('pt-BR') + ' entregas</span>' +
+                '</div>' +
+                '<span class="text-sm font-bold text-marca-900">R$ ' + emp.taxa + '</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+          container.appendChild(card);
+        });
+      };
+
+      window.solicitar_motoboy_ordenar = function() {
+        motoboy_ordemPreco = !motoboy_ordemPreco;
+        window.solicitar_motoboy_renderEmpresas();
+        toast(motoboy_ordemPreco ? 'Ordenado por menor preço' : 'Ordenado por melhor avaliação', 'info');
+      };
+
+      window.solicitar_motoboy_selecionarEmpresa = function(emp) {
+        const html = '<div class="p-2">' +
+          '<div class="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-3" style="background:' + emp.cor + '">' + emp.logo + '</div>' +
+          '<h3 class="font-display font-bold text-center text-lg text-marca-900">' + emp.nome + '</h3>' +
+          '<div class="flex items-center justify-center gap-1 mt-1"><span class="text-sm text-marca-700">' + '★'.repeat(Math.floor(emp.nota)) + '</span><span class="text-sm font-bold">' + emp.nota + '</span><span class="text-xs text-gray-400">(' + emp.avaliacoes + ' avaliações)</span></div>' +
+          '<div class="grid grid-cols-2 gap-3 mt-4">' +
+            '<div class="card p-3 text-center"><p class="text-xs text-gray-500">Taxa</p><p class="text-lg font-bold text-marca-900">R$ ' + emp.taxa + '</p></div>' +
+            '<div class="card p-3 text-center"><p class="text-xs text-gray-500">Tempo estimado</p><p class="text-lg font-bold text-marca-900">' + emp.tempo + '</p></div>' +
+            '<div class="card p-3 text-center"><p class="text-xs text-gray-500">Entregas</p><p class="text-lg font-bold text-marca-900">' + emp.entregas.toLocaleString('pt-BR') + '</p></div>' +
+            '<div class="card p-3 text-center"><p class="text-xs text-gray-500">Tipo</p><p class="text-lg font-bold text-marca-900">' + emp.tipo + '</p></div>' +
+          '</div>' +
+          '<button onclick="fecharModal(); solicitar_motoboy_escolherEmpresa(' + emp.id + ')" class="btn w-full mt-4 active:scale-95 transition">Selecionar esta empresa</button>' +
+        '</div>';
+        abrirModal(html, 'Detalhes da Empresa');
+      };
+
+      window.solicitar_motoboy_escolherEmpresa = function(id) {
+        const emp = motoboy_empresas.find(function(e) { return e.id === id; });
+        if (!emp) return;
+        document.getElementById('motoboy-resumo-taxa').textContent = 'R$ ' + emp.taxa;
+        toast(emp.nome + ' selecionada!', 'ok');
+      };
+
+      window.solicitar_motoboy_enviar = function() {
+        const coleta = document.getElementById('motoboy-endereco-coleta').value.trim();
+        const destino = document.getElementById('motoboy-endereco-destino').value.trim();
+        if (!coleta) { toast('Informe o endereço de coleta', 'erro'); return; }
+        if (!destino) { toast('Informe o endereço de entrega', 'erro'); return; }
+        const html = '<div class="text-center p-4">' +
+          '<div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">' +
+            '<svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' +
+          '</div>' +
+          '<h3 class="font-display font-bold text-lg text-marca-900">Solicitação enviada!</h3>' +
+          '<p class="text-sm text-gray-500 mt-1">Motoboys próximos receberão sua solicitação. Aguarde o aceite.</p>' +
+          '<div class="card mt-4 text-left space-y-2 text-sm">' +
+            '<div class="flex justify-between"><span class="text-gray-500">Coleta</span><span class="font-medium">' + coleta + '</span></div>' +
+            '<div class="flex justify-between"><span class="text-gray-500">Entrega</span><span class="font-medium">' + destino + '</span></div>' +
+            '<div class="flex justify-between"><span class="text-gray-500">Tamanho</span><span class="font-medium">' + tamanhoLabels[motoboy_tamanhoSelecionado] + '</span></div>' +
+            '<div class="flex justify-between"><span class="text-gray-500">Quando</span><span class="font-medium">' + (motoboy_quando === 'imediato' ? 'Imediato' : 'Agendado') + '</span></div>' +
+          '</div>' +
+          '<button onclick="fecharModal(); mostrarTela(\'acompanhar-corrida\')" class="btn w-full mt-4 active:scale-95 transition">Acompanhar Pedido</button>' +
+        '</div>';
+        abrirModal(html, 'Pedido Confirmado');
+      };
+
+      window.solicitar_motoboy_abrirCadastroEmpresa = function() {
+        const html = '<div class="p-2 space-y-4">' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Nome da Empresa</label>' +
+            '<input id="cad-emp-nome" type="text" placeholder="Razão social" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 outline-none transition" />' +
+          '</div>' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">CNPJ</label>' +
+            '<input id="cad-emp-cnpj" type="text" placeholder="00.000.000/0000-00" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 outline-none transition" />' +
+          '</div>' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Volume médio mensal de entregas</label>' +
+            '<select id="cad-emp-volume" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 outline-none transition">' +
+              '<option>Até 50 entregas/mês</option>' +
+              '<option>51 a 200 entregas/mês</option>' +
+              '<option>201 a 500 entregas/mês</option>' +
+              '<option>Mais de 500 entregas/mês</option>' +
+            '</select>' +
+          '</div>' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Frequência</label>' +
+            '<select id="cad-emp-freq" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 outline-none transition">' +
+              '<option>Diária</option>' +
+              '<option>Semanal</option>' +
+              '<option>Quinzenal</option>' +
+              '<option>Mensal</option>' +
+              '<option>Conforme necessidade</option>' +
+            '</select>' +
+          '</div>' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Tipo de veículo preferido</label>' +
+            '<div class="grid grid-cols-2 gap-2">' +
+              '<label class="flex items-center gap-2 p-3 rounded-xl border border-gray-200 cursor-pointer has-[:checked]:border-marca-700 has-[:checked]:bg-marca-50 transition">' +
+                '<input type="radio" name="veiculo" value="moto" checked class="accent-marca-900" />' +
+                '<span class="text-sm">Motocicleta</span>' +
+              '</label>' +
+              '<label class="flex items-center gap-2 p-3 rounded-xl border border-gray-200 cursor-pointer has-[:checked]:border-marca-700 has-[:checked]:bg-marca-50 transition">' +
+                '<input type="radio" name="veiculo" value="carro" class="accent-marca-900" />' +
+                '<span class="text-sm">Carro</span>' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">E-mail para contato</label>' +
+            '<input id="cad-emp-email" type="email" placeholder="empresa@email.com" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 outline-none transition" />' +
+          '</div>' +
+          '<div>' +
+            '<label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Telefone</label>' +
+            '<input id="cad-emp-telefone" type="tel" placeholder="(11) 99999-9999" class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:border-marca-700 outline-none transition" />' +
+          '</div>' +
+          '<button onclick="solicitar_motoboy_cadastrarDemanda()" class="btn w-full active:scale-95 transition">Cadastrar Demanda</button>' +
+        '</div>';
+        abrirModal(html, 'Cadastro de Empresa');
+      };
+
+      window.solicitar_motoboy_cadastrarDemanda = function() {
+        const nome = document.getElementById('cad-emp-nome').value.trim();
+        const cnpj = document.getElementById('cad-emp-cnpj').value.trim();
+        if (!nome) { toast('Informe o nome da empresa', 'erro'); return; }
+        if (!cnpj) { toast('Informe o CNPJ', 'erro'); return; }
+        const html = '<div class="text-center p-4">' +
+          '<div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">' +
+            '<svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' +
+          '</div>' +
+          '<h3 class="font-display font-bold text-lg text-marca-900">Demanda cadastrada!</h3>' +
+          '<p class="text-sm text-gray-500 mt-1">Nossa equipe entrará em contato em até 24h para configurar seus serviços personalizados.</p>' +
+          '<button onclick="fecharModal(); toast(\'Bem-vindo ao Kilegal!\', \'ok\')" class="btn w-full mt-4 active:scale-95 transition">Entendi</button>' +
+        '</div>';
+        fecharModal();
+        setTimeout(function() { abrirModal(html, 'Cadastro Realizado'); }, 300);
+      };
+
+      window.solicitar_motoboy_ordem = function() { motoboy_ordemPreco = !motoboy_ordemPreco; window.solicitar_motoboy_renderEmpresas(); };
+
+      window.solicitar_motoboy_renderEmpresas();
+    })();
+    </script>
+
     <!-- TELAS -->
     </main>
 

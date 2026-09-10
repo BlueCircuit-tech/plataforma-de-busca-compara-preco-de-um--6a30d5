@@ -148,7 +148,154 @@
 
     <!-- Área Principal -->
     <main class="flex-1 overflow-y-auto pb-20">
-      <!-- TELAS -->
+      <section data-tela="home" class="hidden fadein-300 max-w-[430px] mx-auto bg-marca-50 min-h-[100vh] pb-20 font-body">
+  <!-- Título e contexto -->
+  <div class="px-5 pt-4 pb-3">
+    <h1 class="text-2xl font-display text-marca-900 font-semibold">Buscar Corrida</h1>
+    <p class="text-marca-700 text-sm mt-1">Compare preços entre apps, escolha seu motorista e economize!</p>
+  </div>
+
+  <!-- Mapa com pin dourado -->
+  <div class="relative mx-4 rounded-2xl overflow-hidden shadow-md mb-5 bg-marca-100">
+    <div class="w-full h-[230px] bg-gradient-to-br from-marca-100 via-marca-50 to-marca-200 flex items-end justify-center">
+      <svg width="38" height="38" viewBox="0 0 38 38" class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+        <circle cx="19" cy="19" r="14" fill="#D4AF37" fill-opacity="0.28"/>
+        <ellipse cx="19" cy="35" rx="6" ry="2" fill="#D4AF37" fill-opacity="0.18"/>
+        <path d="M19 6c4.7 0 8.5 3.8 8.5 8.5 0 5.7-8.5 14.5-8.5 14.5S10.5 20.2 10.5 14.5C10.5 9.8 14.3 6 19 6z" fill="#D4AF37"/>
+        <circle cx="19" cy="14.5" r="2.8" fill="#FAFAFA"/>
+      </svg>
+      <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-marca-900/80 text-marca-50 text-xs font-semibold px-3 py-1 rounded-lg flex items-center gap-2 shadow-md">
+        <svg class="w-5 h-5" viewBox="0 0 20 20" fill="#D4AF37"><path d="M10 0C6.1 0 3 3.1 3 7c0 6.1 6.1 12.4 6.3 12.6a1 1 0 0 0 1.4 0C10.9 19.4 17 13.1 17 7c0-3.9-3.1-7-7-7zm0 9.6A2.6 2.6 0 1 1 10 4.4a2.6 2.6 0 0 1 0 5.2z"/></svg>
+        Sua localização: Centro de Belo Horizonte
+      </div>
+      <img src="https://maps.unsplash.com/photo-1464983953574-0892a7169fb3?fit=crop&w=450&q=80" alt="Mapa Belo Horizonte" class="w-full h-full object-cover opacity-40 pointer-events-none select-none">
+    </div>
+  </div>
+
+  <!-- Formulário de busca -->
+  <form id="home_buscaForm" class="mx-5 mb-5 flex flex-col gap-2" autocomplete="off">
+    <label for="home_origem" class="text-xs text-marca-700 ml-1">Origem</label>
+    <div class="flex items-center rounded-xl bg-marca-100 border border-marca-100 px-3 py-2">
+      <svg class="w-5 h-5 text-marca-400 mr-2" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#D4AF37" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="#D4AF37"/></svg>
+      <input id="home_origem" type="text" class="bg-transparent w-full outline-none text-marca-900 font-semibold text-sm" value="Sua localização atual" readonly>
+    </div>
+    <label for="home_destino" class="text-xs text-marca-700 ml-1 mt-1">Destino</label>
+    <div class="flex items-center rounded-xl bg-marca-100 border border-marca-300 px-3 py-2 transition-all">
+      <svg class="w-5 h-5 text-marca-300 mr-2" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18" stroke="#D4AF37" stroke-width="2"/><circle cx="18" cy="6" r="2" fill="#D4AF37"/><circle cx="6" cy="18" r="2" fill="#D4AF37"/></svg>
+      <input
+        id="home_destino"
+        type="text"
+        class="bg-transparent w-full outline-none text-marca-900 font-semibold text-sm"
+        placeholder="Para onde você quer ir?"
+        required
+      >
+    </div>
+    <button
+      type="submit"
+      class="btn bg-marca-400 text-marca-900 font-semibold text-lg mt-2 transition active:scale-95 shadow-sm hover:bg-marca-500"
+    >
+      Buscar Melhor Preço
+    </button>
+  </form>
+
+  <!-- Carrossel de banners promocionais -->
+  <div class="mx-4 mb-6">
+    <div class="flex items-center justify-between px-1 mb-2">
+      <span class="font-display text-marca-900 text-base font-semibold">Promoções</span>
+      <button onclick="mostrarTela('promocoes-e-banners')" class="text-xs text-marca-400 hover:underline">Ver todas</button>
+    </div>
+    <div id="home_carrossel" class="flex gap-3 overflow-x-auto scrollbar-hide -mx-1 pb-1">
+      <div class="home_banner card min-w-[220px] bg-gradient-to-r from-marca-200 via-marca-100 to-marca-200 shadow-md rounded-xl flex flex-col justify-between p-3 cursor-pointer transition hover:ring-2 hover:ring-marca-400 active:scale-95" tabindex="0" data-promocao="OFF20" onclick="home_abrirBanner(0)">
+        <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-marca-400" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="2"/></svg>
+          <span class="text-marca-900 font-bold text-lg">20% OFF</span>
+        </div>
+        <span class="text-marca-700 text-sm">Em todas as corridas hoje!</span>
+      </div>
+      <div class="home_banner card min-w-[220px] bg-gradient-to-r from-marca-200 via-marca-100 to-marca-150 shadow-md rounded-xl flex flex-col justify-between p-3 cursor-pointer transition hover:ring-2 hover:ring-marca-400 active:scale-95" tabindex="0" data-promocao="R10" onclick="home_abrirBanner(1)">
+        <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-marca-400" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M8 4v16" stroke="#D4AF37" stroke-width="2"/><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="2"/></svg>
+          <span class="text-marca-900 font-bold text-lg">R$10 Bônus</span>
+        </div>
+        <span class="text-marca-700 text-sm">Cadastre-se e ganhe na primeira corrida.</span>
+      </div>
+      <div class="home_banner card min-w-[220px] bg-gradient-to-r from-marca-100 to-marca-200 shadow-md rounded-xl flex flex-col justify-between p-3 cursor-pointer transition hover:ring-2 hover:ring-marca-400 active:scale-95" tabindex="0" data-promocao="KM5" onclick="home_abrirBanner(2)">
+        <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-marca-400" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M12 3v18" stroke="#D4AF37" stroke-width="2"/><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="2"/></svg>
+          <span class="text-marca-900 font-bold text-lg">5km Grátis</span>
+        </div>
+        <span class="text-marca-700 text-sm">Corridas até 5km sem taxa extra.</span>
+      </div>
+      <div class="home_banner card min-w-[220px] bg-gradient-to-r from-marca-200 via-marca-100 to-marca-150 shadow-md rounded-xl flex flex-col justify-between p-3 cursor-pointer transition hover:ring-2 hover:ring-marca-400 active:scale-95" tabindex="0" data-promocao="VIP" onclick="home_abrirBanner(3)">
+        <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-marca-400" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="2"/></svg>
+          <span class="text-marca-900 font-bold text-lg">VIP</span>
+        </div>
+        <span class="text-marca-700 text-sm">Motoristas Premium disponíveis.</span>
+      </div>
+      <div class="home_banner card min-w-[220px] bg-gradient-to-r from-marca-100 to-marca-200 shadow-md rounded-xl flex flex-col justify-between p-3 cursor-pointer transition hover:ring-2 hover:ring-marca-400 active:scale-95" tabindex="0" data-promocao="EMP" onclick="home_abrirBanner(4)">
+        <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-marca-400" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#D4AF37" stroke-width="2"/><path d="M4 12h16" stroke="#D4AF37" stroke-width="2"/><path d="M12 4v16" stroke="#D4AF37" stroke-width="2"/></svg>
+          <span class="text-marca-900 font-bold text-lg">Empresas</span>
+        </div>
+        <span class="text-marca-700 text-sm">Motoboys com desconto especial para empresas.</span>
+      </div>
+      <div class="home_banner card min-w-[220px] bg-gradient-to-r from-marca-200 via-marca-100 to-marca-150 shadow-md rounded-xl flex flex-col justify-between p-3 cursor-pointer transition hover:ring-2 hover:ring-marca-400 active:scale-95" tabindex="0" data-promocao="GAS" onclick="home_abrirBanner(5)">
+        <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-marca-400" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" stroke="#D4AF37" stroke-width="2"/><path d="M6 12h12" stroke="#D4AF37" stroke-width="2"/></svg>
+          <span class="text-marca-900 font-bold text-lg">Tele Gás</span>
+        </div>
+        <span class="text-marca-700 text-sm">Compare preço de gás entre empresas.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra inferior de navegação -->
+  <nav class="fixed bottom-0 left-0 w-full max-w-[430px] mx-auto bg-marca-900 py-2 px-4 flex items-center justify-between rounded-t-2xl shadow-2xl z-30">
+    <button class="flex flex-col items-center group px-2 transition hover:bg-marca-800 rounded-lg" onclick="mostrarTela('home')">
+      <svg class="w-6 h-6 mb-1" viewBox="0 0 24 24" fill="none"><path d="M3 12l9-9 9 9M4 10v9a2 2 0 0 0 2 2h4m8-11v9a2 2 0 0 1-2 2h-4" stroke="#D4AF37" stroke-width="2"/><rect x="10" y="15" width="4" height="4" rx="1" fill="#D4AF37"/></svg>
+      <span class="text-xs text-marca-50 group-hover:text-marca-400">Busca</span>
+    </button>
+    <button class="flex flex-col items-center group px-2 transition hover:bg-marca-800 rounded-lg" onclick="mostrarTela('busca-motoboy')">
+      <svg class="w-6 h-6 mb-1" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="9" rx="2" stroke="#D4AF37" stroke-width="2"/><rect x="11" y="13" width="2" height="4" fill="#D4AF37"/><path d="M20 10.5c0 .828-.672 1.5-1.5 1.5h-13c-.828 0-1.5-.672-1.5-1.5" stroke="#D4AF37" stroke-width="1.5"/></svg>
+      <span class="text-xs text-marca-50 group-hover:text-marca-400">Motoboys</span>
+    </button>
+    <button class="flex flex-col items-center group px-2 transition hover:bg-marca-800 rounded-lg" onclick="mostrarTela('meus-pedidos')">
+      <svg class="w-6 h-6 mb-1" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="#D4AF37" stroke-width="2"/><path d="M8 8v8M12 8v8M16 8v8" stroke="#D4AF37" stroke-width="2"/></svg>
+      <span class="text-xs text-marca-50 group-hover:text-marca-400">Pedidos</span>
+    </button>
+    <button class="flex flex-col items-center group px-2 transition hover:bg-marca-800 rounded-lg" onclick="mostrarTela('perfil')">
+      <svg class="w-6 h-6 mb-1" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#D4AF37" stroke-width="2"/><path d="M4 20v-3a8 8 0 0 1 16 0v3" stroke="#D4AF37" stroke-width="2"/></svg>
+      <span class="text-xs text-marca-50 group-hover:text-marca-400">Perfil</span>
+    </button>
+  </nav>
+
+  <script>
+    // Banners promo - dados
+    const home_banners = [
+      {
+        titulo: "20% OFF",
+        desc: "Em todas as corridas hoje!",
+        detalhe: `
+          <div class="py-3 px-1 text-center">
+            <div class="text-xl font-display text-marca-900 mb-2">CORRIDAS COM DESCONTO</div>
+            <div class="text-lg font-semibold text-marca-400 mb-1">20% OFF</div>
+            <div class="text-marca-700">Todas as corridas feitas até 23:59 de hoje ganham 20% de desconto automaticamente.<br/>
+            <span class="badge bg-marca-200 text-marca-900 mt-2">Oferta válida para todos os usuários</span></div>
+            <button onclick="fecharModal();toast('Promoção ativada!','ok')" class="btn bg-marca-400 text-marca-900 font-semibold mt-4 w-full active:scale-95">Aproveitar</button>
+          </div>`,
+      },
+      {
+        titulo: "R$10 Bônus",
+        desc: "Cadastre-se e ganhe na primeira corrida.",
+        detalhe: `
+          <div class="py-3 px-1 text-center">
+            <div class="text-xl font-display text-marca-900 mb-2">BÔNUS DE CADASTRO</div>
+            <div class="text-lg font-semibold text-marca-400 mb-1">R$10 de desconto</div>
+            <div class="text-marca-700">Ao se cadastrar, sua primeira corrida terá R$10 de desconto automaticamente.<br/>
+            <span class="badge bg
+
+    <!-- TELAS -->
     </main>
 
     <!-- Navegação Inferior -->

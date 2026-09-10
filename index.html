@@ -2084,6 +2084,470 @@
       </script>
     </section>
 
+    <section data-tela="painel-motorista" class="hidden">
+  <div class="px-5 pt-6 pb-28 space-y-5 animate-fadeIn">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-400 font-body">Boa noite,</p>
+        <h1 class="text-xl font-display font-bold text-white">Carlos Mendes</h1>
+        <span class="inline-flex items-center gap-1 text-xs text-emerald-400 font-body mt-0.5"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>Online &bull; Honda Civic • ABC-1234</span>
+      </div>
+      <div class="relative cursor-pointer active:scale-90 transition-transform" onclick="painel_motorista_notificacoes()">
+        <svg class="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        <span id="notif-badge" class="absolute -top-1 -right-1 bg-marca text-marca-900 text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center animate-pulse">3</span>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl px-4 py-3">
+      <span class="text-sm text-gray-300 font-body" id="toggle-label">Status: <strong class="text-emerald-400">Disponível</strong></span>
+      <button id="btn-toggle" onclick="painel_motorista_toggle()" class="w-12 h-7 bg-emerald-500 rounded-full relative transition-colors duration-300 active:scale-95">
+        <span id="toggle-dot" class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform duration-300 translate-x-5"></span>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div class="card !p-4 border-l-2 border-marca">
+        <p class="text-xs text-gray-400 font-body mb-1">Ganhos Hoje</p>
+        <p class="text-2xl font-display font-bold text-marca">R$ 127,40</p>
+        <span class="inline-flex items-center gap-1 text-xs text-emerald-400 mt-1">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+          +12% vs ontem
+        </span>
+      </div>
+      <div class="card !p-4 border-l-2 border-marca">
+        <p class="text-xs text-gray-400 font-body mb-1">Ganhos do Mês</p>
+        <p class="text-2xl font-display font-bold text-marca">R$ 3.240</p>
+        <span class="inline-flex items-center gap-1 text-xs text-emerald-400 mt-1">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+          +8% vs mês anterior
+        </span>
+      </div>
+    </div>
+
+    <div class="card !p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-display font-bold text-white">Área de Atuação</h3>
+        <span class="badge badge-info text-[10px]">Zona Sul • SP</span>
+      </div>
+      <div class="relative bg-marca-900/30 rounded-xl overflow-hidden h-44">
+        <svg class="w-full h-full" viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="340" height="160" fill="#0d0d0d" rx="12"/>
+          <rect x="15" y="15" width="310" height="130" fill="none" stroke="#D4AF37" stroke-opacity="0.12" stroke-width="0.5" rx="2"/>
+          <rect x="35" y="30" width="130"="55" fill="#D4AF37" fill-opacity="0.06" stroke="#D4AF37" stroke-opacity="0.2" rx="4"/>
+          <rect x="185" y="55" width="120" height="70" fill="#D4AF37" fill-opacity="0.06" stroke="#D4AF37" stroke-opacity="0.15" rx="4"/>
+          <rect x="55" y="100" width="90" height="30" fill="#D4AF37" fill-opacity="0.04" stroke="#D4AF37" stroke-opacity="0.1" rx="3"/>
+          <line x1="80" y1="90" x2="80" y2="55" stroke="#D4AF37" stroke-opacity="0.25" stroke-dasharray="3,3"/>
+          <circle cx="80" cy="55" r="4" fill="#D4AF37" fill-opacity="0.9"/>
+          <circle cx="80" cy="55" r="8" fill="#D4AF37" fill-opacity="0.15"/>
+          <line x1="200" y1="120" x2="200" y2="80" stroke="#D4AF37" stroke-opacity="0.25" stroke-dasharray="3,3"/>
+          <circle cx="200" cy="80" r="4" fill="#D4AF37" fill-opacity="0.9"/>
+          <circle cx="200" cy="80" r="8" fill="#D4AF37" fill-opacity="0.15"/>
+          <line x1="120" y1="110" x2="220" y2="95" stroke="#D4AF37" stroke-opacity="0.15" stroke-dasharray="3,3"/>
+          <circle cx="170" cy="98" r="3" fill="#D4AF37" fill-opacity="0.5"/>
+          <text x="165" y="10" fill="#6b6b6b" font-size="7" font-family="sans-serif">Av. Brigadeiro Faria Lima, 2232</text>
+          <text x="80" y="48" fill="#FAFAFA" font-size="6" font-family="sans-serif" text-anchor="middle" opacity="0.7">Você</text>
+          <text x="200" y="73" fill="#FAFAFA" font-size="6" font-family="sans-serif" text-anchor="middle" opacity="0.7">Demanda</text>
+          <text x="170" y="150" fill="#D4AF37" font-size="6" font-family="sans-serif" text-anchor="middle" opacity="0.6">Zona de alta demanda</text>
+        </svg>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-display font-bold text-white flex items-center gap-2">
+          <svg class="w-4 h-4 text-marca" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+          Solicitações Pendentes
+        </h3>
+        <span class="text-xs text-marca font-body font-medium" id="pendentes-count">3 novas</span>
+      </div>
+      <div id="solicitacoes-list" class="space-y-3">
+        <div class="card !p-4 hover:border-marca/30 transition-colors cursor-pointer" data-corrida-id="1" onclick="painel_motorista_detalheCorrida(this)">
+          <div class="flex items-start justify-between mb-2">
+            <span class="badge badge-success text-[10px]">✓ Aceitou • U4B</span>
+            <span class="text-marca font-display font-bold text-base">R$ 18,50</span>
+          </div>
+          <div class="space-y-1.5 mb-3">
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Av. Paulista, 1578 – Bela Vista</p>
+            </div>
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-marca flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Rua Augusta, 420 – Consolação</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-500 font-body">4,2 km • ~12 min</span>
+            <div class="flex gap-2">
+              <button onclick="event.stopPropagation(); painel_motorista_recusar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-gray-400 bg-white/5 rounded-lg hover:bg-red-500/10 hover:text-red-400 active:scale-95 transition-all">Recusar</button>
+              <button onclick="event.stopPropagation(); painel_motorista_aceitar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-marca-900 bg-marca rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-marca/20">Aceitar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card !p-4 hover:border-marca/30 transition-colors cursor-pointer" data-corrida-id="2" onclick="painel_motorista_detalheCorrida(this)">
+          <div class="flex items-start justify-between mb-2">
+            <span class="badge badge-warning text-[10px]">⏳ Pendente</span>
+            <span class="text-marca font-display font-bold text-base">R$ 32,00</span>
+          </div>
+          <div class="space-y-1.5 mb-3">
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Av. Rebouças, 1100 – Pinheiros</p>
+            </div>
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-marca flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Shopping Iguatemi – Jardim Europa</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-500 font-body">8,7 km • ~22 min</span>
+            <div class="flex gap-2">
+              <button onclick="event.stopPropagation(); painel_motorista_recusar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-gray-400 bg-white/5 rounded-lg hover:bg-red-500/10 hover:text-red-400 active:scale-95 transition-all">Recusar</button>
+              <button onclick="event.stopPropagation(); painel_motorista_aceitar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-marca-900 bg-marca rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-marca/20">Aceitar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card !p-4 hover:border-marca/30 transition-colors cursor-pointer" data-corrida-id="3" onclick="painel_motorista_detalheCorrida(this)">
+          <div class="flex items-start justify-between mb-2">
+            <span class="badge badge-warning text-[10px]">⏳ Pendente</span>
+            <span class="text-marca font-display font-bold text-base">R$ 25,90</span>
+          </div>
+          <div class="space-y-1.5 mb-3">
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Rua Oscar Freire, 300 – Jardins</p>
+            </div>
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-marca flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Av. Brasil, 1500 – Jardim América</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-500 font-body">5,9 km • ~15 min</span>
+            <div class="flex gap-2">
+              <button onclick="event.stopPropagation(); painel_motorista_recusar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-gray-400 bg-white/5 rounded-lg hover:bg-red-500/10 hover:text-red-400 active:scale-95 transition-all">Recusar</button>
+              <button onclick="event.stopPropagation(); painel_motorista_aceitar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-marca-900 bg-marca rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-marca/20">Aceitar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card !p-4 hover:border-marca/30 transition-colors cursor-pointer" data-corrida-id="4" onclick="painel_motorista_detalheCorrida(this)">
+          <div class="flex items-start justify-between mb-2">
+            <span class="badge badge-warning text-[10px]">⏳ Pendente</span>
+            <span class="text-marca font-display font-bold text-base">R$ 15,75</span>
+          </div>
+          <div class="space-y-1.5 mb-3">
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Metrô Vila Madalena – Pinheiros</p>
+            </div>
+            <div class="flex items-start gap-2">
+              <div class="mt-0.5"><svg class="w-3.5 h-3.5 text-marca flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/></svg></div>
+              <p class="text-xs text-gray-300 font-body leading-relaxed">Parque Ibirapuera – Portão 1</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-500 font-body">3,1 km • ~10 min</span>
+            <div class="flex gap-2">
+              <button onclick="event.stopPropagation(); painel_motorista_recusar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-gray-400 bg-white/5 rounded-lg hover:bg-red-500/10 hover:text-red-400 active:scale-95 transition-all">Recusar</button>
+              <button onclick="event.stopPropagation(); painel_motorista_aceitar(this)" class="px-3 py-1.5 text-xs font-body font-medium text-marca-900 bg-marca rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-marca/20">Aceitar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card !p-4">
+      <h3 class="text-sm font-display font-bold text-white mb-3">Estatísticas do Dia</h3>
+      <div class="grid grid-cols-3 gap-3 mb-4">
+        <div class="text-center">
+          <p class="text-xl font-display font-bold text-white">8</p>
+          <p class="text-[10px] text-gray-400 font-body mt-0.5">Corridas Hoje</p>
+          <span class="text-[10px] text-emerald-400 font-body">+3 vs ontem</span>
+        </div>
+        <div class="text-center border-x border-white/5">
+          <p class="text-xl font-display font-bold text-marca">4.7</p>
+          <p class="text-[10px] text-gray-400 font-body mt-0.5">Avaliação Média</p>
+          <div class="flex justify-center gap-0.5 mt-0.5">
+            <svg class="w-3 h-3 text-marca" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg class="w-3 h-3 text-marca" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg class="w-3 h-3 text-marca" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg class="w-3 h-3 text-marca" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+            <svg class="w-3 h-3 text-marca" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+          </div>
+        </div>
+        <div class="text-center">
+          <p class="text-xl font-display font-bold text-emerald-400">92%</p>
+          <p class="text-[10px] text-gray-400 font-body mt-0.5">Taxa Aceitação</p>
+          <span class="text-[10px] text-emerald-400 font-body">Acima da média</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-400 font-body">Ganhos da semana</span>
+        <span class="text-xs text-marca font-body font-medium">R$ 847,00</span>
+      </div>
+      <div class="mt-2 flex items-end gap-1 h-16">
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/20 rounded-sm" style="height:60%"></div>
+          <span class="text-[9px] text-gray-500">Seg</span>
+        </div>
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/20 rounded-sm" style="height:80%"></div>
+          <span class="text-[9px] text-gray-500">Ter</span>
+        </div>
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/20 rounded-sm" style="height:45%"></div>
+          <span class="text-[9px] text-gray-500">Qua</span>
+        </div>
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/20 rounded-sm" style="height:90%"></div>
+          <span class="text-[9px] text-gray-500">Qui</span>
+        </div>
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/40 rounded-sm" style="height:70%"></div>
+          <span class="text-[9px] text-gray-500">Sex</span>
+        </div>
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/20 rounded-sm" style="height:35%"></div>
+          <span class="text-[9px] text-gray-500">Sáb</span>
+        </div>
+        <div class="flex-1 flex flex-col items-center gap-0.5">
+          <div class="w-full bg-marca/60 rounded-sm border border-marca" style="height:100%"></div>
+          <span class="text-[9px] text-marca font-medium">Dom</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card !p-4">
+      <h3 class="text-sm font-display font-bold text-white mb-3">Corridas Recentes</h3>
+      <div class="space-y-2.5">
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-pointer" onclick="painel_motorista_abrirDetalhe('2024-12-15-1')">
+          <div class="w-9 h-9 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-200 font-body truncate">Av. Paulista, 1578 &rarr; Rua Augusta, 420</p>
+            <p class="text-[10px] text-gray-500 font-body">Hoje • 14:32</p>
+          </div>
+          <span class="text-xs font-display font-bold text-marca">R$ 22,40</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-pointer" onclick="painel_motorista_abrirDetalhe('2024-12-15-2')">
+          <div class="w-9 h-9 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-200 font-body truncate">Moema Plaza Shopping &rarr; Aeroporto GRU</p>
+            <p class="text-[10px] text-gray-500 font-body">Hoje • 11:15</p>
+          </div>
+          <span class="text-xs font-display font-bold text-marca">R$ 89,90</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-pointer" onclick="painel_motorista_abrirDetalhe('2024-12-14-1')">
+          <div class="w-9 h-9 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-200 font-body truncate">Pinheiros &rarr; Vila Olímpia</p>
+            <p class="text-[10px] text-gray-500 font-body">Ontem • 18:45</p>
+          </div>
+          <span class="text-xs font-display font-bold text-marca">R$ 15,10</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-pointer" onclick="painel_motorista_abrirDetalhe('2024-12-14-2')">
+          <div class="w-9 h-9 rounded-full bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-200 font-body truncate">Morumbi Shopping &rarr; Perdizes</p>
+            <p class="text-[10px] text-gray-500 font-body">Ontem • 09:20</p>
+          </div>
+          <span class="text-xs font-display font-bold text-marca">R$ 34,50</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-pointer" onclick="painel_motorista_abrirDetalhe('2024-12-13-1')">
+          <div class="w-9 h-9 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-200 font-body truncate">Consolação &rarr; Barra Funda</p>
+            <p class="text-[10px] text-gray-500 font-body">14/12 • 20:10</p>
+          </div>
+          <span class="text-xs font-display font-bold text-marca">R$ 19,80</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-pointer" onclick="painel_motorista_abrirDetalhe('2024-12-12-1')">
+          <div class="w-9 h-9 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-200 font-body truncate">Liberdade &rarr; Tatuapé</p>
+            <p class="text-[10px] text-gray-500 font-body">12/12 • 16:40</p>
+          </div>
+          <span class="text-xs font-display font-bold text-red-400">Cancelada</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let motorista_disponivel = true;
+    const solicitacoes = [
+      { id: 1, valor: 18.50, km: 4.2, min: 12, origem: 'Av. Paulista, 1578 – Bela Vista', destino: 'Rua Augusta, 420 – Consolação', status: 'aceitou', app: 'U4B' },
+      { id: 2, valor: 32.00, km: 8.7, min: 22, origem: 'Av. Rebouças, 1100 – Pinheiros', destino: 'Shopping Iguatemi – Jardim Europa', status: 'pendente', app: '99Pop' },
+      { id: 3, valor: 25.90, km: 5.9, min: 15, origem: 'Rua Oscar Freire, 300 – Jardins', destino: 'Av. Brasil, 1500 – Jardim América', status: 'pendente', app: 'U4B' },
+      { id: 4, valor: 15.75, km: 3.1, min: 10, origem: 'Metrô Vila Madalena – Pinheiros', destino: 'Parque Ibirapuera – Portão 1', status: 'pendente', app: 'Cabify' },
+    ];
+
+    function painel_motorista_toggle() {
+      motorista_disponivel = !motorista_disponivel;
+      const btn = document.getElementById('btn-toggle');
+      const dot = document.getElementById('toggle-dot');
+      const label = document.getElementById('toggle-label');
+      if (motorista_disponivel) {
+        btn.classList.remove('bg-gray-600');
+        btn.classList.add('bg-emerald-500');
+        dot.classList.add('translate-x-5');
+        dot.classList.remove('translate-x-0');
+        label.innerHTML = 'Status: <strong class="text-emerald-400">Disponível</strong>';
+        toast('Você está disponível para corridas', 'ok');
+      } else {
+        btn.classList.remove('bg-emerald-500');
+        btn.classList.add('bg-gray-600');
+        dot.classList.remove('translate-x-5');
+        dot.classList.add('translate-x-0');
+        label.innerHTML = 'Status: <strong class="text-red-400">Indisponível</strong>';
+        toast('Você saiu da área de atendimento', 'info');
+      }
+    }
+
+    function painel_motorista_aceitar(btn) {
+      const card = btn.closest('[data-corrida-id]');
+      const id = card.getAttribute('data-corrida-id');
+      const corrida = solicitacoes.find(c => c.id == id);
+      if (corrida) corrida.status = 'aceitou';
+      card.querySelector('.badge').className = 'badge badge-success text-[10px]';
+      card.querySelector('.badge').textContent = '✓ Aceitou • ' + corrida.app;
+      card.querySelectorAll('button').forEach(b => {
+        b.innerHTML = b.textContent === 'Aceitar' ? 'Em andamento' : b.textContent;
+        b.disabled = true;
+        b.classList.add('opacity-50', 'cursor-not-allowed');
+        b.classList.remove('bg-marca', 'text-marca-900', 'hover:brightness-110', 'shadow-sm');
+        b.classList.add('bg-emerald-500/10', 'text-emerald-400');
+      });
+      toast('Corrida aceita! Dirija-se ao local de embarque.', 'ok');
+      setTimeout(() => mostrarTela('acompanhar-corrida'), 1500);
+    }
+
+    function painel_motorista_recusar(btn) {
+      const card = btn.closest('[data-corrida-id]');
+      const id = card.getAttribute('data-corrida-id');
+      const corrida = solicitacoes.find(c => c.id == id);
+      if (corrida) {
+        card.style.opacity = '0.3';
+        card.style.transform = 'scale(0.96)';
+        card.style.transition = 'all 0.3s ease';
+        toast('Solicitação recusada', 'info');
+        setTimeout(() => {
+          card.style.opacity = '0';
+          card.style.maxHeight = '0';
+          card.style.padding = '0';
+          card.style.margin = '0';
+          card.style.overflow = 'hidden';
+          painel_motorista_atualizarContador();
+        }, 400);
+      }
+    }
+
+    function painel_motorista_detalheCorrida(card) {
+      const id = card.getAttribute('data-corrida-id');
+      const corrida = solicitacoes.find(c => c.id == id);
+      if (!corrida) return;
+      const corBadge = corrida.status === 'aceitou' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30';
+      const html = '<div class="space-y-4 text-sm font-body text-gray-300">' +
+        '<div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl">' +
+          '<div class="w-10 h-10 rounded-full bg-marca/20 flex items-center justify-center"><span class="text-marca font-display font-bold text-sm">' + corrida.app.substring(0,2) + '</span></div>' +
+          '<div><p class="text-white font-medium text-xs">Solicitação #' + corrida.id + '000' + '</p><p class="text-[10px] text-gray-500">Via ' + corrida.app + ' • há 2 min</p></div>' +
+          '<span class="badge ml-auto ' + corBadge + ' text-[10px] border">' + (corrida.status === 'aceitou' ? 'Aceitou' : 'Pendente') + '</span>' +
+        '</div>' +
+        '<div class="space-y-3">' +
+          '<div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center mt-0.5"><svg class="w-3 h-3 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg></div><p class="text-xs leading-relaxed">' + corrida.origem + '</p></div>' +
+          '<div class="ml-3 border-l border-dashed border-marca/30 pl-3 space-y-3">' +
+            '<div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-marca/20 flex items-center justify-center mt-0.5"><svg class="w-3 h-3 text-marca" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/></svg></div><p class="text-xs leading-relaxed">' + corrida.destino + '</p></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="grid grid-cols-3 gap-2 pt-2">' +
+          '<div class="text-center p-2 bg-white/5 rounded-lg"><p class="text-marca font-display font-bold">R$ ' + corrida.valor.toFixed(2).replace('.',',') + '</p><p class="text-[10px] text-gray-500 mt-0.5">Valor</p></div>' +
+          '<div class="text-center p-2 bg-white/5 rounded-lg"><p class="text-white font-display font-bold">' + corrida.km + ' km</p><p class="text-[10px] text-gray-500 mt-0.5">Distância</p></div>' +
+          '<div class="text-center p-2 bg-white/5 rounded-lg"><p class="text-white font-display font-bold">~' + corrida.min + ' min</p><p class="text-[10px] text-gray-500 mt-0.5">Duração</p></div>' +
+        '</div>' +
+        (corrida.status === 'pendente' ? '<div class="flex gap-2 pt-1"><button onclick="painel_motorista_aceitarModal(' + corrida.id + ')" class="flex-1 py-2.5 bg-marca text-marca-900 font-body font-bold text-sm rounded-xl active:scale-95 transition-all shadow-sm shadow-marca/20">Aceitar Corrida</button><button onclick="painel_motorista_recusarModal(' + corrida.id + ')" class="px-5 py-2.5 bg-white/5 text-gray-400 font-body font-medium text-sm rounded-xl hover:bg-red-500/10 hover:text-red-400 active:scale-95 transition-all">Recusar</button></div>' : '<button onclick="fecharModal(); mostrarTela(\'acompanhar-corrida\')" class="w-full py-2.5 bg-emerald-500/15 text-emerald-400 font-body font-bold text-sm rounded-xl active:scale-95 transition-all border border-emerald-500/30">Acompanhar Corrida</button>') +
+      '</div>';
+      abrirModal(html, 'Detalhes da Solicitação #' + corrida.id + '000' + corrida.id);
+    }
+
+    function painel_motorista_aceitarModal(id) {
+      fecharModal();
+      setTimeout(() => {
+        const card = document.querySelector('[data-corrida-id="' + id + '"]');
+        if (card) {
+          card.querySelector('.badge').className = 'badge badge-success text-[10px]';
+          card.querySelector('.badge').textContent = '✓ Aceitou • ' + solicitacoes.find(c => c.id == id).app;
+          card.querySelectorAll('button').forEach(b => { b.disabled = true; b.classList.add('opacity-50'); });
+          toast('Corrida aceita! Dirija-se ao local de embarque.', 'ok');
+          setTimeout(() => mostrarTela('acompanhar-corrida'), 1500);
+        }
+      }, 300);
+    }
+
+    function painel_motorista_recusarModal(id) {
+      fecharModal();
+      setTimeout(() => {
+        const card = document.querySelector('[data-corrida-id="' + id + '"]');
+        if (card) {
+          card.style.opacity = '0.3';
+          card.style.transform = 'scale(0.96)';
+          card.style.transition = 'all 0.3s ease';
+          toast('Solicitação recusada', 'info');
+          setTimeout(() => {
+            card.style.opacity = '0';
+            card.style.maxHeight = '0';
+            card.style.padding = '0';
+            card.style.margin = '0';
+            card.style.overflow = 'hidden';
+            painel_motorista_atualizarContador();
+          }, 400);
+        }
+      }, 300);
+    }
+
+    function painel_motorista_notificacoes() {
+      const html = '<div class="space-y-2">' +
+        '<div class="p-3 bg-marca/10 rounded-xl border border-marca/20"><p class="text-xs text-white font-body font-medium">⭐ Nova avaliação 5 estrelas!</p><p class="text-[10px] text-gray-500 mt-0.5">Passageiro Maria S. avaliou sua corrida</p></div>' +
+        '<div class="p-3 bg-white/5 rounded-xl"><p class="text-xs text-gray-200 font-body font-medium">🔔 Nova solicitação de corrida</p><p class="text-[10px] text-gray-500 mt-0.5">Av. Rebouças 1100 → Shopping Iguatemi</p></div>' +
+        '<div class="p-3 bg-white/5 rounded-xl"><p class="text-xs text-gray-200 font-body font-medium">🔔 Nova solicitação de corrida</p><p class="text-[10px] text-gray-500 mt-0.5">Rua Oscar Freire 300 → Av. Brasil 1500</p></div>' +
+      '</div>';
+      abrirModal(html, 'Notificações');
+    }
+
+    function painel_motorista_abrirDetalhe(id) {
+      mostrarTela('acompanhar-corrida');
+    }
+
+    function painel_motorista_atualizarContador() {
+      const cards = document.querySelectorAll('#solicitacoes-list [data-corrida-id]');
+      const count = cards.length;
+      const badge = document.getElementById('notif-badge');
+      const label = document.getElementById('pendentes-count');
+      if (count > 0) {
+        badge.textContent = count;
+        label.textContent = count + ' nova' + (count > 1 ? 's' : '');
+      } else {
+        badge.style.display = 'none';
+        label.textContent = '0 pendentes';
+        const empty = document.createElement('div');
+        empty.className = 'text-center py-8';
+        empty.innerHTML = '<svg class="w-10 h-10 text-gray-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg><p class="text-xs text-gray-500 font-body">Nenhuma solicitação no momento</p>';
+        document.getElementById('solicitacoes-list').appendChild(empty);
+      }
+    }
+  </script>
+</section>
+
     <!-- TELAS -->
     </main>
 

@@ -497,6 +497,484 @@
       </script>
     </section>
 
+    <section data-tela="busca-e-filtros" class="hidden">
+  <div class="h-screen flex flex-col bg-marca-50 overflow-hidden">
+    <!-- Conteúdo scrollável -->
+    <div class="flex-1 overflow-y-auto pb-28">
+      <!-- Cabeçalho -->
+      <div class="bg-marca-900 px-5 pt-6 pb-5 rounded-b-3xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-40 h-40 bg-marca-500/10 rounded-full -translate-y-1/2 translate-x-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-24 h-24 bg-marca-500/5 rounded-full translate-y-1/2 -translate-x-1/4"></div>
+        <div class="relative">
+          <h2 class="font-display text-2xl font-bold text-white leading-tight">Para onde você<br>vai hoje?</h2>
+          <p class="text-marca-500/80 text-sm mt-1.5 font-body">Compare preços e escolha a melhor opção</p>
+        </div>
+      </div>
+
+      <!-- Card de Busca -->
+      <div class="px-4 -mt-5 relative z-10">
+        <div class="bg-white rounded-2xl shadow-lg shadow-black/5 p-4 border border-gray-100">
+          <!-- Origem -->
+          <div class="flex items-start gap-3">
+            <div class="flex flex-col items-center pt-1">
+              <div class="w-3 h-3 rounded-full bg-emerald-400 shadow-md shadow-emerald-400/40 animate-pulse-soft"></div>
+              <div class="w-px h-10 bg-dashed my-0.5" style="border-left: 2px dashed #D1D5DB;"></div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Origem</label>
+              <p class="text-sm font-semibold text-marca-900 mt-0.5 truncate">Av. Paulista, 1000 — Bela Vista</p>
+              <p class="text-[11px] text-emerald-500 font-medium mt-0.5">📍 GPS detectado</p>
+            </div>
+            <button onclick="busca_e_filtros_alterarOrigem()" class="p-2 -mr-1 rounded-lg hover:bg-gray-50 active:scale-90 transition-all" title="Alterar origem">
+              <svg class="w-4 h-4 text-gray-400 hover:text-marca-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            </button>
+          </div>
+
+          <!-- Destino -->
+          <div class="flex items-start gap-3 mt-3">
+            <div class="w-3 h-3 rounded-full bg-marca-500 shadow-md shadow-marca-500/30 mt-1"></div>
+            <div class="flex-1">
+              <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Destino</label>
+              <input
+                id="campo-destino"
+                type="text"
+                placeholder="Digite o destino..."
+                oninput="busca_e_filtros_filtrarSugestoes(this.value)"
+                onfocus="busca_e_filtros_mostrarSugestoes()"
+                class="w-full text-sm font-semibold text-marca-900 mt-0.5 placeholder:text-gray-300 bg-transparent border-none outline-none p-0"
+              />
+            </div>
+          </div>
+
+          <!-- Linha divisória -->
+          <div class="border-t border-gray-100 mt-4 pt-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-gray-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-xs">Agora</span>
+              </div>
+              <div class="flex items-center gap-1 text-xs text-gray-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span id="passageiros-display">1 passageiro</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtros Rápidos -->
+      <div class="mt-5 px-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-display font-bold text-marca-900 text-sm">Filtros rápidos</h3>
+          <button onclick="busca_e_filtros_abrirModalFiltros()" class="flex items-center gap-1 text-xs font-semibold text-marca-500 hover:text-marca-600 active:scale-95 transition-all">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            Ver todos
+          </button>
+        </div>
+        <div class="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide" style="scrollbar-width: none;">
+          <button onclick="busca_e_filtros_toggleFiltroRapido(this, 'menor-preco')" data-ativo="false" class="filtro-rapido flex-shrink-0 px-4 py-2 rounded-full border-2 border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-marca-500 hover:text-marca-500 active:scale-95 transition-all">
+            💰 Menor preço
+          </button>
+          <button onclick="busca_e_filtros_toggleFiltroRapido(this, 'cinco-estrelas')" data-ativo="false" class="filtro-rapido flex-shrink-0 px-4 py-2 rounded-full border-2 border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-marca-500 hover:text-marca-500 active:scale-95 transition-all">
+            ⭐ 5 estrelas
+          </button>
+          <button onclick="busca_e_filtros_toggleFiltroRapido(this, 'mais-proximo')" data-ativo="false" class="filtro-rapido flex-shrink-0 px-4 py-2 rounded-full border-2 border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-marca-500 hover:text-marca-500 active:scale-95 transition-all">
+            📍 Mais próximo
+          </button>
+          <button onclick="busca_e_filtros_toggleFiltroRapido(this, 'porta-malas')" data-ativo="false" class="filtro-rapido flex-shrink-0 px-4 py-2 rounded-full border-2 border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-marca-500 hover:text-marca-500 active:scale-95 transition-all">
+            🧳 Porta-malas
+          </button>
+          <button onclick="busca_e_filtros_toggleFiltroRapido(this, 'acessivel')" data-ativo="false" class="filtro-rapido flex-shrink-0 px-4 py-2 rounded-full border-2 border-gray-200 bg-white text-xs font-semibold text-gray-600 hover:border-marca-500 hover:text-marca-500 active:scale-95 transition-all">
+            ♿ Acessível
+          </button>
+        </div>
+      </div>
+
+      <!-- Sugestões de Destino -->
+      <div class="mt-5 px-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-display font-bold text-marca-900 text-sm">Sugestões de destino</h3>
+          <span id="contador-sugestoes" class="text-[11px] text-gray-400 font-medium">8 locais</span>
+        </div>
+        <div id="lista-sugestoes" class="space-y-2">
+          <!-- Itens preenchidos via JS -->
+        </div>
+        <!-- Estado vazio -->
+        <div id="estado-vazio-busca" class="hidden text-center py-10">
+          <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p class="text-sm text-gray-400">Nenhum local encontrado</p>
+          <p class="text-xs text-gray-300 mt-1">Tente outro termo de busca</p>
+        </div>
+      </div>
+
+      <!-- Anúncio / Banner -->
+      <div class="mt-5 px-4">
+        <div onclick="busca_e_filtros_clicarBanner()" class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-marca-900 via-marca-900 to-marca-800 p-4 cursor-pointer active:scale-[0.98] transition-all shadow-lg shadow-marca-900/20">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-marca-500/10 rounded-full -translate-y-1/2 translate-x-1/4"></div>
+          <div class="relative flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-marca-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[10px] font-bold text-marca-500 uppercase tracking-wider">Promoção</p>
+              <p class="text-sm font-bold text-white mt-0.5">20% OFF na primeira corrida</p>
+              <p class="text-[11px] text-gray-400 mt-0.5">Use o cupom <span class="text-marca-500 font-semibold">KILEGAL20</span></p>
+            </div>
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Espaço final -->
+      <div class="h-4"></div>
+    </div>
+
+    <!-- Barra inferior fixa -->
+    <div class="fixed bottom-0 left-0 right-0 z-40">
+      <div class="max-w-[430px] mx-auto">
+        <div class="bg-white/80 backdrop-blur-xl border-t border-gray-100 px-5 py-3 safe-area-bottom">
+          <button onclick="busca_e_filtros_comparar()" id="btn-comparar" class="w-full bg-marca-500 hover:bg-marca-600 active:scale-[0.97] text-marca-900 font-display font-bold text-base py-3.5 rounded-2xl shadow-lg shadow-marca-500/30 transition-all flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            Comparar Agora
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Dados de exemplo ===
+    const sugestoes = [
+      { nome: 'Shopping Iguatemi', endereco: 'Av. Brigadeiro Faria Lima, 2232 — Jardim Paulistano', distancia: '3,2 km', tempo: '12 min', categoria: 'shopping', inicial: 'SI', cor: 'bg-rose-400' },
+      { nome: 'Estação Pinheiros', endereco: 'R. dos Pinheiros, 320 — Pinheiros', distancia: '2,8 km', tempo: '10 min', categoria: 'transporte', inicial: 'EP', cor: 'bg-blue-400' },
+      { nome: 'Hospital Sírio-Libanês', endereco: 'R. Dr. Celso Araripe, 354 — Bela Vista', distancia: '1,5 km', tempo: '5 min', categoria: 'saude', inicial: 'HS', cor: 'bg-teal-400' },
+      { nome: 'Aeroporto Congonhas', endereco: 'Av. Washington Luís, s/n — Campo Belo', distancia: '8,4 km', tempo: '22 min', categoria: 'aeroporto', inicial: 'AC', cor: 'bg-amber-400' },
+      { nome: 'Parque Ibirapuera', endereco: 'Av. Pedro Álvares Cabral, s/n — Vila Mariana', distancia: '4,1 km', tempo: '15 min', categoria: 'parque', inicial: 'PI', cor: 'bg-green-400' },
+      { nome: 'Mercado Municipal', endereco: 'R. da Cantareira, 306 — Centro', distancia: '5,6 km', tempo: '18 min', categoria: 'mercado', inicial: 'MM', cor: 'bg-orange-400' },
+      { nome: 'USP — Cidade Universitária', endereco: 'Av. Prof. Lineu Prestes, 768 — Butantã', distancia: '7,2 km', tempo: '20 min', categoria: 'universidade', inicial: 'US', cor: 'bg-indigo-400' },
+      { nome: 'Estádio do Morumbi', endereco: 'Praça Roberto Gomes Pedrosa, s/n — Morumbi', distancia: '6,8 km', tempo: '19 min', categoria: 'estadio', inicial: 'EM', cor: 'bg-purple-400' },
+    ];
+
+    const sugestoesFiltradas = [...sugestoes];
+
+    function busca_e_filtros_renderizarSugestoes(lista) {
+      const container = document.getElementById('lista-sugestoes');
+      const estadoVazio = document.getElementById('estado-vazio-busca');
+      const contador = document.getElementById('contador-sugestoes');
+
+      if (lista.length === 0) {
+        container.innerHTML = '';
+        estadoVazio.classList.remove('hidden');
+        contador.textContent = '0 locais';
+        return;
+      }
+      estadoVazio.classList.add('hidden');
+      contador.textContent = lista.length + ' local' + (lista.length !== 1 ? 'is' : '');
+
+      container.innerHTML = lista.map((s, i) => `
+        <button
+          onclick="busca_e_filtros_selecionarDestino('${s.nome}', '${s.endereco.replace(/'/g, "\\'")}')"
+          class="w-full flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-100 hover:border-marca-500/30 hover:shadow-md hover:shadow-marca-500/5 active:scale-[0.98] transition-all text-left group opacity-0"
+          style="animation: slideUp 0.3s ease ${i * 0.04}s forwards;"
+        >
+          <div class="w-10 h-10 rounded-xl ${s.cor} bg-opacity-15 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+            <span class="text-xs font-bold text-gray-700">${s.inicial}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-marca-900 truncate">${s.nome}</p>
+            <p class="text-[11px] text-gray-400 truncate">${s.endereco}</p>
+          </div>
+          <div class="flex flex-col items-end gap-0.5 flex-shrink-0">
+            <span class="text-xs font-bold text-marca-500">${s.distancia}</span>
+            <span class="text-[10px] text-gray-400">${s.tempo}</span>
+          </div>
+          <svg class="w-4 h-4 text-gray-300 group-hover:text-marca-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      `).join('');
+    }
+
+    function busca_e_filtros_filtrarSugestoes(termo) {
+      const t = termo.toLowerCase().trim();
+      if (!t) {
+        sugestoesFiltradas.length = 0;
+        sugestoesFiltradas.push(...sugestoes);
+      } else {
+        sugestoesFiltradas.length = 0;
+        sugestoesFiltradas.push(...sugestoes.filter(s =>
+          s.nome.toLowerCase().includes(t) ||
+          s.endereco.toLowerCase().includes(t) ||
+          s.categoria.toLowerCase().includes(t)
+        ));
+      }
+      busca_e_filtros_renderizarSugestoes(sugestoesFiltradas);
+    }
+
+    function busca_e_filtros_mostrarSugestoes() {
+      sugestoesFiltradas.length = 0;
+      sugestoesFiltradas.push(...sugestoes);
+      busca_e_filtros_renderizarSugestoes(sugestoesFiltradas);
+    }
+
+    function busca_e_filtros_selecionarDestino(nome, endereco) {
+      const campo = document.getElementById('campo-destino');
+      campo.value = nome;
+      // Highlight effect
+      campo.parentElement.classList.add('ring-2', 'ring-marca-500/20', 'rounded-lg');
+      setTimeout(() => campo.parentElement.classList.remove('ring-2', 'ring-marca-500/20', 'rounded-lg'), 600);
+      // Re-render with single selected item highlighted
+      sugestoesFiltradas.length = 0;
+      sugestoesFiltradas.push(...sugestoes.filter(s => s.nome === nome));
+      busca_e_filtros_renderizarSugestoes(sugestoesFiltradas);
+      toast('Destino selecionado: ' + nome, 'ok');
+    }
+
+    function busca_e_filtros_alterarOrigem() {
+      abrirModal(`
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs font-semibold text-gray-500 block mb-1.5">Endereço atual</label>
+            <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center gap-2.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse-soft"></div>
+              <div>
+                <p class="text-sm font-semibold text-gray-800">Av. Paulista, 1000</p>
+                <p class="text-[11px] text-gray-500">Bela Vista, São Paulo — SP</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 block mb-1.5">Ou digite outro endereço</label>
+            <input type="text" placeholder="Buscar endereço..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-gray-200 text-sm font-medium text-marca-900 placeholder:text-gray-300 focus:border-marca-500 focus:outline-none transition-colors" />
+          </div>
+        </div>
+      `, 'Alterar Origem');
+    }
+
+    function busca_e_filtros_toggleFiltroRapido(btn, filtro) {
+      const ativo = btn.dataset.ativo === 'true';
+      if (ativo) {
+        btn.dataset.ativo = 'false';
+        btn.classList.remove('bg-marca-500', 'text-marca-900', 'border-marca-500');
+        btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+      } else {
+        btn.dataset.ativo = 'true';
+        btn.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+        btn.classList.add('bg-marca-500', 'text-marca-900', 'border-marca-500');
+      }
+      // Haptic-like feedback
+      btn.style.transform = 'scale(0.9)';
+      setTimeout(() => btn.style.transform = '', 120);
+    }
+
+    function busca_e_filtros_abrirModalFiltros() {
+      const html = `
+        <div class="space-y-5 max-h-[60vh] overflow-y-auto">
+          <!-- Tipo de veículo -->
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2.5">Tipo de veículo</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="this.classList.toggle('ring-2');this.classList.toggle('ring-marca-500');this.classList.toggle('bg-marca-50')" class="flex items-center gap-2.5 p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-marca-300 active:scale-95 transition-all text-left">
+                <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 4h8m-4-8v16m-4-4h8a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">Econômico</p>
+                  <p class="text-[10px] text-gray-400">Sem porta-malas</p>
+                </div>
+              </button>
+              <button onclick="this.classList.toggle('ring-2');this.classList.toggle('ring-marca-500');this.classList.toggle('bg-marca-50')" class="flex items-center gap-2.5 p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-marca-300 active:scale-95 transition-all text-left">
+                <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">Porta-malas</p>
+                  <p class="text-[10px] text-gray-400">Espaçoso</p>
+                </div>
+              </button>
+              <button onclick="this.classList.toggle('ring-2');this.classList.toggle('ring-marca-500');this.classList.toggle('bg-marca-50')" class="flex items-center gap-2.5 p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-marca-300 active:scale-95 transition-all text-left">
+                <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3"/></svg>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">Acessível</p>
+                  <p class="text-[10px] text-gray-400">Para cadeirantes</p>
+                </div>
+              </button>
+              <button onclick="this.classList.toggle('ring-2');this.classList.toggle('ring-marca-500');this.classList.toggle('bg-marca-50')" class="flex items-center gap-2.5 p-3 rounded-xl border-2 border-gray-200 bg-white hover:border-marca-300 active:scale-95 transition-all text-left">
+                <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">Luxo</p>
+                  <p class="text-[10px] text-gray-400">Conforto premium</p>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ordenação -->
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2.5">Ordenar por</label>
+            <div class="space-y-1.5">
+              <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 cursor-pointer group">
+                <div class="w-5 h-5 rounded-full border-2 border-marca-500 bg-marca-500 flex items-center justify-center flex-shrink-0">
+                  <div class="w-2 h-2 rounded-full bg-white"></div>
+                </div>
+                <span class="text-sm font-medium text-marca-900">Menor preço</span>
+              </label>
+              <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 cursor-pointer group">
+                <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex-shrink-0 group-hover:border-marca-300 transition-colors"></div>
+                <span class="text-sm font-medium text-gray-600 group-hover:text-gray-800">Motorista preferido</span>
+              </label>
+              <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 cursor-pointer group">
+                <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex-shrink-0 group-hover:border-marca-300 transition-colors"></div>
+                <span class="text-sm font-medium text-gray-600 group-hover:text-gray-800">Mais próximo</span>
+              </label>
+              <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 cursor-pointer group">
+                <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex-shrink-0 group-hover:border-marca-300 transition-colors"></div>
+                <span class="text-sm font-medium text-gray-600 group-hover:text-gray-800">Melhor avaliação</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Motoristas 5 estrelas -->
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2.5">Avaliação mínima</label>
+            <label class="flex items-center gap-3 p-3 rounded-xl border-2 border-gray-200 hover:border-marca-300 cursor-pointer transition-all">
+              <div class="w-5 h-5 rounded border-2 border-marca-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="text-sm font-semibold text-gray-800">⭐ Apenas motoristas 5 estrelas</span>
+            </label>
+          </div>
+
+          <!-- Passageiros -->
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2.5">Número de passageiros</label>
+            <div class="flex items-center justify-center gap-6 p-3 rounded-xl border-2 border-gray-200">
+              <button onclick="busca_e_filtros_ajustarPassageiros(-1)" class="w-10 h-10 rounded-full border-2 border-marca-500 text-marca-500 font-bold text-lg flex items-center justify-center hover:bg-marca-500 hover:text-white active:scale-90 transition-all">−</button>
+              <span id="modal-passageiros" class="text-2xl font-display font-bold text-marca-900 w-8 text-center">1</span>
+              <button onclick="busca_e_filtros_ajustarPassageiros(1)" class="w-10 h-10 rounded-full border-2 border-marca-500 text-marca-500 font-bold text-lg flex items-center justify-center hover:bg-marca-500 hover:text-white active:scale-90 transition-all">+</button>
+            </div>
+          </div>
+
+          <!-- Cupom -->
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2.5">Cupom de desconto</label>
+            <div class="relative">
+              <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                <svg class="w-4 h-4 text-marca-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5a2 2 0 012 2v5.5a2 2 0 01-.6 1.46l-6.354 5.054A2 2 0 017 18.5V7z"/></svg>
+              </div>
+              <input type="text" id="cupom-filtro" placeholder="Digite seu cupom..." oninput="busca_e_filtros_validarCupom(this.value)" class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-gray-200 text-sm font-medium text-marca-900 placeholder:text-gray-300 focus:border-marca-500 focus:outline-none transition-colors uppercase tracking-wider" />
+              <button onclick="busca_e_filtros_aplicarCupom()" class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-marca-500 text-marca-900 text-[11px] font-bold rounded-lg hover:bg-marca-600 active:scale-95 transition-all">APLICAR</button>
+            </div>
+            <p id="cupom-status" class="text-[11px] mt-1.5 hidden"></p>
+          </div>
+        </div>
+      `;
+      abrirModal(html, 'Filtros e Preferências');
+    }
+
+    // === Passageiros ===
+    let passageiros = 1;
+    const passageirosDisplay = document.getElementById('passageiros-display');
+
+    function busca_e_filtros_ajustarPassageiros(delta) {
+      passageiros = Math.max(1, Math.min(8, passageiros + delta));
+      // Update both displays
+      const display = document.getElementById('passageiros-display');
+      const modalDisplay = document.getElementById('modal-passageiros');
+      if (display) display.textContent = passageiros + ' passageiro' + (passageiros !== 1 ? 's' : '');
+      if (modalDisplay) modalDisplay.textContent = passageiros;
+    }
+
+    // === Cupom ===
+    function busca_e_filtros_validarCupom(valor) {
+      const status = document.getElementById('cupom-status');
+      if (!status) return;
+      if (valor.length >= 3) {
+        status.classList.remove('hidden', 'text-red-500');
+        status.classList.add('text-emerald-500');
+        status.textContent = '✓ Cupom válido! 20% de desconto';
+      } else if (valor.length > 0) {
+        status.classList.remove('hidden');
+        status.classList.add('text-gray-400');
+        status.classList.remove('text-emerald-500', 'text-red-500');
+        status.textContent = 'Continue digitando...';
+      }
+    }
+
+    function busca_e_filtros_aplicarCupom() {
+      const valor = document.getElementById('cupom-filtro').value.trim().toUpperCase();
+      if (valor === 'KILEGAL20') {
+        toast('Cupom KILEGAL20 aplicado! 20% OFF', 'ok');
+        fecharModal();
+      } else if (valor.length >= 3) {
+        toast('Cupom não reconhecido', 'erro');
+      } else {
+        toast('Digite um cupom válido', 'erro');
+      }
+    }
+
+    // === Ações ===
+    function busca_e_filtros_comparar() {
+      const destino = document.getElementById('campo-destino').value.trim();
+      if (!destino) {
+        toast('Digite um destino para comparar', 'erro');
+        // Shake the input
+        const input = document.getElementById('campo-destino');
+        input.style.animation = 'shake 0.5s ease';
+        input.parentElement.classList.add('ring-2', 'ring-red-300');
+        setTimeout(() => {
+          input.style.animation = '';
+          input.parentElement.classList.remove('ring-2', 'ring-red-300');
+        }, 600);
+        input.focus();
+        return;
+      }
+      // Button loading state
+      const btn = document.getElementById('btn-comparar');
+      btn.innerHTML = '<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Buscando...';
+      btn.disabled = true;
+      btn.classList.add('opacity-80');
+
+      setTimeout(() => {
+        btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Comparar Agora';
+        btn.disabled = false;
+        btn.classList.remove('opacity-80');
+        mostrarTela('comparativo-de-precos');
+      }, 1200);
+    }
+
+    function busca_e_filtros_clicarBanner() {
+      toast('Cupom copiado: KILEGAL20', 'ok');
+    }
+
+    // === Inicialização ===
+    sugestoesFiltradas.push(...sugestoes);
+    busca_e_filtros_renderizarSugestoes(sugestoesFiltradas);
+  </script>
+</section>
+
+<style>
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+</style>
+
     <!-- TELAS -->
     </main>
 

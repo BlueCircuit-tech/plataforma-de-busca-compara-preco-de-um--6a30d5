@@ -2989,6 +2989,477 @@
     </script>
 </section>
 
+    <section data-tela="promocoes-e-banners" class="hidden">
+      <div class="animate-fade-in space-y-5">
+        <!-- Cabeçalho -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="font-display text-xl font-bold text-marca-900">Promoções e Banners</h1>
+            <p class="text-sm text-gray-500 mt-0.5">Gerencie campanhas e cupons do app</p>
+          </div>
+          <button onclick="promocoes_e_banners_abrirFormulario()" class="btn text-sm font-semibold flex items-center gap-1.5 bg-marca-500 text-white px-4 py-2.5 rounded-xl hover:bg-marca-600 active:scale-95 transition-all shadow-lg shadow-marca-500/20">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+            Novo Banner
+          </button>
+        </div>
+
+        <!-- Cards de indicadores -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-marca-500/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-marca-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Impressões</p>
+              <p class="font-display font-bold text-lg text-marca-900">24.8K</p>
+              <p class="text-xs text-emerald-600 font-medium">+12% vs semana</p>
+            </div>
+          </div>
+          <div class="card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Cliques</p>
+              <p class="font-display font-bold text-lg text-marca-900">3.2K</p>
+              <p class="text-xs text-emerald-600 font-medium">+8% vs semana</p>
+            </div>
+          </div>
+          <div class="card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Conversão</p>
+              <p class="font-display font-bold text-lg text-marca-900">12.9%</p>
+              <p class="text-xs text-emerald-600 font-medium">+2.1% vs semana</p>
+            </div>
+          </div>
+          <div class="card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Banners Ativos</p>
+              <p class="font-display font-bold text-lg text-marca-900">5</p>
+              <p class="text-xs text-gray-400 font-medium">2 agendados</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico SVG -->
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-display font-semibold text-sm text-marca-900">Impressões — Últimos 7 dias</h3>
+            <span class="text-xs text-gray-400">por dia</span>
+          </div>
+          <svg viewBox="0 0 340 120" class="w-full h-28">
+            <defs>
+              <linearGradient id="gradArea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polyline points="0,95 48,78 96,88 144,60 192,72 240,42 288,48 340,28" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="0,95 48,78 96,88 144,60 192,72 240,42 288,48 340,28 340,120 0,120" fill="url(#gradArea)"/>
+            <circle cx="340" cy="28" r="4" fill="#D4AF37" stroke="#FAFAFA" stroke-width="2"/>
+            <circle cx="240" cy="42" r="3" fill="#D4AF37" stroke="#FAFAFA" stroke-width="1.5"/>
+            <circle cx="144" cy="60" r="3" fill="#D4AF37" stroke="#FAFAFA" stroke-width="1.5"/>
+            <line x1="0" y1="30" x2="340" y2="30" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="0" y1="60" x2="340" y2="60" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="0" y1="90" x2="340" y2="90" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <text x="4" y="23" fill="#9CA3AF" font-size="8">4K</text>
+            <text x="4" y="53" fill="#9CA3AF" font-size="8">2K</text>
+            <text x="4" y="83" fill="#9CA3AF" font-size="8">0</text>
+            <text x="2" y="115" fill="#9CA3AF" font-size="7">Seg</text>
+            <text x="45" y="115" fill="#9CA3AF" font-size="7">Ter</text>
+            <text x="90" y="115" fill="#9CA3AF" font-size="7">Qua</text>
+            <text x="135" y="115" fill="#9CA3AF" font-size="7">Qui</text>
+            <text x="182" y="115" fill="#9CA3AF" font-size="7">Sex</text>
+            <text x="228" y="115" fill="#9CA3AF" font-size="7">Sáb</text>
+            <text x="275" y="115" fill="#9CA3AF" font-size="7">Dom</text>
+            <text x="312" y="115" fill="#9CA3AF" font-size="7">Hoje</text>
+          </svg>
+        </div>
+
+        <!-- Filtros -->
+        <div class="flex gap-2">
+          <div class="flex-1 relative">
+            <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input id="bannerSearch" oninput="promocoes_e_banners_filtrar()" type="text" placeholder="Buscar banner..." class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+          </div>
+          <select id="bannerFiltroStatus" onchange="promocoes_e_banners_filtrar()" class="px-3 py-2.5 text-sm rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all appearance-none">
+            <option value="">Todos</option>
+            <option value="Ativo">Ativo</option>
+            <option value="Pausado">Pausado</option>
+            <option value="Agendado">Agendado</option>
+          </select>
+          <select id="bannerFiltroApp" onchange="promocoes_e_banners_filtrar()" class="px-3 py-2.5 text-sm rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all appearance-none">
+            <option value="">Todos Apps</option>
+            <option value="Todos">Todos</option>
+            <option value="99">99</option>
+            <option value="Uber">Uber</option>
+            <option value="Bolt">Bolt</option>
+            <option value="Cabify">Cabify</option>
+          </select>
+        </div>
+
+        <!-- Grid de banners -->
+        <div id="bannersGrid" class="grid grid-cols-2 gap-3">
+        </div>
+
+        <!-- Estado vazio -->
+        <div id="bannersVazio" class="hidden text-center py-10">
+          <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m8.286-8.286l-5.159-5.159a2.25 2.25 0 00-3.182 0L5.683 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p class="text-sm text-gray-500 font-medium">Nenhum banner encontrado</p>
+          <p class="text-xs text-gray-400 mt-1">Ajuste os filtros ou crie um novo banner</p>
+        </div>
+      </div>
+
+      <!-- Modal: Novo Banner -->
+      <div id="modalNovoBanner" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="promocoes_e_banners_fecharFormulario()"></div>
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white sm:rounded-2xl rounded-t-2xl max-h-[85vh] sm:max-h-[90vh] sm:max-w-lg w-full overflow-y-auto shadow-2xl animate-slide-up">
+          <div class="sticky top-0 bg-white z-10 px-5 pt-5 pb-3 border-b border-gray-100 flex items-center justify-between">
+            <h2 class="font-display font-bold text-lg text-marca-900">Novo Banner</h2>
+            <button onclick="promocoes_e_banners_fecharFormulario()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <form onsubmit="event.preventDefault(); promocoes_e_banners_salvarBanner();" class="p-5 space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-1">Título da campanha</label>
+              <input id="bannerTitulo" type="text" required placeholder="Ex: Primeira corrida com 50% OFF" class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-1">Texto do cupom</label>
+              <input id="bannerCupom" type="text" placeholder="Ex: PRIMEIRO20" class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all uppercase tracking-wider">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-medium text-marca-900 mb-1">Data início</label>
+                <input id="bannerDataInicio" type="date" required class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-marca-900 mb-1">Data fim</label>
+                <input id="bannerDataFim" type="date" required class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-1">App alvo</label>
+              <select id="bannerAppAlvo" class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+                <option value="Todos">Todos os apps</option>
+                <option value="99">99</option>
+                <option value="Uber">Uber</option>
+                <option value="Bolt">Bolt</option>
+                <option value="Cabify">Cabify</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-1">Tipo de veículo</label>
+              <select id="bannerTipoVeiculo" class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+                <option value="Todos">Todos</option>
+                <option value="Economico">Econômico</option>
+                <option value="Conforto">Conforto</option>
+                <option value="SUV">SUV</option>
+                <option value="Motoboy">Motoboy</option>
+                <option value="Frente">Frente</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-1">Link de destino</label>
+              <input id="bannerLink" type="url" placeholder="https://..." class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-1">Upload de imagem</label>
+              <div id="bannerUploadArea" onclick="document.getElementById('bannerFileInput').click()" class="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center cursor-pointer hover:border-marca-500/50 hover:bg-marca-500/5 transition-all">
+                <svg class="w-8 h-8 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m8.286-8.286l-5.159-5.159a2.25 2.25 0 00-3.182 0L5.683 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <p class="text-xs text-gray-500">Toque para enviar imagem</p>
+                <p class="text-xs text-gray-400 mt-1">PNG, JPG até 2MB — 1200×628px</p>
+                <p id="bannerFileName" class="text-xs text-marca-500 font-medium mt-1 hidden"></p>
+              </div>
+              <input id="bannerFileInput" type="file" accept="image/*" class="hidden" onchange="promocoes_e_banners_mostrarNomeArquivo(this)">
+            </div>
+
+            <!-- Preview mobile -->
+            <div>
+              <label class="block text-sm font-medium text-marca-900 mb-2">Preview do banner</label>
+              <div class="mx-auto w-48 border border-gray-200 rounded-[2rem] overflow-hidden shadow-lg bg-marca-900">
+                <div class="bg-marca-900 pt-3 pb-1 px-4 flex items-center justify-center">
+                  <div class="w-16 h-1 bg-white/20 rounded-full"></div>
+                </div>
+                <div id="bannerPreview" class="bg-gradient-to-br from-marca-500 to-marca-700 aspect-[9/16] p-4 flex flex-col justify-between relative overflow-hidden">
+                  <div class="absolute top-0 right-0 w-20 h-20 bg-white/5 rounded-full -translate-y-4 translate-x-4"></div>
+                  <div class="absolute bottom-0 left-0 w-16 h-16 bg-white/5 rounded-full translate-y-4 -translate-x-4"></div>
+                  <div>
+                    <span class="bg-marca-400/30 text-marca-50 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Promoção</span>
+                  </div>
+                  <div>
+                    <h4 id="previewTitulo" class="text-white font-display font-bold text-sm leading-tight">Primeira corrida com 50% OFF</h4>
+                    <p id="previewCupom" class="text-marca-200 text-[10px] font-mono mt-1 tracking-widest">CUPOM: PRIMEIRO20</p>
+                    <div class="mt-2 bg-white text-marca-900 text-[9px] font-bold text-center py-1 rounded-lg">Usar cupom</div>
+                  </div>
+                </div>
+                <div class="bg-white/10 py-2 flex justify-around">
+                  <div class="w-1 h-1 rounded-full bg-white/40"></div>
+                  <div class="w-1 h-1 rounded-full bg-white/40"></div>
+                  <div class="w-1 h-1 rounded-full bg-marca-400"></div>
+                  <div class="w-1 h-1 rounded-full bg-white/40"></div>
+                  <div class="w-1 h-1 rounded-full bg-white/40"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-3 pt-2 pb-4">
+              <button type="button" onclick="promocoes_e_banners_fecharFormulario()" class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 active:scale-95 transition-all">Cancelar</button>
+              <button type="submit" class="flex-1 btn py-2.5 rounded-xl bg-marca-500 text-white text-sm font-semibold hover:bg-marca-600 active:scale-95 transition-all shadow-lg shadow-marca-500/20">Salvar Banner</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal: Detalhes do Banner -->
+      <div id="modalDetalhesBanner" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="promocoes_e_banners_fecharDetalhes()"></div>
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white sm:rounded-2xl rounded-t-2xl max-h-[85vh] overflow-y-auto shadow-2xl">
+          <div id="detalhesBannerConteudo" class="p-5">
+          </div>
+        </div>
+      </div>
+
+      <script>
+        var promocoes_e_banners_banners = [
+          { id: 1, titulo: 'Primeira corrida com 50% OFF', cupom: 'PRIMEIRO20', dataInicio: '2026-01-10', dataFim: '2026-03-31', app: 'Todos', veiculo: 'Todos', status: 'Ativo', impressoes: 12400, cliques: 1850, conversao: 14.9, imagem: 'gradiente-marca' },
+          { id: 2, titulo: 'Frete grátis motoboy acima de R$ 30', cupom: 'FRETEGRATIS', dataInicio: '2026-02-01', dataFim: '2026-04-15', app: '99', veiculo: 'Motoboy', status: 'Ativo', impressoes: 8300, cliques: 920, conversao: 11.1, imagem: 'gradiente-azul' },
+          { id: 3, titulo: 'Cashback 10% em corridas de SUV', cupom: 'SUV10', dataInicio: '2026-02-15', dataFim: '2026-05-30', app: 'Uber', veiculo: 'SUV', status: 'Ativo', impressoes: 5600, cliques: 680, conversao: 12.1, imagem: 'gradiente-roxo' },
+          { id: 4, titulo: 'Desconto R$ 15 em frente para delivery', cupom: 'FRENTE15', dataInicio: '2026-03-01', dataFim: '2026-06-30', app: 'Todos', veiculo: 'Frente', status: 'Agendado', impressoes: 0, cliques: 0, conversao: 0, imagem: 'gradiente-verde' },
+          { id: 5, titulo: 'Promoção relâmpago — 20% OFF', cupom: 'RELOGIO20', dataInicio: '2026-03-10', dataFim: '2026-03-12', app: 'Bolt', veiculo: 'Todos', status: 'Agendado', impressoes: 0, cliques: 0, conversao: 0, imagem: 'gradiente-laranja' },
+          { id: 6, titulo: 'Primeira corrida Uber grátis até R$ 25', cupom: 'UBERGRATIS', dataInicio: '2026-01-05', dataFim: '2026-02-28', app: 'Uber', veiculo: 'Todos', status: 'Pausado', impressoes: 15800, cliques: 2340, conversao: 14.8, imagem: 'gradiente-preto' },
+          { id: 7, titulo: 'Motoboy express — entrega em 30min', cupom: 'EXPRESS30', dataInicio: '2026-02-20', dataFim: '2026-05-20', app: 'Todos', veiculo: 'Motoboy', status: 'Ativo', impressoes: 4200, cliques: 510, conversao: 12.1, imagem: 'gradiente-vermelho' },
+          { id: 8, titulo: 'Viagem compartilhada R$ 8,99', cupom: 'COMPART8', dataInicio: '2026-03-05', dataFim: '2026-07-31', app: 'Cabify', veiculo: 'Econômico', status: 'Ativo', impressoes: 3100, cliques: 390, conversao: 12.6, imagem: 'gradiente-ciano' }
+        ];
+
+        function promocoes_e_banners_mostrarNomeArquivo(input) {
+          var el = document.getElementById('bannerFileName');
+          if (input.files && input.files.length > 0) {
+            el.textContent = input.files[0].name;
+            el.classList.remove('hidden');
+          }
+        }
+
+        function promocoes_e_banners_getGradiente(tipo) {
+          var gradientes = {
+            'gradiente-marca': 'from-marca-500 to-marca-700',
+            'gradiente-azul': 'from-blue-500 to-blue-700',
+            'gradiente-roxo': 'from-purple-500 to-purple-700',
+            'gradiente-verde': 'from-emerald-500 to-emerald-700',
+            'gradiente-laranja': 'from-orange-500 to-orange-700',
+            'gradiente-preto': 'from-gray-700 to-gray-900',
+            'gradiente-vermelho': 'from-red-500 to-red-700',
+            'gradiente-ciano': 'from-cyan-500 to-cyan-700'
+          };
+          return gradientes[tipo] || 'from-marca-500 to-marca-700';
+        }
+
+        function promocoes_e_banners_getStatusColor(status) {
+          var cores = {
+            'Ativo': 'bg-emerald-100 text-emerald-700 border-emerald-200',
+            'Pausado': 'bg-amber-100 text-amber-700 border-amber-200',
+            'Agendado': 'bg-blue-100 text-blue-700 border-blue-200'
+          };
+          return cores[status] || 'bg-gray-100 text-gray-600 border-gray-200';
+        }
+
+        function promocoes_e_banners_renderizar(banners) {
+          var grid = document.getElementById('bannersGrid');
+          var vazio = document.getElementById('bannersVazio');
+          if (banners.length === 0) {
+            grid.innerHTML = '';
+            vazio.classList.remove('hidden');
+            return;
+          }
+          vazio.classList.add('hidden');
+          grid.innerHTML = banners.map(function(b) {
+            var statusCor = promocoes_e_banners_getStatusColor(b.status);
+            var grad = promocoes_e_banners_getGradiente(b.imagem);
+            var ini = dataBR(b.dataInicio);
+            var fim = dataBR(b.dataFim);
+            return '<div class="card overflow-hidden cursor-pointer hover:shadow-md transition-all active:scale-[0.97]" onclick="promocoes_e_banners_abrirDetalhes(' + b.id + ')">' +
+              '<div class="bg-gradient-to-br ' + grad + ' aspect-video relative flex items-center justify-center">' +
+                '<div class="absolute inset-0 bg-black/5"></div>' +
+                '<div class="text-center relative z-10 px-3">' +
+                  '<span class="bg-white/25 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Promoção</span>' +
+                  '<p class="text-white font-display font-bold text-xs mt-1.5 leading-tight">' + b.titulo + '</p>' +
+                  '<p class="text-white/80 text-[9px] font-mono mt-0.5 tracking-wider">CUPOM: ' + b.cupom + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<div class="p-3 space-y-2">' +
+                '<div class="flex items-center justify-between">' +
+                  '<span class="badge text-[10px] font-medium border ' + statusCor + '">' + b.status + '</span>' +
+                  '<span class="text-[10px] text-gray-400">' + b.app + '</span>' +
+                '</div>' +
+                '<div class="flex items-center gap-1 text-[10px] text-gray-500">' +
+                  '<svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+                  '<span>' + ini + ' — ' + fim + '</span>' +
+                '</div>' +
+                '<div class="flex items-center gap-3 pt-1 border-t border-gray-50">' +
+                  '<div class="flex items-center gap-1 text-[10px] text-gray-500">' +
+                    '<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>' +
+                    '<span>' + b.impressoes.toLocaleString('pt-BR') + '</span>' +
+                  '</div>' +
+                  '<div class="flex items-center gap-1 text-[10px] text-gray-500">' +
+                    '<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>' +
+                    '<span>' + b.cliques.toLocaleString('pt-BR') + '</span>' +
+                  '</div>' +
+                  '<div class="flex items-center gap-1 text-[10px] text-marca-500 font-medium ml-auto">' +
+                    b.conversao + '%' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+        }
+
+        function promocoes_e_banners_filtrar() {
+          var busca = document.getElementById('bannerSearch').value.toLowerCase();
+          var filtroStatus = document.getElementById('bannerFiltroStatus').value;
+          var filtroApp = document.getElementById('bannerFiltroApp').value;
+          var filtrados = promocoes_e_banners_banners.filter(function(b) {
+            var matchBusca = !busca || b.titulo.toLowerCase().includes(busca) || b.cupom.toLowerCase().includes(busca);
+            var matchStatus = !filtroStatus || b.status === filtroStatus;
+            var matchApp = !filtroApp || b.app === filtroApp || (filtroApp === 'Todos' && b.app === 'Todos');
+            return matchBusca && matchStatus && matchApp;
+          });
+          promocoes_e_banners_renderizar(filtrados);
+        }
+
+        function promocoes_e_banners_abrirFormulario() {
+          document.getElementById('modalNovoBanner').classList.remove('hidden');
+          document.getElementById('bannerTitulo').value = '';
+          document.getElementById('bannerCupom').value = '';
+          document.getElementById('bannerDataInicio').value = '';
+          document.getElementById('bannerDataFim').value = '';
+          document.getElementById('bannerAppAlvo').value = 'Todos';
+          document.getElementById('bannerTipoVeiculo').value = 'Todos';
+          document.getElementById('bannerLink').value = '';
+          document.getElementById('bannerFileName').classList.add('hidden');
+          document.getElementById('previewTitulo').textContent = 'Primeira corrida com 50% OFF';
+          document.getElementById('previewCupom').textContent = 'CUPOM: PRIMEIRO20';
+          document.body.style.overflow = 'hidden';
+        }
+
+        function promocoes_e_banners_fecharFormulario() {
+          document.getElementById('modalNovoBanner').classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+
+        function promocoes_e_banners_salvarBanner() {
+          var titulo = document.getElementById('bannerTitulo').value.trim();
+          var cupom = document.getElementById('bannerCupom').value.trim().toUpperCase();
+          var dataInicio = document.getElementById('bannerDataInicio').value;
+          var dataFim = document.getElementById('bannerDataFim').value;
+          var app = document.getElementById('bannerAppAlvo').value;
+          var veiculo = document.getElementById('bannerTipoVeiculo').value;
+
+          if (!titulo || !cupom || !dataInicio || !dataFim) {
+            toast('Preencha todos os campos obrigatórios', 'erro');
+            return;
+          }
+
+          var gradientes = ['gradiente-marca','gradiente-azul','gradiente-roxo','gradiente-verde','gradiente-laranja','gradiente-vermelho','gradiente-ciano'];
+          var novo = {
+            id: Date.now(),
+            titulo: titulo,
+            cupom: cupom || 'KILEGAL',
+            dataInicio: dataInicio,
+            dataFim: dataFim,
+            app: app,
+            veiculo: veiculo,
+            status: 'Ativo',
+            impressoes: 0,
+            cliques: 0,
+            conversao: 0,
+            imagem: gradientes[Math.floor(Math.random() * gradientes.length)]
+          };
+          promocoes_e_banners_banners.unshift(novo);
+          promocoes_e_banners_filtrar();
+          promocoes_e_banners_fecharFormulario();
+          toast('Banner "' + titulo + '" criado com sucesso!', 'ok');
+        }
+
+        function promocoes_e_banners_abrirDetalhes(id) {
+          var b = promocoes_e_banners_banners.find(function(x) { return x.id === id; });
+          if (!b) return;
+          var statusCor = promocoes_e_banners_getStatusColor(b.status);
+          var grad = promocoes_e_banners_getGradiente(b.imagem);
+          var ini = dataBR(b.dataInicio);
+          var fim = dataBR(b.dataFim);
+          var diasRestantes = b.status === 'Ativo' ? Math.max(0, Math.ceil((new Date(b.dataFim) - new Date()) / 86400000)) : '—';
+
+          var html = '' +
+            '<div class="flex items-start justify-between mb-4">' +
+              '<div>' +
+                '<span class="badge text-[10px] font-medium border ' + statusCor + '">' + b.status + '</span>' +
+                '<h3 class="font-display font-bold text-base text-marca-900 mt-2">' + b.titulo + '</h3>' +
+                '<p class="text-xs text-gray-500 mt-0.5">Cupom: <span class="font-mono font-bold text-marca-500">' + b.cupom + '</span></p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="bg-gradient-to-br ' + grad + ' aspect-video rounded-xl flex items-center justify-center relative overflow-hidden mb-4">' +
+              '<div class="absolute inset-0 bg-black/5"></div>' +
+              '<div class="text-center relative z-10 px-4">' +
+                '<p class="text-white font-display font-bold text-sm">' + b.titulo + '</p>' +
+                '<p class="text-white/80 text-xs font-mono mt-1">CUPOM: ' + b.cupom + '</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-3 mb-4">' +
+              '<div class="card p-3"><p class="text-[10px] text-gray-500 uppercase tracking-wider">Período</p><p class="text-sm font-semibold text-marca-900 mt-0.5">' + ini + '</p><p class="text-xs text-gray-400">até ' + fim + '</p></div>' +
+              '<div class="card p-3"><p class="text-[10px] text-gray-500 uppercase tracking-wider">App alvo</p><p class="text-sm font-semibold text-marca-900 mt-0.5">' + b.app + '</p><p class="text-xs text-gray-400">' + b.veiculo + '</p></div>' +
+              '<div class="card p-3"><p class="text-[10px] text-gray-500 uppercase tracking-wider">Impressões</p><p class="text-sm font-semibold text-marca-900 mt-0.5">' + b.impressoes.toLocaleString('pt-BR') + '</p></div>' +
+              '<div class="card p-3"><p class="text-[10px] text-gray-500 uppercase tracking-wider">Cliques</p><p class="text-sm font-semibold text-marca-900 mt-0.5">' + b.cliques.toLocaleString('pt-BR') + '</p></div>' +
+              '<div class="card p-3"><p class="text-[10px] text-gray-500 uppercase tracking-wider">Taxa de Conversão</p><p class="text-sm font-semibold text-marca-900 mt-0.5">' + (b.conversao > 0 ? b.conversao + '%' : '—') + '</p></div>' +
+              '<div class="card p-3"><p class="text-[10px] text-gray-500 uppercase tracking-wider">Dias restantes</p><p class="text-sm font-semibold text-marca-900 mt-0.5">' + diasRestantes + '</p></div>' +
+            '</div>' +
+            '<div class="flex gap-2">' +
+              (b.status === 'Ativo'
+                ? '<button onclick="promocoes_e_banners_alterarStatus(' + b.id + ', \'Pausado\')" class="flex-1 py-2.5 rounded-xl border border-amber-300 text-amber-700 text-sm font-medium hover:bg-amber-50 active:scale-95 transition-all">Pausar</button>'
+                : b.status === 'Pausado'
+                  ? '<button onclick="promocoes_e_banners_alterarStatus(' + b.id + ', \'Ativo\')" class="flex-1 py-2.5 rounded-xl border border-emerald-300 text-emerald-700 text-sm font-medium hover:bg-emerald-50 active:scale-95 transition-all">Reativar</button>'
+                  : '<span class="flex-1 text-center py-2.5 text-sm text-gray-400 italic">Aguardando início</span>'
+              ) +
+              '<button onclick="promocoes_e_banners_excluir(' + b.id + ')" class="flex-1 py-2.5 rounded-xl border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 active:scale-95 transition-all">Excluir</button>' +
+            '</div>';
+
+          document.getElementById('detalhesBannerConteudo').innerHTML = html;
+          document.getElementById('modalDetalhesBanner').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function promocoes_e_banners_fecharDetalhes() {
+          document.getElementById('modalDetalhesBanner').classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+
+        function promocoes_e_banners_alterarStatus(id, novoStatus) {
+          var b = promocoes_e_banners_banners.find(function(x) { return x.id === id; });
+          if (b) {
+            b.status = novoStatus;
+            promocoes_e_banners_filtrar();
+            promocoes_e_banners_fecharDetalhes();
+            toast('Banner ' + (novoStatus === 'Ativo' ? 'reativado' : 'pausado') + ' com sucesso', 'ok');
+          }
+        }
+
+        function promocoes_e_banners_excluir(id) {
+          promocoes_e_banners_banners = promocoes_e_banners_banners.filter(function(x) { return x.id !== id; });
+          promocoes_e_banners_filtrar();
+          promocoes_e_banners_fecharDetalhes();
+          toast('Banner excluído', 'info');
+        }
+
+        promocoes_e_banners_renderizar(promocoes_e_banners_banners);
+      </script>
+    </section>
+
     <!-- TELAS -->
     </main>
 

@@ -206,7 +206,298 @@
 
     <!-- ======= SCREEN AREA ======= -->
     <main id="tela-scroll" class="flex-1 overflow-y-auto" style="background:#0A0A0A;">
-      <!-- TELAS -->
+      <section data-tela="inicio-e-busca" class="hidden">
+      <div class="h-full flex flex-col">
+        <!-- Topo com barra de pesquisa -->
+        <div class="flex items-center gap-3 px-4 pt-3 pb-2 bg-marca-900 shrink-0">
+          <button onclick="inicio_e_busca_focarBusca()" class="flex-1 flex items-center gap-2 bg-marca-800 text-marca-200 rounded-xl px-4 py-3 text-left hover:bg-marca-700 transition-colors active:scale-95">
+            <svg class="w-5 h-5 text-marca-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <span class="text-sm text-marca-400 truncate">Para onde você quer ir?</span>
+          </button>
+          <button onclick="inicio_e_busca_voz()" class="w-10 h-10 flex items-center justify-center bg-marca-800 rounded-xl hover:bg-marca-700 transition-colors active:scale-95">
+            <svg class="w-5 h-5 text-marca-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+          </button>
+        </div>
+
+        <!-- Mapa simulado -->
+        <div id="mapaContainer" class="relative flex-1 min-h-0 bg-marca-900 overflow-hidden cursor-grab active:cursor-grabbing" onclick="inicio_e_busca_interagirMapa(event)">
+          <svg class="w-full h-full" viewBox="0 0 375 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="ruas" width="40" height="40" patternUnits="userSpaceOnUse">
+                <rect width="40" height="40" fill="#111111"/>
+                <rect x="0" y="16" width="40" height="8" fill="#1a1a1a"/>
+                <rect x="16" y="0" width="8" height="40" fill="#1a1a1a"/>
+              </pattern>
+              <radialGradient id="pinoGrad" cx="50%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0.6"/>
+              </radialGradient>
+              <filter id="sombraMarcador"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.4"/></filter>
+            </defs>
+            <rect width="375" height="400" fill="url(#ruas)"/>
+            <circle cx="140" cy="180" r="30" fill="#1a1a1a" opacity="0.5"/>
+            <circle cx="250" cy="280" r="45" fill="#1a1a1a" opacity="0.5"/>
+            <circle cx="100" cy="320" r="25" fill="#1a1a1a" opacity="0.5"/>
+            <circle cx="300" cy="120" r="35" fill="#1a1a1a" opacity="0.5"/>
+
+            <!-- Marcador central do usuário -->
+            <g filter="url(#sombraMarcador)">
+              <circle cx="187" cy="200" r="14" fill="url(#pinoGrad)"/>
+              <circle cx="187" cy="200" r="6" fill="#FAFAFA"/>
+            </g>
+
+            <!-- Marcadores de veículos animados -->
+            <g class="marcador-veiculo" data-veiculo="1">
+              <rect x="90" y="120" width="28" height="18" rx="5" fill="#D4AF37" opacity="0.85"/>
+              <circle cx="96" cy="138" r="3" fill="#0A0A0A" opacity="0.5"/>
+              <circle cx="112" cy="138" r="3" fill="#0A0A0A" opacity="0.5"/>
+            </g>
+            <g class="marcador-veiculo" data-veiculo="2">
+              <rect x="280" y="220" width="28" height="18" rx="5" fill="#D4AF37" opacity="0.85"/>
+              <circle cx="286" cy="238" r="3" fill="#0A0A0A" opacity="0.5"/>
+              <circle cx="302" cy="238" r="3" fill="#0A0A0A" opacity="0.5"/>
+            </g>
+            <g class="marcador-veiculo" data-veiculo="3">
+              <rect x="60" y="260" width="28" height="18" rx="5" fill="#D4AF37" opacity="0.85"/>
+              <circle cx="66" cy="278" r="3" fill="#0A0A0A" opacity="0.5"/>
+              <circle cx="82" cy="278" r="3" fill="#0A0A0A" opacity="0.5"/>
+            </g>
+            <g class="marcador-veiculo" data-veiculo="4">
+              <rect x="310" y="80" width="28" height="18" rx="5" fill="#D4AF37" opacity="0.85"/>
+              <circle cx="316" cy="98" r="3" fill="#0A0A0A" opacity="0.5"/>
+              <circle cx="332" cy="98" r="3" fill="#0A0A0A" opacity="0.5"/>
+            </g>
+            <g class="marcador-veiculo" data-veiculo="5">
+              <rect x="220" y="150" width="28" height="18" rx="5" fill="#D4AF37" opacity="0.85"/>
+              <circle cx="226" cy="168" r="3" fill="#0A0A0A" opacity="0.5"/>
+              <circle cx="242" cy="168" r="3" fill="#0A0A0A" opacity="0.5"/>
+            </g>
+
+            <!-- Ruas principais -->
+            <line x1="0" y1="160" x2="375" y2="140" stroke="#222222" stroke-width="6"/>
+            <line x1="0" y1="260" x2="375" y2="280" stroke="#222222" stroke-width="5"/>
+            <line x1="130" y1="0" x2="120" y2="400" stroke="#222222" stroke-width="5"/>
+            <line x1="260" y1="0" x2="270" y2="400" stroke="#222222" stroke-width="4"/>
+          </svg>
+          <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-marca-900/80 backdrop-blur-sm text-marca-200 text-xs px-2.5 py-1.5 rounded-lg">
+            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span>5 veículos próximos</span>
+          </div>
+        </div>
+
+        <!-- Área de conteúdo abaixo do mapa -->
+        <div class="bg-marca-50 rounded-t-2xl -mt-4 relative z-10 shrink-0 flex flex-col" style="height: 180px;">
+          <!-- Categorias -->
+          <div class="flex gap-2 px-4 pt-4 pb-2 overflow-x-auto scrollbar-hide" style="scrollbar-width: none;">
+            <button onclick="inicio_e_busca_categoria('carro')" class="categoria-btn flex items-center gap-2 bg-marca-900 text-white pl-3 pr-4 py-2.5 rounded-xl shrink-0 text-sm font-medium hover:bg-marca-800 transition-all active:scale-95 border-2 border-transparent" data-cat="carro">
+              <div class="w-8 h-8 rounded-lg bg-marca-50/10 flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 4h8m-4 4v2m-6-2h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></div>
+              Carro
+            </button>
+            <button onclick="inicio_e_busca_categoria('motoboy')" class="categoria-btn flex items-center gap-2 bg-white text-marca-800 pl-3 pr-4 py-2.5 rounded-xl shrink-0 text-sm font-medium hover:bg-gray-50 transition-all active:scale-95 border-2 border-transparent shadow-sm" data-cat="motoboy">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center text-marca-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+              MotoBoy
+            </button>
+            <button onclick="inicio_e_busca_categoria('guincho')" class="categoria-btn flex items-center gap-2 bg-white text-marca-800 pl-3 pr-4 py-2.5 rounded-xl shrink-0 text-sm font-medium hover:bg-gray-50 transition-all active:scale-95 border-2 border-transparent shadow-sm" data-cat="guincho">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center text-marca-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg></div>
+              Guincho
+            </button>
+            <button onclick="inicio_e_busca_categoria('telegas')" class="categoria-btn flex items-center gap-2 bg-white text-marca-800 pl-3 pr-4 py-2.5 rounded-xl shrink-0 text-sm font-medium hover:bg-gray-50 transition-all active:scale-95 border-2 border-transparent shadow-sm" data-cat="telegas">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center text-marca-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 7.048A4 4 0 015.657 3.343S7 5 9 6.343c0 .828.448 1.562 1.118 1.986"/></svg></div>
+              TeleGás
+            </button>
+            <button onclick="inicio_e_busca_categoria('excursao')" class="categoria-btn flex items-center gap-2 bg-white text-marca-800 pl-3 pr-4 py-2.5 rounded-xl shrink-0 text-sm font-medium hover:bg-gray-50 transition-all active:scale-95 border-2 border-transparent shadow-sm" data-cat="excursao">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center text-marca-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+              Excursões
+            </button>
+          </div>
+
+          <!-- Banner promocional -->
+          <div class="px-4 pb-2">
+            <button onclick="inicio_e_busca_bannerPromo()" class="w-full bg-marca-600 text-marca-900 rounded-xl p-3.5 flex items-center gap-3 active:scale-[0.98] transition-transform relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-24 h-24 bg-marca-500/30 rounded-full -translate-y-1/2 translate-x-1/4"></div>
+              <div class="w-10 h-10 bg-marca-900 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-6 h-6 text-marca-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
+              </div>
+              <div class="text-left">
+                <p class="font-display font-bold text-sm">Primeira viagem com 50% OFF</p>
+                <p class="text-xs text-marca-800 mt-0.5">Use o cupom <span class="font-bold bg-marca-900/20 px-1.5 py-0.5 rounded">KILEGAL50</span></p>
+              </div>
+              <svg class="w-5 h-5 shrink-0 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Overlay de busca -->
+        <div id="overlayBusca" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden" onclick="inicio_e_busca_fecharOverlay(event)">
+          <div id="overlayBuscaContent" class="absolute bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-marca-50 rounded-t-3xl p-5 transform translate-y-full transition-transform duration-300" onclick="event.stopPropagation()">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="flex-1 flex items-center gap-2 bg-white border-2 border-marca-900 rounded-xl px-4 py-3">
+                <svg class="w-5 h-5 text-marca-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input id="inputBusca" type="text" placeholder="Digite seu destino..." class="flex-1 bg-transparent text-sm text-marca-900 outline-none placeholder-marca-400" oninput="inicio_e_busca_filtrarSugestoes(this.value)">
+              </div>
+              <button onclick="inicio_e_busca_fecharOverlay()" class="text-marca-400 text-sm font-medium shrink-0">Cancelar</button>
+            </div>
+
+            <div id="listaSugestoes" class="space-y-1 max-h-[50vh] overflow-y-auto">
+              <p class="text-xs font-bold text-marca-400 uppercase tracking-wider mb-2">Recentes</p>
+              <button onclick="inicio_e_busca_selecionarEndereco('Av. Paulista, 1000, São Paulo, SP')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-marca-900/5 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-marca-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Av. Paulista, 1000</p><p class="text-xs text-marca-400">São Paulo, SP</p></div>
+              </button>
+              <button onclick="inicio_e_busca_selecionarEndereco('Rua Augusta, 500, Consolação, São Paulo')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-marca-900/5 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-marca-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Rua Augusta, 500</p><p class="text-xs text-marca-400">Consolação, São Paulo</p></div>
+              </button>
+              <button onclick="inicio_e_busca_selecionarEndereco('Shopping Morumbi, São Paulo, SP')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-marca-900/5 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-marca-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Shopping Morumbi</p><p class="text-xs text-marca-400">São Paulo, SP</p></div>
+              </button>
+
+              <p class="text-xs font-bold text-marca-400 uppercase tracking-wider mb-2 mt-3">Pontos de interesse</p>
+              <button onclick="inicio_e_busca_selecionarEndereco('Hospital Sírio-Libanês, São Paulo, SP')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Hospital Sírio-Libanês</p><p class="text-xs text-marca-400">Saúde</p></div>
+              </button>
+              <button onclick="inicio_e_busca_selecionarEndereco('Aeroporto de Guarulhos, GRU, São Paulo')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Aeroporto de Guarulhos</p><p class="text-xs text-marca-400">Transporte</p></div>
+              </button>
+              <button onclick="inicio_e_busca_selecionarEndereco('Estádio do Morumbi, São Paulo, SP')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Estádio do Morumbi</p><p class="text-xs text-marca-400">Esportes</p></div>
+              </button>
+              <button onclick="inicio_e_busca_selecionarEndereco('Parque Ibirapuera, São Paulo, SP')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">
+                <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg></div>
+                <div><p class="text-sm font-medium text-marca-900">Parque Ibirapuera</p><p class="text-xs text-marca-400">Parque</p></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function(){
+          const sugestoes = [
+            { nome: 'Av. Paulista, 1000', bairro: 'São Paulo, SP', tipo: 'recente' },
+            { nome: 'Rua Augusta, 500', bairro: 'Consolação, São Paulo', tipo: 'recente' },
+            { nome: 'Shopping Morumbi', bairro: 'São Paulo, SP', tipo: 'recente' },
+            { nome: 'Hospital Sírio-Libanês', bairro: 'Saúde', tipo: 'poi' },
+            { nome: 'Aeroporto de Guarulhos', bairro: 'Transporte', tipo: 'poi' },
+            { nome: 'Estádio do Morumbi', bairro: 'Esportes', tipo: 'poi' },
+            { nome: 'Parque Ibirapuera', bairro: 'Parque', tipo: 'poi' },
+            { nome: 'Rua Oscar Freire, 200', bairro: 'Jardins, São Paulo', tipo: 'recente' },
+            { nome: 'Pinheiros, São Paulo', bairro: 'São Paulo, SP', tipo: 'recente' },
+            { nome: 'Metrô Vila Madalena', bairro: 'Transporte', tipo: 'poi' },
+          ];
+
+          function inicio_e_busca_focarBusca(){
+            const overlay = document.getElementById('overlayBusca');
+            const content = document.getElementById('overlayBuscaContent');
+            overlay.classList.remove('hidden');
+            requestAnimationFrame(() => { content.style.transform = 'translateY(0)'; });
+            setTimeout(() => { document.getElementById('inputBusca').focus(); }, 350);
+          }
+
+          function inicio_e_busca_fecharOverlay(event){
+            if (event && event.target !== event.currentTarget) return;
+            const content = document.getElementById('overlayBuscaContent');
+            content.style.transform = 'translateY(100%)';
+            setTimeout(() => {
+              document.getElementById('overlayBusca').classList.add('hidden');
+              document.getElementById('inputBusca').value = '';
+            }, 300);
+          }
+
+          function inicio_e_busca_filtrarSugestoes(termo){
+            const lista = document.getElementById('listaSugestoes');
+            const termoLower = termo.toLowerCase().trim();
+            let recentes = sugestoes.filter(s => s.tipo === 'recente' && (s.nome.toLowerCase().includes(termoLower) || s.bairro.toLowerCase().includes(termoLower)));
+            let pois = sugestoes.filter(s => s.tipo === 'poi' && (s.nome.toLowerCase().includes(termoLower) || s.bairro.toLowerCase().includes(termoLower)));
+            if (termoLower) { recentes = [...recentes, ...pois]; pois = []; }
+            let html = '';
+            if (recentes.length > 0) {
+              html += '<p class="text-xs font-bold text-marca-400 uppercase tracking-wider mb-2">' + (termoLower ? 'Resultados' : 'Recentes') + '</p>';
+              recentes.forEach(s => {
+                const iconeTipo = s.tipo === 'poi' ? { saude: 'text-red-400 bg-red-50', transporte: 'text-blue-400 bg-blue-50', esportes: 'text-green-500 bg-green-50', parque: 'text-green-500 bg-green-50' }[s.bairro] || 'text-marca-400 bg-marca-900/5';
+                html += '<button onclick=\'inicio_e_busca_selecionarEndereco("' + s.nome + ', ' + s.bairro + '")\' class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">';
+                html += '<div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ' + (s.tipo === 'poi' ? iconeTipo : 'bg-marca-900/5') + '">';
+                html += '<svg class="w-4 h-4 ' + (s.tipo === 'poi' ? '' : 'text-marca-400') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>';
+                html += '<div><p class="text-sm font-medium text-marca-900">' + s.nome + '</p><p class="text-xs text-marca-400">' + s.bairro + '</p></div></button>';
+              });
+            }
+            if (pois.length > 0 && !termoLower) {
+              html += '<p class="text-xs font-bold text-marca-400 uppercase tracking-wider mb-2 mt-3">Pontos de interesse</p>';
+              pois.forEach(s => {
+                html += '<button onclick=\'inicio_e_busca_selecionarEndereco("' + s.nome + ')\' class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-marca-900/5 transition-colors text-left">';
+                html += '<div class="w-8 h-8 rounded-lg bg-marca-900/5 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-marca-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243A8 8 0 1117.657 16.657z"/><circle cx="12" cy="11" r="1.5" fill="currentColor"/></svg></div>';
+                html += '<div><p class="text-sm font-medium text-marca-900">' + s.nome + '</p><p class="text-xs text-marca-400">' + s.bairro + '</p></div></button>';
+              });
+            }
+            if (!html) {
+              html = '<div class="text-center py-8"><svg class="w-12 h-12 text-marca-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><p class="text-sm text-marca-400">Nenhum resultado encontrado</p></div>';
+            }
+            lista.innerHTML = html;
+          }
+
+          function inicio_e_busca_selecionarEndereco(endereco){
+            inicio_e_busca_fecharOverlay();
+            document.getElementById('overlayBusca').classList.add('hidden');
+            toast('Destino: ' + endereco, 'info');
+            setTimeout(() => { mostrarTela('busca-e-filtros'); }, 500);
+          }
+
+          function inicio_e_busca_categoria(cat){
+            document.querySelectorAll('.categoria-btn').forEach(btn => {
+              btn.classList.remove('bg-marca-900', 'text-white', 'border-marca-400');
+              btn.classList.add('bg-white', 'text-marca-800');
+            });
+            const ativo = document.querySelector('[data-cat="' + cat + '"]');
+            ativo.classList.remove('bg-white', 'text-marca-800');
+            ativo.classList.add('bg-marca-900', 'text-white', 'border-marca-400');
+            toast('Categoria: ' + cat.charAt(0).toUpperCase() + cat.slice(1), 'info');
+            setTimeout(() => {
+              if (cat === 'motoboy') mostrarTela('solicitar-motoboy');
+              else mostrarTela('busca-e-filtros');
+            }, 400);
+          }
+
+          function inicio_e_busca_bannerPromo(){
+            mostrarTela('busca-e-filtros');
+          }
+
+          function inicio_e_busca_voz(){
+            toast('Reconhecimento de voz ativado', 'info');
+            setTimeout(() => { mostrarTela('busca-e-filtros'); }, 800);
+          }
+
+          function inicio_e_busca_interagirMapa(e){
+            if (e.target.closest('#mapaContainer')) {
+              toast('Toque para definir ponto de partida', 'info');
+            }
+          }
+
+          // Animação suave dos marcadores
+          let frame = 0;
+          function animarMarcadores(){
+            const markers = document.querySelectorAll('.marcador-veiculo');
+            markers.forEach((m, i) => {
+              const offset = Math.sin(frame * 0.02 + i * 1.2) * 3;
+              m.setAttribute('transform', 'translate(0,' + offset + ')');
+            });
+            frame++;
+            requestAnimationFrame(animarMarcadores);
+          }
+          animarMarcadores();
+
+          // Navegação inferior
+          window._navegarInicio = function(tela){
+            mostrarTela(tela);
+          };
+        })();
+      </script>
+    </section>
+
+    <!-- TELAS -->
     </main>
 
     <!-- ======= BOTTOM NAV ======= -->

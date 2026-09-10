@@ -1545,6 +1545,360 @@
       </script>
     </section>
 
+    <section data-tela="meus-pedidos" class="hidden">
+      <div id="meus-pedidos-content" class="px-4 pt-2 pb-6">
+        <!-- Cabeçalho da tela -->
+        <div class="mb-5 animate-fadeIn">
+          <h1 class="font-display text-2xl font-bold text-marca-900 tracking-tight">Meus Pedidos</h1>
+          <p class="text-sm text-gray-500 mt-1 font-body">Acompanhe suas corridas e serviços</p>
+        </div>
+
+        <!-- Cards indicadores -->
+        <div class="grid grid-cols-3 gap-2.5 mb-5 animate-fadeIn">
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-body mb-0.5">Em andamento</p>
+            <p id="mp-count-em-andamento" class="text-xl font-bold text-marca-900 font-display">2</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-body mb-0.5">Concluídas</p>
+            <p id="mp-count-concluidas" class="text-xl font-bold text-green-600 font-display">3</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 text-center">
+            <p class="text-xs text-gray-400 font-body mb-0.5">Canceladas</p>
+            <p id="mp-count-canceladas" class="text-xl font-bold text-red-500 font-display">1</p>
+          </div>
+        </div>
+
+        <!-- Abas -->
+        <div class="flex bg-gray-100 rounded-xl p-1 mb-4 animate-fadeIn">
+          <button onclick="meus_pedidos_trocarAba('andamento')" id="mp-aba-andamento" class="mp-aba flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-marca-900 text-white font-body">Em andamento</button>
+          <button onclick="meus_pedidos_trocarAba('concluidas')" id="mp-aba-concluidas" class="mp-aba flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-gray-500 font-body hover:text-gray-700">Concluídas</button>
+          <button onclick="meus_pedidos_trocarAba('canceladas')" id="mp-aba-canceladas" class="mp-aba flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 text-gray-500 font-body hover:text-gray-700">Canceladas</button>
+        </div>
+
+        <!-- Lista de pedidos -->
+        <div id="mp-lista-pedidos" class="space-y-3 animate-fadeIn">
+          <!-- preenchida via JS -->
+        </div>
+
+        <!-- Estado vazio -->
+        <div id="mp-estado-vazio" class="hidden text-center py-10 animate-fadeIn">
+          <svg class="w-16 h-16 mx-auto text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <p class="text-gray-400 font-body text-sm">Nenhum pedido encontrado</p>
+          <p class="text-gray-300 font-body text-xs mt-1">Toque no botão abaixo para buscar</p>
+        </div>
+      </div>
+
+      <!-- Botão flutuante -->
+      <button onclick="mostrarTela('home')" class="active:scale-95 transition-transform fixed bottom-6 right-5 w-14 h-14 bg-marca-500 rounded-full shadow-lg shadow-marca-500/30 flex items-center justify-center z-40 hover:bg-marca-400">
+        <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </button>
+    </section>
+
+    <script>
+      (function() {
+        'use strict';
+
+        const meus_pedidos_pedidos = [
+          {
+            id: 1, tipo: 'corrida', veiculo: 'carro', aba: 'andamento',
+            data: '2025-07-15', hora: '14:30',
+            origem: 'Av. Paulista, 1000', destino: 'Rua Oscar Freire, 200',
+            origemCurta: 'Av. Paulista', destinoCurta: 'Pinheiros',
+            valor: 24.90, valorTaxa: 1.25,
+            app: 'Kilegal Express', motorista: 'Carlos M.',
+            motoristaAvatar: 'CM', motoristaCor: '#D4AF37',
+            veiculoModelo: 'Honda Civic', veiculoCor: 'Prata', placa: 'ABC-1234',
+            status: 'A caminho', statusIcon: 'direcao',
+            distancia: '8.2 km', tempoEstimado: '15 min',
+            avaliacao: null, avaliacaoComentario: null,
+            avaliacaoMotorista: null,
+            metodoPagamento: 'Cartão de Crédito'
+          },
+          {
+            id: 2, tipo: 'corrida', veiculo: 'moto', aba: 'andamento',
+            data: '2025-07-15', hora: '15:45',
+            origem: 'Praça da Sé, s/n', destino: 'Alameda Santos, 500',
+            origemCurta: 'Centro', destinoCurta: 'Jardins',
+            valor: 12.50, valorTaxa: 0.63,
+            app: 'Kilegal Moto', motorista: 'Rafael S.',
+            motoristaAvatar: 'RS', motoristaCor: '#2563EB',
+            veiculoModelo: 'Honda CG 160', veiculoCor: 'Vermelha', placa: 'MOT-5678',
+            status: 'Aguardando motorista', statusIcon: 'relogio',
+            distancia: '3.5 km', tempoEstimado: '10 min',
+            avaliacao: null, avaliacaoComentario: null,
+            avaliacaoMotorista: null,
+            metodoPagamento: 'Pix'
+          },
+          {
+            id: 3, tipo: 'corrida', veiculo: 'carro', aba: 'concluidas',
+            data: '2025-07-14', hora: '09:15',
+            origem: 'Estação Tietê', destino: 'Shopping Morumbi',
+            origemCurta: 'Tietê', destinoCurta: 'Morumbi',
+            valor: 38.70, valorTaxa: 1.94,
+            app: 'Kilegal Premium', motorista: 'Fernanda L.',
+            motoristaAvatar: 'FL', motoristaCor: '#7C3AED',
+            veiculoModelo: 'Toyota Corolla', veiculoCor: 'Branco', placa: 'DEF-9012',
+            status: 'Finalizada', statusIcon: 'check',
+            distancia: '14.1 km', tempoEstimado: '25 min',
+            avaliacao: 5, avaliacaoComentario: 'Motorista muito atenciosa, carro limpo e ar condicionado perfeito!',
+            avaliacaoMotorista: 5,
+            metodoPagamento: 'Cartão de Débito'
+          },
+          {
+            id: 4, tipo: 'corrida', veiculo: 'carro', aba: 'concluidas',
+            data: '2025-07-13', hora: '18:20',
+            origem: 'Aeroporto GRU', destino: 'Hotel Unique',
+            origemCurta: 'GRU', destinoCurta: 'Jardins',
+            valor: 92.30, valorTaxa: 4.62,
+            app: 'Kilegal Express', motorista: 'João P.',
+            motoristaAvatar: 'JP', motoristaCor: '#059669',
+            veiculoModelo: 'Chevrolet Onix', veiculoCor: 'Preto', placa: 'GHI-3456',
+            status: 'Finalizada', statusIcon: 'check',
+            distancia: '28.7 km', tempoEstimado: '40 min',
+            avaliacao: 4, avaliacaoComentario: 'Boa corrida, chegou rápido no aeroporto.',
+            avaliacaoMotorista: 4,
+            metodoPagamento: 'Cartão de Crédito'
+          },
+          {
+            id: 5, tipo: 'motoboy', veiculo: 'moto', aba: 'concluidas',
+            data: '2025-07-12', hora: '11:00',
+            origem: 'Loja Decoração House', destino: 'Rua Augusta, 1200',
+            origemCurta: 'Loja Decoração', destinoCurta: 'Augusta',
+            valor: 18.00, valorTaxa: 0.90,
+            app: 'Kilegal Motoboy', motorista: 'Lucas V.',
+            motoristaAvatar: 'LV', motoristaCor: '#EA580C',
+            veiculoModelo: 'Yamaha Factor', veiculoCor: 'Azul', placa: 'MOT-7890',
+            status: 'Entregue', statusIcon: 'check',
+            distancia: '5.8 km', tempoEstimado: '18 min',
+            avaliacao: 5, avaliacaoComentario: 'Entrega rápida, tudo perfeito!',
+            avaliacaoMotorista: 5,
+            metodoPagamento: 'Pix'
+          },
+          {
+            id: 6, tipo: 'corrida', veiculo: 'carro', aba: 'concluidas',
+            data: '2025-07-10', hora: '07:30',
+            origem: 'Casa', destino: 'Metrô Vila Mariana',
+            origemCurta: 'Casa', destinoCurta: 'Vila Mariana',
+            valor: 9.90, valorTaxa: 0.50,
+            app: 'Kilegal Express', motorista: 'Ana R.',
+            motoristaAvatar: 'AR', motoristaCor: '#DB2777',
+            veiculoModelo: 'Fiat Argo', veiculoCor: 'Vermelho', placa: 'JKL-1234',
+            status: 'Finalizada', statusIcon: 'check',
+            distancia: '3.2 km', tempoEstimado: '10 min',
+            avaliacao: 5, avaliacaoComentario: 'Perfeita, sempre no horário.',
+            avaliacaoMotorista: 5,
+            metodoPagamento: 'Dinheiro'
+          },
+          {
+            id: 7, tipo: 'guincho', veiculo: 'carro', aba: 'canceladas',
+            data: '2025-07-09', hora: '22:00',
+            origem: 'Rod. Anhanguera, km 15', destino: 'Oficina AutoCenter',
+            origemCurta: 'Rod. Anhanguera', destinoCurta: 'Oficina',
+            valor: 155.00, valorTaxa: 7.75,
+            app: 'Kilegal Guincho', motorista: '-',
+            motoristaAvatar: '?', motoristaCor: '#6B7280',
+            veiculoModelo: 'Guincho Plataforma', veiculoCor: 'Amarelo', placa: 'GNC-0001',
+            status: 'Cancelada', statusIcon: 'x',
+            distancia: '22.0 km', tempoEstimado: '35 min',
+            avaliacao: null, avaliacaoComentario: null,
+            avaliacaoMotorista: null,
+            metodoPagamento: 'Cartão de Crédito',
+            motivoCancelamento: 'Veículo foi recuperado antes da chegada do guincho'
+          }
+        ];
+
+        let meus_pedidos_abaAtual = 'andamento';
+
+        function meus_pedidos_trocarAba(aba) {
+          meus_pedidos_abaAtual = aba;
+          document.querySelectorAll('.mp-aba').forEach(function(b) {
+            b.classList.remove('bg-marca-900','text-white');
+            b.classList.add('text-gray-500');
+          });
+          var btnAtivo = document.getElementById('mp-aba-' + aba);
+          btnAtivo.classList.add('bg-marca-900','text-white');
+          btnAtivo.classList.remove('text-gray-500');
+          meus_pedidos_renderizarLista();
+        }
+
+        function meus_pedidos_renderizarLista() {
+          var lista = document.getElementById('mp-lista-pedidos');
+          var vazio = document.getElementById('mp-estado-vazio');
+          var filtrados = meus_pedidos_pedidos.filter(function(p) { return p.aba === meus_pedidos_abaAtual; });
+
+          if (filtrados.length === 0) {
+            lista.innerHTML = '';
+            vazio.classList.remove('hidden');
+            return;
+          }
+          vazio.classList.add('hidden');
+
+          lista.innerHTML = filtrados.map(function(p) {
+            var corStatus = p.status === 'Finalizada' || p.status === 'Entregue' ? 'bg-green-100 text-green-700' :
+                            p.status === 'Cancelada' ? 'bg-red-100 text-red-600' :
+                            p.status === 'Aguardando motorista' ? 'bg-yellow-100 text-yellow-700' :
+                            'bg-marca-100 text-marca-800';
+            var iconeVeiculo = p.veiculo === 'moto' ?
+              '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 18h4m4 0h4M3 14l3-6h6l2 4h4"/></svg>' :
+              '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h.01M16 17h.01M5 17h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>';
+
+            var estrelas = p.avaliacao ?
+              '<span class="flex items-center gap-0.5">' + Array(p.avaliacao).fill('<svg class="w-3.5 h-3.5 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>').join('') + '</span>' : '';
+
+            return '<div onclick="meus_pedidos_abrirDetalhe(' + p.id + ')" class="card bg-white rounded-2xl p-4 shadow-sm border border-gray-100 cursor-pointer active:scale-[0.98] transition-all hover:shadow-md">' +
+              '<div class="flex items-start gap-3">' +
+                '<div class="w-11 h-11 rounded-xl bg-marca-50 flex items-center justify-center flex-shrink-0 text-marca-700">' + iconeVeiculo + '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<div class="flex items-center justify-between mb-1">' +
+                    '<span class="text-xs text-gray-400 font-body">' + dataBR(p.data) + ' às ' + p.hora + '</span>' +
+                    '<span class="' + corStatus + ' text-xs font-semibold px-2 py-0.5 rounded-full font-body">' + p.status + '</span>' +
+                  '</div>' +
+                  '<div class="flex items-center gap-1.5 mb-2">' +
+                    '<span class="text-sm font-semibold text-marca-900 font-body truncate">' + p.origemCurta + '</span>' +
+                    '<svg class="w-3.5 h-3.5 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>' +
+                    '<span class="text-sm font-semibold text-marca-900 font-body truncate">' + p.destinoCurta + '</span>' +
+                  '</div>' +
+                  '<div class="flex items-center justify-between">' +
+                    '<div class="flex items-center gap-1">' +
+                      '<div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style="background-color:' + p.motoristaCor + '">' + p.motoristaAvatar + '</div>' +
+                      '<span class="text-xs text-gray-500 font-body">' + p.motorista + '</span>' +
+                    '</div>' +
+                    '<span class="text-base font-bold text-marca-500 font-display">R$ ' + p.valor.toFixed(2).replace('.',',') + '</span>' +
+                  '</div>' +
+                  (p.avaliacao ? '<div class="mt-1.5">' + estrelas + '</div>' : '') +
+                '</div>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+        }
+
+        window.meus_pedidos_abrirDetalhe = function(id) {
+          var p = null;
+          for (var i = 0; i < meus_pedidos_pedidos.length; i++) {
+            if (meus_pedidos_pedidos[i].id === id) { p = meus_pedidos_pedidos[i]; break; }
+          }
+          if (!p) return;
+
+          var corStatus = p.status === 'Finalizada' || p.status === 'Entregue' ? 'text-green-600 bg-green-50' :
+                          p.status === 'Cancelada' ? 'text-red-500 bg-red-50' :
+                          p.status === 'Aguardando motorista' ? 'text-yellow-600 bg-yellow-50' :
+                          'text-marca-700 bg-marca-50';
+
+          var estrelasHTML = '';
+          if (p.avaliacao) {
+            estrelasHTML = Array(p.avaliacao).fill(
+              '<svg class="w-5 h-5 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>'
+            ).join('');
+          }
+
+          var acoes = '';
+          if (p.aba === 'concluidas') {
+            acoes = '<button onclick="fecharModal(); mostrarTela(\'home\'); toast(\'Nova busca iniciada!\', \'ok\');" class="w-full py-3 bg-marca-500 text-white rounded-xl font-semibold text-sm active:scale-95 transition-transform font-body">Solicitar Novamente</button>';
+          } else if (p.aba === 'andamento') {
+            acoes = '<button onclick="mostrarTela(\'acompanhar-corrida\'); fecharModal(); toast(\'Abrindo acompanhamento...\', \'info\');" class="w-full py-3 bg-marca-500 text-white rounded-xl font-semibold text-sm active:scale-95 transition-transform font-body">Acompanhar Corrida</button>' +
+                    '<button onclick="fecharModal(); toast(\'Motorista contatado!\', \'info\');" class="w-full py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold text-sm mt-2 active:scale-95 transition-transform font-body">Contatar Motorista</button>';
+          }
+
+          var motivoCancelamentoHTML = p.motivoCancelamento ?
+            '<div class="mt-4 p-3 bg-red-50 rounded-xl"><p class="text-xs text-red-500 font-body">Motivo: ' + p.motivoCancelamento + '</p></div>' : '';
+
+          var html = '<div class="px-2">' +
+            '<div class="flex items-center justify-between mb-4">' +
+              '<div class="flex items-center gap-3">' +
+                '<div class="w-12 h-12 rounded-xl bg-marca-50 flex items-center justify-center text-marca-700">' +
+                  (p.veiculo === 'moto' ?
+                    '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 18h4m4 0h4M3 14l3-6h6l2 4h4"/></svg>' :
+                    '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h.01M16 17h.01M5 17h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>') +
+                '</div>' +
+                '<div>' +
+                  '<p class="font-display font-bold text-marca-900 text-base">' + p.app + '</p>' +
+                  '<p class="text-xs text-gray-400 font-body">' + (p.tipo === 'motoboy' ? 'Entrega' : p.tipo === 'guincho' ? 'Guincho' : 'Corrida') + ' #' + String(p.id).padStart(6, '0') + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<span class="' + corStatus + ' text-xs font-bold px-3 py-1 rounded-full font-body">' + p.status + '</span>' +
+            '</div>' +
+            '<div class="bg-gray-50 rounded-xl p-4 mb-4">' +
+              '<div class="flex items-center gap-3 mb-3">' +
+                '<div class="w-3 h-3 rounded-full bg-marca-500 flex-shrink-0"></div>' +
+                '<p class="text-sm text-marca-900 font-body font-medium truncate">' + p.origem + '</p>' +
+              '</div>' +
+              '<div class="w-px h-4 bg-gray-300 ml-1.5"></div>' +
+              '<div class="flex items-center gap-3 mt-3">' +
+                '<div class="w-3 h-3 rounded-full bg-red-500 flex-shrink-0"></div>' +
+                '<p class="text-sm text-marca-900 font-body font-medium truncate">' + p.destino + '</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="bg-gray-50 rounded-xl p-3 mb-4">' +
+              '<svg viewBox="0 0 400 120" class="w-full h-auto">' +
+                '<rect width="400" height="120" rx="8" fill="#F9FAFB"/>' +
+                '<path d="M30 100 C30 100, 60 30, 130 50 S220 20, 280 70 S370 40, 380 80" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-dasharray="4,4"/>' +
+                '<path d="M30 100 C30 100, 60 30, 130 50 S220 20, 280 70 S370 40, 380 80" fill="none" stroke="#D4AF37" stroke-width="2"/>' +
+                '<circle cx="30" cy="100" r="6" fill="#0A0A0A"/><circle cx="30" cy="100" r="3" fill="#D4AF37"/>' +
+                '<circle cx="380" cy="80" r="6" fill="#DC2626"/><circle cx="380" cy="80" r="3" fill="#FFF"/>' +
+                '<rect x="250" y="30" width="60" height="18" rx="4" fill="#0A0A0A" opacity="0.85"/>' +
+                '<text x="280" y="43" text-anchor="middle" fill="#D4AF37" font-size="9" font-family="sans-serif">' + p.distancia + '</text>' +
+                '<rect x="290" y="70" width="50" height="16" rx="4" fill="#D4AF37" opacity="0.9"/>' +
+                '<text x="315" y="83" text-anchor="middle" fill="#FFF" font-size="9" font-family="sans-serif" font-weight="bold">' + p.tempoEstimado + '</text>' +
+              '</svg>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-2.5 mb-4">' +
+              '<div class="bg-gray-50 rounded-xl p-3">' +
+                '<p class="text-[10px] text-gray-400 font-body uppercase tracking-wide">Valor total</p>' +
+                '<p class="text-lg font-bold text-marca-500 font-display mt-0.5">R$ ' + p.valor.toFixed(2).replace('.',',') + '</p>' +
+                '<p class="text-[10px] text-gray-400 font-body">Taxa Kilegal: R$ ' + p.valorTaxa.toFixed(2).replace('.',',') + '</p>' +
+              '</div>' +
+              '<div class="bg-gray-50 rounded-xl p-3">' +
+                '<p class="text-[10px] text-gray-400 font-body uppercase tracking-wide">Pagamento</p>' +
+                '<p class="text-sm font-semibold text-marca-900 font-body mt-1">' + p.metodoPagamento + '</p>' +
+                '<p class="text-[10px] text-gray-400 font-body">' + dataBR(p.data) + ' às ' + p.hora + '</p>' +
+              '</div>' +
+            '</div>' +
+            (p.motorista !== '-' ? '<div class="bg-gray-50 rounded-xl p-3 mb-2">' +
+              '<p class="text-[10px] text-gray-400 font-body uppercase tracking-wide mb-2">Motorista</p>' +
+              '<div class="flex items-center gap-3">' +
+                '<div class="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background-color:' + p.motoristaCor + '">' + p.motoristaAvatar + '</div>' +
+                '<div>' +
+                  '<p class="text-sm font-semibold text-marca-900 font-body">' + p.motorista + '</p>' +
+                  '<p class="text-xs text-gray-400 font-body">' + p.veiculoModelo + ' · ' + p.veiculoCor + '</p>' +
+                  '<p class="text-xs text-gray-400 font-body">Placa: ' + p.placa + '</p>' +
+                '</div>' +
+              '</div>' +
+              (p.avaliacaoMotorista ? '<div class="flex items-center gap-1 mt-2 ml-[52px]">' + Array(p.avaliacaoMotorista).fill('<svg class="w-3.5 h-3.5 text-marca-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>').join('') + '</div>' : '') +
+            '</div>' : '') +
+            (p.avaliacao && p.avaliacaoComentario ? '<div class="bg-marca-50 rounded-xl p-3 mb-4 border border-marca-100">' +
+              '<p class="text-[10px] text-marca-600 font-body uppercase tracking-wide mb-1">Sua avaliação</p>' +
+              '<div class="flex items-center gap-0.5 mb-1">' + estrelasHTML + '</div>' +
+              '<p class="text-xs text-gray-600 font-body">"' + p.avaliacaoComentario + '"</p>' +
+            '</div>' : '') +
+            motivoCancelamentoHTML +
+            (acoes ? '<div class="mt-5">' + acoes + '</div>' : '') +
+          '</div>';
+
+          abrirModal(html, 'Detalhes do Pedido');
+        };
+
+        window.meus_pedidos_reiniciar = function() {
+          meus_pedidos_abaAtual = 'andamento';
+          meus_pedidos_renderizarLista();
+        };
+
+        window.meus_pedidos_trocarAba = meus_pedidos_trocarAba;
+
+        if (typeof mostrarTela !== 'undefined') {
+          var original = mostrarTela;
+          window.mostrarTela = function(id) {
+            if (id === 'meus-pedidos') {
+              meus_pedidos_reiniciar();
+            }
+            original(id);
+          };
+        }
+
+        meus_pedidos_renderizarLista();
+      })();
+    </script>
+
     <!-- TELAS -->
     </main>
 
